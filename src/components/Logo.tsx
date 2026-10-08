@@ -1,13 +1,16 @@
 type Props = {
   /** 紺色の背景の上に置くとき（ロゴの紺を白にした版を使う） */
   light?: boolean;
-  /** ロゴマークの大きさ */
+  /** 大きさ（フッターは lg） */
   size?: "md" | "lg";
 };
 
-/** ロゴマーク＋社名 */
+/**
+ * ヘッダー・フッターの社名ロゴ。
+ * ロゴマーク＋ロゴと同じ英字「SUKOYAKA LINE」＋日本語の社名（Noto Sans JP 太字）
+ */
 export function Logo({ light = false, size = "md" }: Props) {
-  const mark = size === "lg" ? "h-14 w-14" : "h-10 w-10 md:h-12 md:w-12";
+  const lg = size === "lg";
   return (
     <span className="flex items-center gap-3">
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -16,16 +19,23 @@ export function Logo({ light = false, size = "md" }: Props) {
         alt=""
         width={148}
         height={154}
-        className={`${mark} shrink-0 object-contain`}
+        className={`shrink-0 object-contain ${lg ? "h-14 w-14" : "h-11 w-11 md:h-[52px] md:w-[52px]"}`}
       />
-      <span className="flex flex-col leading-none">
-        <span className={`text-[10px] tracking-[0.3em] ${light ? "text-sky-soft" : "text-steel"}`}>株式会社</span>
+      <span className="flex flex-col items-start gap-1.5">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={light ? "/logo-text-light.svg" : "/logo-text.svg"}
+          alt="SUKOYAKA LINE"
+          width={169}
+          height={15}
+          className={`w-auto ${lg ? "h-[18px]" : "h-[14px] md:h-[17px]"}`}
+        />
         <span
-          className={`mt-1 font-display font-extrabold tracking-[0.12em] ${size === "lg" ? "text-2xl" : "text-xl"} ${
-            light ? "text-white" : "text-ink"
-          }`}
+          className={`font-display font-extrabold leading-none tracking-[0.22em] ${
+            lg ? "text-[13px]" : "text-[11px] md:text-[12.5px]"
+          } ${light ? "text-white/85" : "text-ink"}`}
         >
-          健やかライン
+          株式会社健やかライン
         </span>
       </span>
     </span>
