@@ -101,10 +101,10 @@ export function PipeHero() {
           兵庫・尼崎の配管工事会社
         </p>
         <h1 className="mt-6 text-[40px] leading-[1.35] tracking-[0.1em] md:text-[68px]">
-          <span className="sr-only">流れを、確かにつなぐ。</span>
-          <SplitLine text="流れを、" start={0.3} />
+          <span className="sr-only">健やかな線を、未来へ。</span>
+          <SplitLine text="健やかな線を、" start={0.3} />
           <br />
-          <SplitLine text="確かにつなぐ。" start={0.62} />
+          <SplitLine text="未来へ。" start={0.78} />
         </h1>
         <p
           className="hero-in mt-8 max-w-md text-[15px] leading-loose text-white/85 md:text-base"
