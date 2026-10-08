@@ -82,6 +82,22 @@ export function InstagramFeed({ posts, limit = 9 }: Props) {
     );
   }
 
+  // プロフィールの埋め込み（Instagram公式の埋め込み表示。最新の投稿も自動で並ぶ）
+  if (site.instagram.profileUrl) {
+    const embedUrl = `${site.instagram.profileUrl.replace(/\/?$/, "/")}embed/`;
+    return (
+      <div className="mx-auto w-full max-w-[540px] overflow-hidden rounded-sm border border-line bg-white">
+        <iframe
+          src={embedUrl}
+          title={`Instagram ${site.instagram.handle || ""} のプロフィール`}
+          loading="lazy"
+          className="block h-[560px] w-full border-0 md:h-[680px]"
+          scrolling="no"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="border border-dashed border-line bg-white px-6 py-12 text-center">
       <p className="font-display text-lg">現場の様子をInstagramで発信しています</p>
