@@ -101,18 +101,24 @@ export function PipeHero() {
           兵庫・尼崎の配管工事会社
         </p>
         <h1 className="mt-6 text-[40px] leading-[1.35] tracking-[0.1em] md:text-[68px]">
-          <span className="sr-only">健やかな線を、未来へ。</span>
-          <SplitLine text="健やかな線を、" start={0.3} />
+          <span className="sr-only">確かな技術を、確かな未来へ。</span>
+          <SplitLine text="確かな技術を、" start={0.3} />
           <br />
-          <SplitLine text="未来へ。" start={0.78} />
+          <SplitLine text="確かな未来へ。" start={0.78} />
         </h1>
         <p
-          className="hero-in mt-8 max-w-md text-[15px] leading-loose text-white/85 md:text-base"
-          style={{ ["--d" as string]: "1.2s" }}
+          className="hero-in mt-5 text-[13px] font-bold tracking-[0.12em] text-sky-soft md:mt-6 md:text-lg md:tracking-[0.18em]"
+          style={{ ["--d" as string]: "1.3s" }}
         >
-          工場やプラントの配管、設備の配管、機器の据付まで。TIG溶接の確かな仕上がりと、急ぎの案件にも動ける機動力で、現場の「止められない」に応えます。
+          ― 配管から生まれる、トータルソリューション ―
         </p>
-        <div className="hero-in mt-10 flex flex-col gap-3 sm:flex-row" style={{ ["--d" as string]: "1.45s" }}>
+        <p
+          className="hero-in mt-8 max-w-md text-[15px] leading-loose text-white/85 md:text-base"
+          style={{ ["--d" as string]: "1.5s" }}
+        >
+          配管工事・配管製作から、架台の製作・据付、溶接まで一貫して対応。急ぎの案件にも動ける機動力で、現場の「止められない」に応えます。
+        </p>
+        <div className="hero-in mt-10 flex flex-col gap-3 sm:flex-row" style={{ ["--d" as string]: "1.7s" }}>
           <ButtonLink href="/contact/" variant="light">
             工事を相談する
           </ButtonLink>
