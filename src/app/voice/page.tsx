@@ -23,7 +23,7 @@ export default function VoicePage() {
         <Container>
           <ul className="space-y-6 md:space-y-8">
             {voices.map((v, i) => (
-              <li key={i}>
+              <li key={i} data-reveal={i % 2 === 1 ? "right" : "left"}>
                 <figure
                   className={`grid gap-6 bg-white px-6 py-10 md:grid-cols-[220px_1fr] md:gap-12 md:px-12 md:py-14 ${
                     i % 2 === 1 ? "md:ml-16" : "md:mr-16"

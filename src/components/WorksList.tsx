@@ -35,7 +35,7 @@ export function WorksList() {
 
       <ul className="mt-10 space-y-14 md:space-y-20">
         {list.map((w) => (
-          <li key={w.slug} id={w.slug} className="scroll-mt-28">
+          <li key={w.slug} id={w.slug} data-reveal className="scroll-mt-28">
             <article className="grid gap-6 md:grid-cols-[1.1fr_1fr] md:gap-12">
               <div className="aspect-[16/10] overflow-hidden">
                 <WorkVisual category={w.category} image={w.image} alt={w.title} />

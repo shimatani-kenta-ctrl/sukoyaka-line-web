@@ -73,9 +73,11 @@ export default function CompanyPage() {
         <Container className="grid gap-12 md:grid-cols-[1fr_1.6fr] md:gap-20">
           <div>
             <SectionHeading title="代表挨拶" />
-            <LogoFull className="mt-12 hidden h-auto w-44 md:block" />
+            <div data-reveal="scale" className="mt-12 hidden md:block">
+              <LogoFull className="h-auto w-44" />
+            </div>
           </div>
-          <div className="space-y-6 font-display text-[16px] leading-[2.2] tracking-[0.06em] md:text-[17px]">
+          <div data-reveal-stagger="140" className="space-y-6 font-display text-[16px] leading-[2.2] tracking-[0.06em] md:text-[17px]">
             <p>
               配管は、工場や設備の中を流れる「血管」のようなものです。一本の配管がきちんと通っていることで、機械が動き、ものが生まれ、そこで働く人の毎日が守られています。
             </p>
@@ -101,7 +103,7 @@ export default function CompanyPage() {
             <SectionHeading title="会社情報" />
             <LogoFull className="h-auto w-20 md:hidden" />
           </div>
-          <dl className="mt-12 border-t border-ink/20 bg-white">
+          <dl data-reveal-stagger="60" className="mt-12 border-t border-ink/20 bg-white">
             {rows.map((r) => (
               <div
                 key={r.label}
@@ -119,7 +121,9 @@ export default function CompanyPage() {
       <section id="access" className="py-20 md:py-28">
         <Container>
           <SectionHeading title="アクセス" lead={`〒${c.postalCode} ${fullAddress}`} />
-          <GoogleMap className="mt-10 aspect-[4/3] w-full md:aspect-[21/9]" />
+          <div data-reveal="scale" className="mt-10">
+            <GoogleMap className="aspect-[4/3] w-full md:aspect-[21/9]" />
+          </div>
           <a
             href={mapLinkUrl()}
             target="_blank"

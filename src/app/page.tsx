@@ -63,7 +63,7 @@ export default async function HomePage() {
             side="事業内容"
             lead="配管の設計意図をくみ取り、現場で確かな形にする。据付から溶接まで、一つの会社で完結します。"
           />
-          <ul className="mt-14 border-t border-line">
+          <ul data-reveal-stagger="120" className="mt-14 border-t border-line">
             {services.map((s) => (
               <li
                 key={s.name}
@@ -84,7 +84,7 @@ export default async function HomePage() {
       <section className="bg-mist py-20 md:py-32">
         <Container>
           <SectionHeading title="選ばれる理由" side="私たちの強み" />
-          <div className="mt-14 grid gap-12 md:grid-cols-3 md:gap-10">
+          <div data-reveal-stagger="160" className="mt-14 grid gap-12 md:grid-cols-3 md:gap-10">
             {strengths.map((s) => (
               <div key={s.title} className="border-l-[3px] border-ai pl-6">
                 <h3 className="text-xl leading-relaxed md:text-[22px]">{s.title}</h3>
@@ -99,7 +99,7 @@ export default async function HomePage() {
       <section className="py-20 md:py-32">
         <Container>
           <SectionHeading title="施工事例" side="これまでの仕事" />
-          <ul className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
+          <ul data-reveal-stagger="140" className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
             {latestWorks.map((w) => (
               <li key={w.slug}>
                 <Link href={`/works/#${w.slug}`} className="group block">
@@ -135,7 +135,7 @@ export default async function HomePage() {
         <section className="border-y border-line bg-white py-20 md:py-28">
           <Container className="grid gap-10 md:grid-cols-[1fr_2fr] md:gap-16">
             <SectionHeading title="お客様の声" />
-            <figure>
+            <figure data-reveal="right">
               <blockquote className="font-display text-xl leading-[2] tracking-[0.06em] md:text-2xl md:leading-[2.1]">
                 {voice.body}
               </blockquote>
@@ -157,11 +157,11 @@ export default async function HomePage() {
 
       {/* 採用 */}
       <section className="relative overflow-hidden bg-ink text-white">
-        <svg aria-hidden="true" viewBox="0 0 600 400" className="absolute -right-24 top-0 h-full opacity-50 md:right-0" fill="none">
-          <path d="M600 60 H300 a60 60 0 0 0 -60 60 V420" stroke="#1f5a96" strokeWidth="26" />
-          <path d="M600 60 H300 a60 60 0 0 0 -60 60 V420" stroke="#00c2cb" strokeWidth="1" />
-          <rect x="420" y="40" width="8" height="40" fill="#00c2cb" />
-          <rect x="220" y="260" width="40" height="8" fill="#00c2cb" />
+        <svg data-reveal="draw" aria-hidden="true" viewBox="0 0 600 400" className="absolute -right-24 top-0 h-full opacity-50 md:right-0" fill="none">
+          <path className="draw-line" pathLength={1} d="M600 60 H300 a60 60 0 0 0 -60 60 V420" stroke="#1f5a96" strokeWidth="26" />
+          <path className="draw-line" pathLength={1} d="M600 60 H300 a60 60 0 0 0 -60 60 V420" stroke="#00c2cb" strokeWidth="1" />
+          <rect className="draw-fade" x="420" y="40" width="8" height="40" fill="#00c2cb" />
+          <rect className="draw-fade" x="220" y="260" width="40" height="8" fill="#00c2cb" />
         </svg>
         <Container className="relative py-20 md:py-32">
           <div className="max-w-xl">
@@ -170,7 +170,7 @@ export default async function HomePage() {
               title="一緒に、現場をつくる仲間を。"
               lead="配管工事スタッフ・溶接工を正社員で募集中。月給30万円〜、未経験歓迎、面接は1回のみです。基礎から先輩が丁寧に教えるので、一生モノの技術が身につきます。"
             />
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <div data-reveal className="mt-10 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/recruit/" variant="light">
                 採用情報を見る
               </ButtonLink>
@@ -186,7 +186,7 @@ export default async function HomePage() {
       <section className="py-20 md:py-32">
         <Container>
           <SectionHeading title="現場の様子" side="インスタグラム" lead="施工中の現場や、職人たちの日常をInstagramで発信しています。" />
-          <div className="mt-12">
+          <div data-reveal className="mt-12">
             <InstagramFeed posts={posts} limit={6} />
           </div>
           <div className="mt-10 flex flex-wrap gap-3">
@@ -203,7 +203,7 @@ export default async function HomePage() {
         <Container className="grid gap-12 md:grid-cols-2 md:items-center">
           <div>
             <SectionHeading title="会社情報" side="アクセス" />
-            <dl className="mt-10 space-y-4 text-[15px]">
+            <dl data-reveal-stagger="90" className="mt-10 space-y-4 text-[15px]">
               <div className="grid grid-cols-[88px_1fr] gap-4">
                 <dt className="text-steel">社名</dt>
                 <dd>{site.name}</dd>
@@ -235,7 +235,9 @@ export default async function HomePage() {
               </ButtonLink>
             </div>
           </div>
-          <GoogleMap className="aspect-[4/3] w-full" />
+          <div data-reveal="scale">
+            <GoogleMap className="aspect-[4/3] w-full" />
+          </div>
         </Container>
       </section>
 

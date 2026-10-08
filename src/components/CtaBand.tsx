@@ -5,7 +5,7 @@ import { site, telHref } from "@/config/site";
 export function CtaBand() {
   return (
     <section className="bg-ai text-white">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-[1fr_auto] md:items-center md:px-8 md:py-20">
+      <div data-reveal-stagger="150" className="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-[1fr_auto] md:items-center md:px-8 md:py-20">
         <div>
           <h2 className="text-2xl md:text-3xl">配管工事のご相談は、お気軽に。</h2>
           <p className="mt-4 text-[15px] text-white/85">

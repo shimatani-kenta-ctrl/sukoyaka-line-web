@@ -28,7 +28,7 @@ export default async function InstagramPage() {
       />
       <section className="py-16 md:py-24">
         <Container>
-          <div className="grid gap-10 md:grid-cols-3">
+          <div data-reveal-stagger="140" className="grid gap-10 md:grid-cols-3">
             {topics.map((t) => (
               <div key={t.title} className="border-t border-ink/20 pt-5">
                 <h2 className="text-lg">{t.title}</h2>
@@ -45,7 +45,7 @@ export default async function InstagramPage() {
       <section className="bg-mist py-16 md:py-24">
         <Container>
           <SectionHeading title="最近の投稿" />
-          <div className="mt-10">
+          <div data-reveal className="mt-10">
             <InstagramFeed posts={posts} limit={12} />
           </div>
         </Container>

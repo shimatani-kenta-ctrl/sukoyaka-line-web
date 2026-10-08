@@ -70,7 +70,7 @@ export default function RecruitPage() {
             title="手に職をつけて、家族を守れる収入を。"
             lead="配管工事は、工場やプラントを動かし続けるために欠かせない、社会のインフラを支える仕事です。「手に職をつけたい」「家族を守れる収入を得たい」という想いを持つ方を待っています。"
           />
-          <dl className="mt-12 grid grid-cols-2 border-l border-t border-line bg-white md:grid-cols-4">
+          <dl data-reveal-stagger="100" className="mt-12 grid grid-cols-2 border-l border-t border-line bg-white md:grid-cols-4">
             {highlights.map((h) => (
               <div key={h.label} className="border-b border-r border-line px-4 py-5 md:px-6">
                 <dt className="text-[12px] text-steel">{h.label}</dt>
@@ -78,7 +78,7 @@ export default function RecruitPage() {
               </div>
             ))}
           </dl>
-          <div className="mt-16 grid gap-12 md:grid-cols-3 md:gap-10">
+          <div data-reveal-stagger="160" className="mt-16 grid gap-12 md:grid-cols-3 md:gap-10">
             {values.map((v) => (
               <div key={v.title} className="border-l-[3px] border-sky pl-6">
                 <h3 className="text-xl leading-relaxed">{v.title}</h3>
@@ -92,7 +92,7 @@ export default function RecruitPage() {
       <section className="bg-mist py-20 md:py-28">
         <Container>
           <SectionHeading title="募集要項" side="募集中の職種" />
-          <article className="mt-12 bg-white">
+          <article data-reveal className="mt-12 bg-white">
             <header className="border-t-[3px] border-ai px-5 pb-6 pt-8 md:px-8">
               <h3 className="text-2xl">{job.title}</h3>
               <p className="mt-3 text-[15px] text-steel">{job.lead}</p>
@@ -122,7 +122,7 @@ export default function RecruitPage() {
       <section className="py-20 md:py-28">
         <Container>
           <SectionHeading title="応募の流れ" />
-          <ol className="mt-12 grid gap-6 md:grid-cols-3 md:gap-0">
+          <ol data-reveal-stagger="200" className="mt-12 grid gap-6 md:grid-cols-3 md:gap-0">
             {applySteps.map((s, i) => (
               <li key={s.title} className="relative md:pr-8">
                 <div className="flex items-center gap-4">
@@ -139,7 +139,7 @@ export default function RecruitPage() {
             ))}
           </ol>
 
-          <div className="mt-16 flex flex-col gap-6 bg-ink px-6 py-10 text-white md:flex-row md:items-center md:justify-between md:px-12">
+          <div data-reveal="scale" className="mt-16 flex flex-col gap-6 bg-ink px-6 py-10 text-white md:flex-row md:items-center md:justify-between md:px-12">
             <div>
               <p className="font-display text-xl font-extrabold md:text-2xl">まずは気軽に、話を聞きに来てください。</p>
               <p className="mt-2 text-[14px] text-white/75">

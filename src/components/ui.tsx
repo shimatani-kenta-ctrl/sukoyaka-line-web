@@ -25,10 +25,10 @@ export function SectionHeading({
   light?: boolean;
 }) {
   return (
-    <div className="flex items-start gap-6">
+    <div data-reveal className="flex items-start gap-6">
       <div className="max-w-2xl">
         <h2 className={`text-2xl md:text-[34px] ${light ? "text-white" : "text-ink"}`}>{title}</h2>
-        <span aria-hidden="true" className={`mt-5 block h-[3px] w-12 ${light ? "bg-sky" : "bg-ai"}`} />
+        <span aria-hidden="true" className={`reveal-bar mt-5 block h-[3px] w-12 ${light ? "bg-sky" : "bg-ai"}`} />
         {lead && (
           <p className={`mt-6 text-[15px] ${light ? "text-white/80" : "text-steel"}`}>{lead}</p>
         )}

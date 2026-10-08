@@ -13,18 +13,19 @@ export function PageHero({ title, lead, path }: Props) {
   return (
     <section className="relative overflow-hidden bg-ink text-white">
       <svg
+        data-reveal="draw"
         aria-hidden="true"
         className="absolute -right-10 bottom-0 h-full w-[420px] opacity-60 md:right-10"
         viewBox="0 0 420 260"
         fill="none"
         preserveAspectRatio="xMaxYMax meet"
       >
-        <path d="M0 200 H230 a50 50 0 0 0 50 -50 V0" stroke="#1f5a96" strokeWidth="22" />
-        <path d="M0 200 H230 a50 50 0 0 0 50 -50 V0" stroke="#00c2cb" strokeWidth="1" />
-        <rect x="120" y="184" width="8" height="32" fill="#00c2cb" />
-        <rect x="264" y="60" width="32" height="8" fill="#00c2cb" />
+        <path className="draw-line" pathLength={1} d="M0 200 H230 a50 50 0 0 0 50 -50 V0" stroke="#1f5a96" strokeWidth="22" />
+        <path className="draw-line" pathLength={1} d="M0 200 H230 a50 50 0 0 0 50 -50 V0" stroke="#00c2cb" strokeWidth="1" />
+        <rect className="draw-fade" x="120" y="184" width="8" height="32" fill="#00c2cb" />
+        <rect className="draw-fade" x="264" y="60" width="32" height="8" fill="#00c2cb" />
       </svg>
-      <div className="relative mx-auto max-w-6xl px-4 pb-14 pt-10 md:px-8 md:pb-20 md:pt-14">
+      <div data-reveal-stagger="120" className="relative mx-auto max-w-6xl px-4 pb-14 pt-10 md:px-8 md:pb-20 md:pt-14">
         <nav aria-label="パンくずリスト" className="text-[12px] text-white/60">
           <ol className="flex flex-wrap items-center gap-2">
             <li>

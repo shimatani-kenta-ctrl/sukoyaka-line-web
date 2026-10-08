@@ -63,12 +63,14 @@ function PipeArt({ id, viewBox, className, fade }: { id: string; viewBox: string
 export function PipeHero() {
   return (
     <section className="relative isolate overflow-hidden bg-ink text-white">
-      <PipeArt
-        id="hero-pc"
-        viewBox="0 0 800 560"
-        fade
-        className="absolute inset-y-0 right-0 -z-10 hidden h-full w-[68%] md:block"
-      />
+      <div data-parallax="0.12" className="absolute inset-y-0 right-0 -z-10 hidden w-[68%] md:block">
+        <PipeArt
+          id="hero-pc"
+          viewBox="0 0 800 560"
+          fade
+          className="h-full w-full"
+        />
+      </div>
 
       <div className="mx-auto flex max-w-6xl flex-col justify-center px-4 pt-14 md:min-h-[640px] md:px-8 md:py-20">
         <p className="text-[13px] tracking-[0.25em] text-sky">兵庫・尼崎の配管工事会社</p>

@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/ui";
+import { ScrollEffects } from "@/components/ScrollEffects";
 import { fullAddress, site } from "@/config/site";
 import "./globals.css";
 
@@ -69,8 +70,16 @@ const organization = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <head>
+        {/* JavaScriptが動く環境だけスクロール演出を有効にする（無効な環境では最初から全部表示） */}
+        {/* 4秒たっても演出の準備ができなければ、隠したままにならないよう元に戻す */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "document.documentElement.classList.add('js');setTimeout(function(){if(!window.__scrollFx)document.documentElement.classList.remove('js')},4000)",
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -89,6 +98,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <ScrollEffects />
       </body>
     </html>
   );

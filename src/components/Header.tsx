@@ -2,13 +2,38 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { site, telHref } from "@/config/site";
 import { Logo } from "./Logo";
 
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const progressRef = useRef<HTMLSpanElement>(null);
+
+  // スクロール量に合わせて、ヘッダー下の水色の線を伸ばす
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+      if (progressRef.current) progressRef.current.style.transform = `scaleX(${p})`;
+      setScrolled(window.scrollY > 8);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     setOpen(false);
@@ -27,7 +52,16 @@ export function Header() {
   const navItems = site.nav.filter((n) => n.href !== "/" && n.href !== "/contact/");
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line/80 bg-porcelain">
+    <header
+      className={`sticky top-0 z-40 border-b bg-porcelain transition-shadow duration-300 ${
+        scrolled ? "border-transparent shadow-[0_6px_24px_-12px_rgba(14,42,71,0.35)]" : "border-line/80"
+      }`}
+    >
+      <span
+        ref={progressRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px] origin-left scale-x-0 bg-gradient-to-r from-ai via-pipe to-sky"
+      />
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:h-20 md:px-8">
         <Link href="/" aria-label={`${site.name} トップページ`}>
           <Logo />
