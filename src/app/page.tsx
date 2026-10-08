@@ -153,7 +153,7 @@ export default async function HomePage() {
               </blockquote>
               <figcaption className="mt-6 flex flex-wrap items-center gap-3 text-[13px] text-steel">
                 <span>
-                  {voice.who} {voice.role}（{voice.work}）
+                  {voice.who}（{voice.work}）
                 </span>
                 {voice.sample && <SampleBadge />}
               </figcaption>

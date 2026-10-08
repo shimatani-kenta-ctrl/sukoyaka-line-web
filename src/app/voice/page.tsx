@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
 import { Container, SampleBadge } from "@/components/ui";
 import { CtaBand } from "@/components/CtaBand";
@@ -16,7 +17,7 @@ export default function VoicePage() {
     <>
       <PageHero
         title="お客様の声"
-        lead="工事をご依頼いただいたお客様から、いただいた言葉をご紹介します。"
+        lead="工事をご依頼いただいたお客様から、いただいた言葉をご紹介します。順次追加していきます。"
         path="/voice/"
       />
       <section className="py-16 md:py-24">
@@ -31,7 +32,7 @@ export default function VoicePage() {
                 >
                   <figcaption className="text-[14px]">
                     <p className="font-display text-lg">{v.who}</p>
-                    <p className="mt-1 text-steel">{v.role}</p>
+                    {v.role && <p className="mt-1 text-steel">{v.role}</p>}
                     <p className="mt-4 inline-block bg-mist px-2 py-0.5 text-[13px]">{v.work}</p>
                     {v.sample && (
                       <p className="mt-3">
@@ -39,9 +40,19 @@ export default function VoicePage() {
                       </p>
                     )}
                   </figcaption>
-                  <blockquote className="font-display text-[17px] leading-[2.2] tracking-[0.05em] md:text-lg">
-                    {v.body}
-                  </blockquote>
+                  <div>
+                    <blockquote className="font-display text-[17px] leading-[2.2] tracking-[0.05em] md:text-lg">
+                      {v.body}
+                    </blockquote>
+                    {v.workSlug && (
+                      <Link
+                        href={`/works/#${v.workSlug}`}
+                        className="mt-5 inline-block text-[14px] text-ai underline underline-offset-4"
+                      >
+                        この工事の施工事例を見る
+                      </Link>
+                    )}
+                  </div>
                 </figure>
               </li>
             ))}
