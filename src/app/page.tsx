@@ -168,7 +168,7 @@ export default async function HomePage() {
             <SectionHeading
               light
               title="一緒に、現場をつくる仲間を。"
-              lead="経験者はもちろん、未経験からでも、道具の名前から先輩が一つずつ教えます。手に職をつけて、長く働ける会社を一緒につくりませんか。"
+              lead="配管工事スタッフ・溶接工を正社員で募集中。月給30万円〜、未経験歓迎、面接は1回のみです。基礎から先輩が丁寧に教えるので、一生モノの技術が身につきます。"
             />
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/recruit/" variant="light">
