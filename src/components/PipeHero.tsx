@@ -40,6 +40,17 @@ function PipeArt({ id, viewBox, className, fade }: { id: string; viewBox: string
         transform="translate(-6 -6)"
       />
 
+      {/* 管の中を流れる水（描き終わってからずっと流れ続ける） */}
+      <path
+        d={route}
+        pathLength={1}
+        className="pipe-flow"
+        fill="none"
+        stroke="#b8ecef"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+
       <g className="pipe-fade" fill="#00c2cb">
         {/* フランジ */}
         <rect x="150" y="448" width="10" height="44" />
@@ -59,6 +70,19 @@ function PipeArt({ id, viewBox, className, fade }: { id: string; viewBox: string
   );
 }
 
+/** 見出しを1文字ずつ現れさせる（読み上げは sr-only の文で行う） */
+function SplitLine({ text, start }: { text: string; start: number }) {
+  return (
+    <span aria-hidden="true" className="inline-block">
+      {Array.from(text).map((ch, i) => (
+        <span key={i} className="hero-char" style={{ ["--d" as string]: `${(start + i * 0.06).toFixed(2)}s` }}>
+          {ch}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 /** 一本の配管が描かれていくトップの見出し */
 export function PipeHero() {
   return (
@@ -73,16 +97,22 @@ export function PipeHero() {
       </div>
 
       <div className="mx-auto flex max-w-6xl flex-col justify-center px-4 pt-14 md:min-h-[640px] md:px-8 md:py-20">
-        <p className="text-[13px] tracking-[0.25em] text-sky">兵庫・尼崎の配管工事会社</p>
+        <p className="hero-in text-[13px] tracking-[0.25em] text-sky" style={{ ["--d" as string]: "0.1s" }}>
+          兵庫・尼崎の配管工事会社
+        </p>
         <h1 className="mt-6 text-[40px] leading-[1.35] tracking-[0.1em] md:text-[68px]">
-          流れを、
+          <span className="sr-only">流れを、確かにつなぐ。</span>
+          <SplitLine text="流れを、" start={0.3} />
           <br />
-          確かにつなぐ。
+          <SplitLine text="確かにつなぐ。" start={0.62} />
         </h1>
-        <p className="mt-8 max-w-md text-[15px] leading-loose text-white/85 md:text-base">
+        <p
+          className="hero-in mt-8 max-w-md text-[15px] leading-loose text-white/85 md:text-base"
+          style={{ ["--d" as string]: "1.2s" }}
+        >
           工場やプラントの配管、設備の配管、機器の据付まで。TIG溶接の確かな仕上がりと、急ぎの案件にも動ける機動力で、現場の「止められない」に応えます。
         </p>
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+        <div className="hero-in mt-10 flex flex-col gap-3 sm:flex-row" style={{ ["--d" as string]: "1.45s" }}>
           <ButtonLink href="/contact/" variant="light">
             工事を相談する
           </ButtonLink>

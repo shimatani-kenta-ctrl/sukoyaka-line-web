@@ -121,7 +121,7 @@ export default function CompanyPage() {
       <section id="access" className="py-20 md:py-28">
         <Container>
           <SectionHeading title="アクセス" lead={`〒${c.postalCode} ${fullAddress}`} />
-          <div data-reveal="scale" className="mt-10">
+          <div data-reveal="wipe" className="mt-10">
             <GoogleMap className="aspect-[4/3] w-full md:aspect-[21/9]" />
           </div>
           <a

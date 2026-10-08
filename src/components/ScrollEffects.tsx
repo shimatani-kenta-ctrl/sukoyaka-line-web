@@ -64,34 +64,71 @@ export function ScrollEffects() {
     });
     mo.observe(document.body, { childList: true, subtree: true });
 
-    // 視差（PCのみ）
+    // 数字のカウントアップ（例: 月給「30」万円）
+    const counters = Array.from(document.querySelectorAll<HTMLElement>("[data-count-to]"));
+    const countIo = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          countIo.unobserve(e.target);
+          const el = e.target as HTMLElement;
+          const to = Number(el.dataset.countTo) || 0;
+          const dur = 1400;
+          const t0 = performance.now();
+          const tick = (now: number) => {
+            const k = Math.min(1, (now - t0) / dur);
+            const eased = 1 - Math.pow(1 - k, 3);
+            el.textContent = String(Math.round(to * eased));
+            if (k < 1) requestAnimationFrame(tick);
+          };
+          el.textContent = "0";
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.6 },
+    );
+    counters.forEach((el) => countIo.observe(el));
+
+    // 視差（PCのみ）と、横に流れる文字
     const parallax = Array.from(document.querySelectorAll<HTMLElement>("[data-parallax]"));
+    const marquees = Array.from(document.querySelectorAll<HTMLElement>("[data-marquee]"));
     const desktop = window.matchMedia("(min-width: 768px)");
     let raf = 0;
     const update = () => {
       raf = 0;
-      if (!desktop.matches) {
-        parallax.forEach((el) => (el.style.transform = ""));
-        return;
-      }
       const y = window.scrollY;
+      const vh = window.innerHeight;
       parallax.forEach((el) => {
+        if (!desktop.matches) {
+          el.style.transform = "";
+          return;
+        }
         const speed = Number(el.dataset.parallax) || 0.15;
         el.style.transform = `translate3d(0, ${y * speed}px, 0)`;
+      });
+      marquees.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < -200 || rect.top > vh + 200) return;
+        const speed = Number(el.dataset.marquee) || 0.35;
+        const base = -el.scrollWidth * 0.25;
+        el.style.transform = `translate3d(${base - (vh - rect.top) * speed}px, 0, 0)`;
       });
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
     };
-    if (parallax.length) {
+    if (parallax.length || marquees.length) {
       window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll);
       update();
     }
 
     return () => {
       io.disconnect();
       mo.disconnect();
+      countIo.disconnect();
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
       if (raf) cancelAnimationFrame(raf);
     };
   }, [pathname]);

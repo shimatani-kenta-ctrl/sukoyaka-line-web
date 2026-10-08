@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { ButtonLink, Container, JsonLd, SectionHeading } from "@/components/ui";
+import { Marquee } from "@/components/Marquee";
 import { site, telHref } from "@/config/site";
 import { applySteps, job, jobPostedAt, jobSalaryMin } from "@/data/jobs";
 
@@ -25,8 +26,8 @@ const values = [
   },
 ];
 
-const highlights = [
-  { label: "給与", value: "月給30万円〜" },
+const highlights: { label: string; value: string; count?: { before: string; to: number; after: string } }[] = [
+  { label: "給与", value: "月給30万円〜", count: { before: "月給", to: 30, after: "万円〜" } },
   { label: "雇用形態", value: "正社員" },
   { label: "選考", value: "面接1回のみ" },
   { label: "経験", value: "未経験歓迎" },
@@ -74,13 +75,25 @@ export default function RecruitPage() {
             {highlights.map((h) => (
               <div key={h.label} className="border-b border-r border-line px-4 py-5 md:px-6">
                 <dt className="text-[12px] text-steel">{h.label}</dt>
-                <dd className="mt-1 font-display text-lg font-extrabold text-ai md:text-xl">{h.value}</dd>
+                <dd className="mt-1 font-display text-lg font-extrabold text-ai md:text-xl">
+                  {h.count ? (
+                    <>
+                      {h.count.before}
+                      <span data-count-to={h.count.to} className="tabular-nums">
+                        {h.count.to}
+                      </span>
+                      {h.count.after}
+                    </>
+                  ) : (
+                    h.value
+                  )}
+                </dd>
               </div>
             ))}
           </dl>
           <div data-reveal-stagger="160" className="mt-16 grid gap-12 md:grid-cols-3 md:gap-10">
             {values.map((v) => (
-              <div key={v.title} className="border-l-[3px] border-sky pl-6">
+              <div key={v.title} className="reveal-rail pl-6" style={{ ["--rail" as string]: "var(--color-sky)" }}>
                 <h3 className="text-xl leading-relaxed">{v.title}</h3>
                 <p className="mt-4 text-[15px] text-steel">{v.body}</p>
               </div>
@@ -88,6 +101,8 @@ export default function RecruitPage() {
           </div>
         </Container>
       </section>
+
+      <Marquee text="未経験から、一生モノの技術を。" speed={0.3} className="pb-12" />
 
       <section className="bg-mist py-20 md:py-28">
         <Container>

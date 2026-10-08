@@ -54,18 +54,31 @@ export function ButtonLink({
   children: ReactNode;
   variant?: "primary" | "outline" | "light" | "ghost";
 }) {
+  // ホバーすると、左から別の色が流れ込む
   const styles = {
-    primary: "bg-ai text-white hover:bg-ai-bright",
-    outline: "border border-ai text-ai hover:bg-ai hover:text-white",
-    light: "bg-white text-ink hover:bg-sky-soft",
-    ghost: "border border-sky/70 text-white hover:bg-white hover:text-ink",
+    primary: "bg-ai text-white before:bg-ai-bright",
+    outline: "border border-ai text-ai hover:text-white before:bg-ai",
+    light: "bg-white text-ink before:bg-sky-soft",
+    ghost: "border border-sky/70 text-white hover:text-ink before:bg-white",
   }[variant];
   return (
     <Link
       href={href}
-      className={`inline-flex min-h-12 items-center justify-center rounded-sm px-7 text-[15px] tracking-[0.1em] transition-colors ${styles}`}
+      className={`group relative inline-flex min-h-12 items-center justify-center overflow-hidden rounded-sm px-7 text-[15px] tracking-[0.1em] transition-colors duration-300 before:absolute before:inset-0 before:-translate-x-full before:transition-transform before:duration-500 before:ease-in-out hover:before:translate-x-0 motion-reduce:before:transition-none ${styles}`}
     >
-      {children}
+      <span className="relative inline-flex items-center gap-3">
+        {children}
+        <svg
+          aria-hidden="true"
+          width="18"
+          height="10"
+          viewBox="0 0 18 10"
+          fill="none"
+          className="transition-transform duration-300 group-hover:translate-x-1"
+        >
+          <path d="M0 5 H16 M12 1 L16 5 L12 9" stroke="currentColor" strokeWidth="1.4" />
+        </svg>
+      </span>
     </Link>
   );
 }

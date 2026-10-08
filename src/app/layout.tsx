@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/ui";
 import { ScrollEffects } from "@/components/ScrollEffects";
+import { BackToTop } from "@/components/BackToTop";
 import { fullAddress, site } from "@/config/site";
 import "./globals.css";
 
@@ -99,6 +100,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <main id="main">{children}</main>
         <Footer />
         <ScrollEffects />
+        <BackToTop />
       </body>
     </html>
   );

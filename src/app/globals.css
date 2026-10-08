@@ -111,7 +111,7 @@
 /* ───────── スクロールで現れる動き ─────────
  * html に .js が付いているとき（JavaScriptが動く環境）だけ、最初は隠しておく。
  * 画面に入ると ScrollEffects が .is-visible を付けて表示する。 */
-html.js [data-reveal]:not([data-reveal="draw"]),
+html.js [data-reveal]:not([data-reveal="draw"]):not([data-reveal="wipe"]),
 html.js [data-reveal-stagger] > * {
   opacity: 0;
   transform: translate3d(0, 32px, 0);
@@ -163,9 +163,106 @@ html.js [data-reveal="draw"].is-visible .draw-fade {
   opacity: 1;
 }
 
+/* 写真や地図が、幕を開けるように現れる（紺色の幕が右へ抜けていく） */
+html.js [data-reveal="wipe"] {
+  position: relative;
+}
+html.js [data-reveal="wipe"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: var(--color-ink);
+  transform-origin: right center;
+  transition: transform 1.1s cubic-bezier(0.77, 0, 0.18, 1) calc(var(--reveal-delay, 0ms) + 0.1s);
+}
+html.js [data-reveal="wipe"].is-visible::after {
+  transform: scaleX(0);
+}
+
+/* 左の縦線が上から伸びる（強み・採用の想いなど） */
+.reveal-rail {
+  position: relative;
+}
+.reveal-rail::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--rail, var(--color-ai));
+  transform-origin: top center;
+}
+html.js .reveal-rail:not(.is-visible)::before {
+  transform: scaleY(0);
+}
+html.js .reveal-rail::before {
+  transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1) calc(var(--reveal-delay, 0ms) + 0.15s);
+}
+
+/* トップの見出し：1文字ずつ下から現れる */
+@keyframes char-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.5em, 0) rotate(4deg);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-char {
+  display: inline-block;
+  animation: char-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s) both;
+}
+.hero-in {
+  animation: rise-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s) both;
+}
+
+/* 配管の中を水が流れ続ける */
+@keyframes flow {
+  to {
+    stroke-dashoffset: -1;
+  }
+}
+.pipe-flow {
+  stroke-dasharray: 0.012 0.06;
+  opacity: 0;
+  animation:
+    fade-in 0.8s ease 2.6s forwards,
+    flow 9s linear 2.6s infinite;
+}
+
+/* 横に流れる大きな文字 */
+.marquee-text {
+  color: transparent;
+  -webkit-text-stroke: 1.2px var(--marquee-stroke, rgba(0, 52, 121, 0.22));
+  font-weight: 800;
+  white-space: nowrap;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html.js [data-reveal]:not([data-reveal="draw"]),
   html.js [data-reveal-stagger] > *,
+  .reveal-rail::before,
+  .hero-char,
+  .hero-in,
   html.js [data-reveal] .reveal-bar,
   html.js [data-reveal="draw"] .draw-line,
   html.js [data-reveal="draw"] .draw-fade {
@@ -173,5 +270,15 @@ html.js [data-reveal="draw"].is-visible .draw-fade {
     transform: none !important;
     stroke-dashoffset: 0 !important;
     transition: none !important;
+    animation: none !important;
+    clip-path: none !important;
+    filter: none !important;
+  }
+  .pipe-flow {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+  html.js [data-reveal="wipe"]::after {
+    display: none;
   }
 }

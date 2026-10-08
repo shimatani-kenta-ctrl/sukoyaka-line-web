@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PipeHero } from "@/components/PipeHero";
 import { ButtonLink, Container, SampleBadge, SectionHeading } from "@/components/ui";
+import { Marquee } from "@/components/Marquee";
 import { WorkVisual } from "@/components/WorkVisual";
 import { CtaBand } from "@/components/CtaBand";
 import { GoogleMap } from "@/components/GoogleMap";
@@ -80,13 +81,19 @@ export default async function HomePage() {
         </Container>
       </section>
 
+      {/* 横に流れる文字 */}
+      <div className="space-y-3 pb-4">
+        <Marquee text="プラント配管 ／ 設備配管 ／ 機器据付 ／ TIG溶接 ／" speed={0.35} />
+        <Marquee text="兵庫・大阪の現場へ、すぐに動く。" speed={-0.3} />
+      </div>
+
       {/* 強み */}
       <section className="bg-mist py-20 md:py-32">
         <Container>
           <SectionHeading title="選ばれる理由" side="私たちの強み" />
           <div data-reveal-stagger="160" className="mt-14 grid gap-12 md:grid-cols-3 md:gap-10">
             {strengths.map((s) => (
-              <div key={s.title} className="border-l-[3px] border-ai pl-6">
+              <div key={s.title} className="reveal-rail pl-6">
                 <h3 className="text-xl leading-relaxed md:text-[22px]">{s.title}</h3>
                 <p className="mt-4 text-[15px] text-steel">{s.body}</p>
               </div>
@@ -99,29 +106,34 @@ export default async function HomePage() {
       <section className="py-20 md:py-32">
         <Container>
           <SectionHeading title="施工事例" side="これまでの仕事" />
-          <ul data-reveal-stagger="140" className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
-            {latestWorks.map((w) => (
-              <li key={w.slug}>
-                <Link href={`/works/#${w.slug}`} className="group block">
-                  <div className="aspect-[16/10] overflow-hidden">
-                    <WorkVisual
-                      category={w.category}
-                      image={w.image}
-                      alt={w.title}
-                      className="transition-transform duration-500 group-hover:scale-[1.03]"
-                    />
-                  </div>
-                  <div className="mt-4 flex items-center gap-3 text-[12px] text-steel">
-                    <span>{w.category}</span>
-                    <span aria-hidden="true" className="h-3 w-px bg-line" />
-                    <span>{w.location}</span>
-                    {w.sample && <SampleBadge />}
-                  </div>
-                  <h3 className="mt-2 text-lg leading-relaxed group-hover:text-ai">{w.title}</h3>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {latestWorks.length === 0 ? (
+            <p data-reveal className="mt-12 text-[15px] text-steel">
+              施工事例は、順次掲載していきます。日々の現場の様子はInstagramでもご覧いただけます。
+            </p>
+          ) : (
+            <ul data-reveal-stagger="140" className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
+              {latestWorks.map((w) => (
+                <li key={w.slug}>
+                  <Link href={`/works/#${w.slug}`} className="group block">
+                    <div data-reveal="wipe" className="aspect-[16/10] overflow-hidden">
+                      <WorkVisual
+                        category={w.category}
+                        image={w.photos[0]?.src}
+                        alt={w.title}
+                        className="transition-transform duration-500 group-hover:scale-[1.03]"
+                      />
+                    </div>
+                    <div className="mt-4 flex items-center gap-3 text-[12px] text-steel">
+                      <span>{w.category}</span>
+                      <span aria-hidden="true" className="h-3 w-px bg-line" />
+                      <span>{w.location}</span>
+                    </div>
+                    <h3 className="mt-2 text-lg leading-relaxed group-hover:text-ai">{w.title}</h3>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
           <div className="mt-12">
             <ButtonLink href="/works/" variant="outline">
               施工事例をすべて見る
@@ -182,6 +194,13 @@ export default async function HomePage() {
         </Container>
       </section>
 
+      <Marquee
+        text="未経験から、一生モノの技術を。"
+        speed={0.3}
+        className="bg-ink pb-10"
+        stroke="rgba(184,236,239,0.28)"
+      />
+
       {/* Instagram */}
       <section className="py-20 md:py-32">
         <Container>
@@ -235,7 +254,7 @@ export default async function HomePage() {
               </ButtonLink>
             </div>
           </div>
-          <div data-reveal="scale">
+          <div data-reveal="wipe">
             <GoogleMap className="aspect-[4/3] w-full" />
           </div>
         </Container>
