@@ -83,7 +83,7 @@ export default async function HomePage() {
 
       {/* 横に流れる文字 */}
       <div className="space-y-3 pb-4">
-        <Marquee text="プラント配管 ／ 設備配管 ／ 機器据付 ／ TIG溶接 ／" speed={0.35} />
+        <Marquee text="各種配管工事 ／ 配管製作 ／ 架台製作・据付 ／ 溶接工事 ／" speed={0.35} />
         <Marquee text="兵庫・大阪の現場へ、すぐに動く。" speed={-0.3} />
       </div>
 
