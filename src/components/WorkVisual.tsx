@@ -5,17 +5,17 @@ import type { WorkCategory } from "@/data/works";
  * 事例ごとに配管の形を変えて、一覧が単調にならないようにしています。
  */
 const paths: Record<WorkCategory, string> = {
-  プラント配管: "M-10 120 H90 a30 30 0 0 0 30 -30 V40 a20 20 0 0 1 20 -20 H330",
-  設備配管: "M-10 60 H120 V150 H210 V70 H330",
-  機器据付: "M-10 140 H110 M190 140 H330 M110 100 h80 v80 h-80 Z",
-  溶接: "M-10 95 H330",
+  配管工事: "M-10 120 H90 a30 30 0 0 0 30 -30 V40 a20 20 0 0 1 20 -20 H330",
+  配管製作: "M-10 60 H120 V150 H210 V70 H330",
+  "架台製作・据付": "M-10 140 H110 M190 140 H330 M110 100 h80 v80 h-80 Z",
+  溶接工事: "M-10 95 H330",
 };
 
 const ids: Record<WorkCategory, string> = {
-  プラント配管: "plant",
-  設備配管: "facility",
-  機器据付: "install",
-  溶接: "weld",
+  配管工事: "piping",
+  配管製作: "fabrication",
+  "架台製作・据付": "frame",
+  溶接工事: "weld",
 };
 
 export function WorkVisual({
@@ -44,7 +44,7 @@ export function WorkVisual({
         <rect width="320" height="190" fill={`url(#grid-${ids[category]})`} />
         <path d={paths[category]} fill="none" stroke="#1f5a96" strokeWidth="16" strokeLinejoin="round" />
         <path d={paths[category]} fill="none" stroke="#00c2cb" strokeWidth="1.2" strokeLinejoin="round" />
-        {category === "溶接" &&
+        {category === "溶接工事" &&
           [100, 160, 220].map((x) => (
             <g key={x}>
               <rect x={x - 3} y="83" width="6" height="24" fill="#00c2cb" />
