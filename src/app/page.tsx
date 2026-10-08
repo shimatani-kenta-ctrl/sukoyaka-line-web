@@ -198,7 +198,7 @@ export default async function HomePage() {
         text="未経験から、一生モノの技術を。"
         speed={0.3}
         className="bg-ink pb-10"
-        stroke="rgba(184,236,239,0.28)"
+        stroke="rgba(184,236,239,0.9)"
       />
 
       {/* Instagram */}

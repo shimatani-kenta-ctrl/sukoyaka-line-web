@@ -1,8 +1,9 @@
 import type { CSSProperties } from "react";
 
 /**
- * スクロールに合わせて横に流れる大きな文字（飾り）。
- * speed がプラスなら左へ、マイナスなら右へ流れます。動きは ScrollEffects が担当します。
+ * 横に流れる文字（飾り）。
+ * スマホでも1フレーズ全体が読める大きさ・濃さで、一定の速さで流れ続けます。
+ * speed がプラスなら左へ、マイナスなら右へ流れます（数字が大きいほど速い）。
  */
 export function Marquee({
   text,
@@ -13,19 +14,31 @@ export function Marquee({
   text: string;
   speed?: number;
   className?: string;
-  /** 文字の輪郭の色（例: "rgba(255,255,255,0.25)"） */
+  /** 文字の色（暗い背景の上で使うとき。例: "rgba(184,236,239,0.9)"） */
   stroke?: string;
 }) {
-  const items = Array.from({ length: 6 }, () => text);
+  // 同じ並びを2組つくり、半分の位置まで流してつなぎ目なく繰り返す
+  const group = Array.from({ length: 4 }, () => text);
+  const seconds = Math.max(18, Math.round(12 / Math.max(Math.abs(speed), 0.05)));
+  const style = {
+    ["--marquee-duration" as string]: `${seconds}s`,
+    ...(stroke ? { ["--marquee-color" as string]: stroke } : {}),
+  } as CSSProperties;
+
   return (
-    <div aria-hidden="true" className={`overflow-hidden ${className}`}>
+    <div className={`overflow-hidden ${className}`}>
+      <p className="sr-only">{text}</p>
       <div
-        data-marquee={speed}
-        className="marquee-text flex w-max gap-10 text-[56px] will-change-transform md:gap-16 md:text-[112px]"
-        style={stroke ? ({ ["--marquee-stroke" as string]: stroke } as CSSProperties) : undefined}
+        aria-hidden="true"
+        className={`marquee-text marquee-run flex w-max text-[26px] md:text-[64px] ${speed < 0 ? "marquee-reverse" : ""}`}
+        style={style}
       >
-        {items.map((t, i) => (
-          <span key={i}>{t}</span>
+        {[0, 1].map((g) => (
+          <div key={g} className="flex shrink-0 gap-10 pr-10 md:gap-16 md:pr-16">
+            {group.map((t, i) => (
+              <span key={i}>{t}</span>
+            ))}
+          </div>
         ))}
       </div>
     </div>
