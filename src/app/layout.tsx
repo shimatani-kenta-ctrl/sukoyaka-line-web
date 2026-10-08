@@ -5,6 +5,8 @@ import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/ui";
 import { ScrollEffects } from "@/components/ScrollEffects";
 import { BackToTop } from "@/components/BackToTop";
+import { Intro } from "@/components/Intro";
+import { INTRO_HEAD_SCRIPT } from "@/lib/intro";
 import { fullAddress, site } from "@/config/site";
 import "./globals.css";
 
@@ -74,6 +76,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="ja" suppressHydrationWarning>
       <head>
         {/* JavaScriptが動く環境だけスクロール演出を有効にする（無効な環境では最初から全部表示） */}
+        {/* トップページを開いたときだけ、オープニングを表示する */}
+        <script dangerouslySetInnerHTML={{ __html: INTRO_HEAD_SCRIPT }} />
         {/* 4秒たっても演出の準備ができなければ、隠したままにならないよう元に戻す */}
         <script
           dangerouslySetInnerHTML={{
@@ -90,6 +94,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <JsonLd data={organization} />
       </head>
       <body className="min-h-screen antialiased">
+        <Intro />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-white focus:px-4 focus:py-2"
