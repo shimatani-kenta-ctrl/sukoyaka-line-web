@@ -49,9 +49,9 @@ export const site = {
 
   instagram: {
     /** アカウントのURL（例: https://www.instagram.com/xxxx/）。空欄ならフォローボタン非表示 */
-    profileUrl: "",
+    profileUrl: "https://www.instagram.com/sukoyaka0303/",
     /** 表示名（例: @xxxx） */
-    handle: "",
+    handle: "@sukoyaka0303",
     /**
      * 手動で載せたい投稿のURL（トークン不要のいちばん簡単な方法）。
      * 投稿を開いて「…」→「リンクをコピー」で取れるURLを貼り付けてください。
