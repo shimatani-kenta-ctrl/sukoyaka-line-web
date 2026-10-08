@@ -3,7 +3,16 @@ import { PageHero } from "@/components/PageHero";
 import { ButtonLink, Container, JsonLd, SectionHeading } from "@/components/ui";
 import { Marquee } from "@/components/Marquee";
 import { site, telHref } from "@/config/site";
-import { applySteps, job, jobPostedAt, jobSalaryMin } from "@/data/jobs";
+import {
+  applySteps,
+  ceoMessage,
+  daySchedule,
+  dayScheduleNote,
+  job,
+  jobPostedAt,
+  jobSalaryMin,
+  recruitFaq,
+} from "@/data/jobs";
 
 export const metadata: Metadata = {
   title: "採用情報",
@@ -60,10 +69,21 @@ export default function RecruitPage() {
     },
   };
 
+  const faqPage = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: recruitFaq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
   return (
     <>
       <PageHero title="採用情報" lead={`${job.catchCopy}${job.title}を募集しています。`} path="/recruit/" />
       <JsonLd data={jobPosting} />
+      <JsonLd data={faqPage} />
 
       <section className="py-20 md:py-28">
         <Container>
@@ -102,7 +122,31 @@ export default function RecruitPage() {
         </Container>
       </section>
 
-      <Marquee text="未経験から、一生モノの技術を。" speed={0.3} className="pb-12" />
+      {/* 代表メッセージ */}
+      <section className="bg-ink py-20 text-white md:py-28">
+        <Container>
+          <div className="grid gap-10 md:grid-cols-[260px_1fr] md:gap-16">
+            <div data-reveal="left">
+              <p className="text-[13px] tracking-[0.3em] text-sky">MESSAGE</p>
+              <p className="mt-3 text-[15px] text-white/70">代表メッセージ</p>
+            </div>
+            <div data-reveal>
+              <h2 className="text-[28px] leading-snug md:text-[40px]">{ceoMessage.title}</h2>
+              <div className="mt-8 space-y-6 text-[15px] leading-[2.1] text-white/85 md:text-base">
+                {ceoMessage.paragraphs.map((p) => (
+                  <p key={p}>{p}</p>
+                ))}
+              </div>
+              <p className="mt-10 text-right font-display text-lg">
+                <span className="mr-3 text-[13px] text-white/60">{site.company.representativeTitle}</span>
+                {site.company.representative}
+              </p>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <Marquee text="未経験から、一生モノの技術を。" speed={0.3} className="py-12" />
 
       <section className="bg-mist py-20 md:py-28">
         <Container>
@@ -131,6 +175,49 @@ export default function RecruitPage() {
               ))}
             </dl>
           </article>
+        </Container>
+      </section>
+
+      {/* ある1日の流れ */}
+      <section className="py-20 md:py-28">
+        <Container>
+          <SectionHeading title="ある1日の流れ" side="働き方" lead={dayScheduleNote} />
+          <ol data-reveal-stagger="90" className="mt-12 max-w-3xl border-l-[3px] border-sky">
+            {daySchedule.map((d, i) => (
+              <li key={i} className="relative grid grid-cols-[96px_1fr] gap-4 py-4 pl-6 md:grid-cols-[120px_1fr] md:pl-10">
+                <span aria-hidden="true" className="absolute -left-[8px] top-[26px] h-[13px] w-[13px] rounded-full border-[3px] border-sky bg-white" />
+                <p className="font-display text-lg font-extrabold tabular-nums text-ai md:text-xl">{d.time}</p>
+                <div>
+                  <p className="text-[16px] font-bold md:text-lg">{d.title}</p>
+                  {d.body && <p className="mt-1 text-[14px] text-steel">{d.body}</p>}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </Container>
+      </section>
+
+      {/* よくある質問 */}
+      <section className="bg-mist py-20 md:py-28">
+        <Container>
+          <SectionHeading title="よくある質問" side="FAQ" />
+          <div data-reveal-stagger="80" className="mt-12 space-y-3">
+            {recruitFaq.map((f, i) => (
+              <details key={f.q} className="group bg-white" open={i === 0}>
+                <summary className="flex cursor-pointer list-none items-start gap-4 px-5 py-5 md:px-8 [&::-webkit-details-marker]:hidden">
+                  <span className="font-display text-lg font-extrabold text-sky">Q</span>
+                  <span className="flex-1 text-[16px] font-bold leading-relaxed">{f.q}</span>
+                  <span aria-hidden="true" className="mt-1 text-xl leading-none text-ai transition-transform group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <div className="flex gap-4 border-t border-line px-5 py-5 md:px-8">
+                  <span className="font-display text-lg font-extrabold text-ai">A</span>
+                  <p className="flex-1 text-[15px] leading-relaxed text-steel">{f.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
         </Container>
       </section>
 
