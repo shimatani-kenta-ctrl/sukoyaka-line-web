@@ -30,7 +30,7 @@ export default function VoicePage() {
                   } border-t-[3px] border-ai`}
                 >
                   <figcaption className="text-[14px]">
-                    <p className="font-serif text-lg">{v.who}</p>
+                    <p className="font-display text-lg">{v.who}</p>
                     <p className="mt-1 text-steel">{v.role}</p>
                     <p className="mt-4 inline-block bg-mist px-2 py-0.5 text-[13px]">{v.work}</p>
                     {v.sample && (
@@ -39,7 +39,7 @@ export default function VoicePage() {
                       </p>
                     )}
                   </figcaption>
-                  <blockquote className="font-serif text-[17px] leading-[2.2] tracking-[0.05em] md:text-lg">
+                  <blockquote className="font-display text-[17px] leading-[2.2] tracking-[0.05em] md:text-lg">
                     {v.body}
                   </blockquote>
                 </figure>

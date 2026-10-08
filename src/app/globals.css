@@ -10,6 +10,8 @@
  *  porcelain #F7FAFC  白磁：ページの地
  *  steel     #5B6B7A  鋼：補足の文字
  *  line      #D5E1EA  罫線
+ *
+ * 書体：Noto Sans JP。見出しは極太（800）、本文は通常（400）
  */
 @theme {
   --color-ink: #0e2a47;
@@ -24,7 +26,7 @@
   --color-steel: #5b6b7a;
   --color-line: #d4e2e8;
 
-  --font-serif: "Shippori Mincho B1", "Noto Serif JP", "Noto Serif CJK JP", "Hiragino Mincho ProN", serif;
+  --font-display: "Noto Sans JP", "Noto Sans CJK JP", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
   --font-sans: "Noto Sans JP", "Noto Sans CJK JP", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
 }
 
@@ -44,9 +46,9 @@
   h1,
   h2,
   h3 {
-    font-family: var(--font-serif);
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: 0.06em;
     line-height: 1.5;
   }
   :focus-visible {

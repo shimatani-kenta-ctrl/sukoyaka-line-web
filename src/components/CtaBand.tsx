@@ -18,7 +18,7 @@ export function CtaBand() {
             className="flex min-h-14 flex-col items-center justify-center rounded-sm bg-white px-8 text-ink transition-colors hover:bg-sky-soft"
           >
             <span className="text-[11px] tracking-[0.2em] text-steel">お電話</span>
-            <span className="font-serif text-xl tracking-[0.08em]">{site.company.tel}</span>
+            <span className="font-display text-xl tracking-[0.08em]">{site.company.tel}</span>
           </a>
           <Link
             href="/contact/"

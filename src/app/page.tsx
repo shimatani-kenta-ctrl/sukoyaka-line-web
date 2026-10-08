@@ -136,7 +136,7 @@ export default async function HomePage() {
           <Container className="grid gap-10 md:grid-cols-[1fr_2fr] md:gap-16">
             <SectionHeading title="お客様の声" />
             <figure>
-              <blockquote className="font-serif text-xl leading-[2] tracking-[0.06em] md:text-2xl md:leading-[2.1]">
+              <blockquote className="font-display text-xl leading-[2] tracking-[0.06em] md:text-2xl md:leading-[2.1]">
                 {voice.body}
               </blockquote>
               <figcaption className="mt-6 flex flex-wrap items-center gap-3 text-[13px] text-steel">

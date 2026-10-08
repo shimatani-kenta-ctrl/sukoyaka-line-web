@@ -99,7 +99,7 @@ export function Header() {
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  className="flex items-center justify-between py-4 font-serif text-lg tracking-[0.12em]"
+                  className="flex items-center justify-between py-4 font-display text-lg tracking-[0.12em]"
                 >
                   {item.label}
                   <span aria-hidden="true" className="h-px w-6 bg-sky" />

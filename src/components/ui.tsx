@@ -36,7 +36,7 @@ export function SectionHeading({
       {side && (
         <span
           aria-hidden="true"
-          className={`tategaki ml-auto hidden font-serif text-xs md:block ${light ? "text-sky" : "text-steel/70"}`}
+          className={`tategaki ml-auto hidden font-display text-xs md:block ${light ? "text-sky" : "text-steel/70"}`}
         >
           {side}
         </span>

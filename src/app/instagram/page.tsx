@@ -53,7 +53,7 @@ export default async function InstagramPage() {
 
       <section className="py-16 md:py-20">
         <Container className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
-          <p className="font-serif text-xl">投稿を見て、働いてみたいと思った方へ。</p>
+          <p className="font-display text-xl">投稿を見て、働いてみたいと思った方へ。</p>
           <ButtonLink href="/recruit/">採用情報を見る</ButtonLink>
         </Container>
       </section>

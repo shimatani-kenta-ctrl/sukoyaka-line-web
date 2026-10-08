@@ -31,7 +31,7 @@ export default function ContactPage() {
           <aside className="space-y-8 lg:sticky lg:top-28 lg:self-start">
             <div className="bg-ink px-6 py-8 text-white">
               <p className="text-[13px] text-sky">お急ぎの方はお電話で</p>
-              <a href={telHref} className="mt-2 block font-serif text-[26px] tracking-[0.06em] hover:text-sky">
+              <a href={telHref} className="mt-2 block font-display text-[26px] tracking-[0.06em] hover:text-sky">
                 {site.company.tel}
               </a>
               <p className="mt-4 text-[13px] text-white/70">

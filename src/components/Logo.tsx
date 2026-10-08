@@ -21,7 +21,7 @@ export function Logo({ light = false, size = "md" }: Props) {
       <span className="flex flex-col leading-none">
         <span className={`text-[10px] tracking-[0.3em] ${light ? "text-sky-soft" : "text-steel"}`}>株式会社</span>
         <span
-          className={`mt-1 font-serif font-semibold tracking-[0.18em] ${size === "lg" ? "text-2xl" : "text-xl"} ${
+          className={`mt-1 font-display font-extrabold tracking-[0.12em] ${size === "lg" ? "text-2xl" : "text-xl"} ${
             light ? "text-white" : "text-ink"
           }`}
         >

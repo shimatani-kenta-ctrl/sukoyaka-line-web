@@ -85,7 +85,7 @@ export default function RecruitPage() {
             {applySteps.map((s, i) => (
               <li key={s.title} className="relative md:pr-8">
                 <div className="flex items-center gap-4">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink font-serif text-white">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink font-display text-white">
                     {i + 1}
                   </span>
                   {i < applySteps.length - 1 && (
@@ -100,7 +100,7 @@ export default function RecruitPage() {
 
           <div className="mt-16 flex flex-col gap-6 bg-ink px-6 py-10 text-white md:flex-row md:items-center md:justify-between md:px-12">
             <div>
-              <p className="font-serif text-xl md:text-2xl">まずは気軽に、話を聞きに来てください。</p>
+              <p className="font-display text-xl md:text-2xl">まずは気軽に、話を聞きに来てください。</p>
               <p className="mt-2 text-[14px] text-white/75">履歴書は面談のときで構いません。</p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">

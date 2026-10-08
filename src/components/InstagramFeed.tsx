@@ -84,7 +84,7 @@ export function InstagramFeed({ posts, limit = 9 }: Props) {
 
   return (
     <div className="border border-dashed border-line bg-white px-6 py-12 text-center">
-      <p className="font-serif text-lg">現場の様子をInstagramで発信しています</p>
+      <p className="font-display text-lg">現場の様子をInstagramで発信しています</p>
       <p className="mt-3 text-sm text-steel">
         施工中の様子や、職人たちの日常を投稿しています。
       </p>
