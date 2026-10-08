@@ -4,7 +4,7 @@
  * 空欄（""）の項目はサイト上に表示されません。
  */
 export const site = {
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.sukoyaka-line.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://sukoyaka-line.com",
   name: "株式会社健やかライン",
   shortName: "健やかライン",
   description:
