@@ -66,10 +66,12 @@ function WorkArticle({ work: w }: { work: Work }) {
             <dt className="text-steel">場所</dt>
             <dd>{w.location}</dd>
           </div>
-          <div className="flex gap-2">
-            <dt className="text-steel">工期</dt>
-            <dd>{w.period}</dd>
-          </div>
+          {w.period && (
+            <div className="flex gap-2">
+              <dt className="text-steel">工期</dt>
+              <dd>{w.period}</dd>
+            </div>
+          )}
         </dl>
         <p className="mt-5 max-w-3xl text-[15px] text-steel">{w.summary}</p>
       </header>
