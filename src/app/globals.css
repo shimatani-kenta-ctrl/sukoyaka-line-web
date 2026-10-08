@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+/*
+ * 色とフォントの設計
+ *  ink       #0E2A47  深藍：見出し・ヘッダー・フッター
+ *  ai        #003479  ロゴの紺：ボタン・リンク
+ *  pipe      #1F5A96  配管の青：図柄の管
+ *  sky       #00C2CB  ロゴの水色：配管の線・アクセント
+ *  mist      #EAF5F7  水色の地：区切りの背景
+ *  porcelain #F7FAFC  白磁：ページの地
+ *  steel     #5B6B7A  鋼：補足の文字
+ *  line      #D5E1EA  罫線
+ */
+@theme {
+  --color-ink: #0e2a47;
+  --color-ink-deep: #0a1f36;
+  --color-ai: #003479;
+  --color-ai-bright: #1f5a96;
+  --color-pipe: #1f5a96;
+  --color-sky: #00c2cb;
+  --color-sky-soft: #b8ecef;
+  --color-mist: #e9f6f7;
+  --color-porcelain: #f7fafc;
+  --color-steel: #5b6b7a;
+  --color-line: #d4e2e8;
+
+  --font-serif: "Shippori Mincho B1", "Noto Serif JP", "Noto Serif CJK JP", "Hiragino Mincho ProN", serif;
+  --font-sans: "Noto Sans JP", "Noto Sans CJK JP", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-porcelain);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "palt" 1;
+    letter-spacing: 0.04em;
+    line-height: 1.9;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ai-bright);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: var(--color-sky-soft);
+  }
+}
+
+@layer components {
+  /* 縦書きの見出し添え字（PCのみ） */
+  .tategaki {
+    writing-mode: vertical-rl;
+    letter-spacing: 0.4em;
+  }
+}
+
+/* トップの配管ラインを一度だけ描く演出 */
+@keyframes pipe-draw {
+  from {
+    stroke-dashoffset: var(--len);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.pipe-draw {
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  animation: pipe-draw 2.4s cubic-bezier(0.65, 0, 0.35, 1) 0.2s forwards;
+}
+.pipe-fade {
+  opacity: 0;
+  animation: fade-in 0.8s ease 2.2s forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .pipe-draw {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .pipe-fade {
+    animation: none;
+    opacity: 1;
+  }
+}
