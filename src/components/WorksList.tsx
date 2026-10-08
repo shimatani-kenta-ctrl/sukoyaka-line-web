@@ -42,78 +42,41 @@ export function WorksList() {
         </div>
       )}
 
-      <div className="mt-10 space-y-20 md:space-y-28">
+      <div className="mt-10 space-y-14 md:space-y-20">
         {list.map((w) => (
-          <WorkArticle key={w.slug} work={w} />
+          <WorkCard key={w.slug} work={w} />
         ))}
       </div>
     </>
   );
 }
 
-function WorkArticle({ work: w }: { work: Work }) {
-  const [main, ...rest] = w.photos;
+/** 一覧のカード。詳しい内容は事例ごとのページ（/works/記事のslug/）で読めます */
+function WorkCard({ work: w }: { work: Work }) {
   return (
     <article id={w.slug} className="scroll-mt-28">
-      <header data-reveal>
-        <div className="flex flex-wrap items-center gap-3 text-[13px] text-steel">
-          <span className="bg-ai px-2.5 py-0.5 text-white">{w.category}</span>
-          {w.date && <span>{w.date}</span>}
+      <Link href={`/works/${w.slug}/`} className="group grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10">
+        <div data-reveal="wipe" className="aspect-[16/10] overflow-hidden bg-ink">
+          <WorkVisual
+            category={w.category}
+            image={w.photos[0]?.src}
+            alt={w.photos[0]?.caption || w.title}
+            className="transition-transform duration-500 group-hover:scale-[1.03]"
+          />
         </div>
-        <h2 className="mt-4 text-2xl md:text-[32px]">{w.title}</h2>
-        <dl className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-[14px]">
-          <div className="flex gap-2">
-            <dt className="text-steel">場所</dt>
-            <dd>{w.location}</dd>
+        <div data-reveal>
+          <div className="flex flex-wrap items-center gap-3 text-[13px] text-steel">
+            <span className="bg-ai px-2.5 py-0.5 text-white">{w.category}</span>
+            {w.date && <span>{w.date}</span>}
           </div>
-          {w.period && (
-            <div className="flex gap-2">
-              <dt className="text-steel">工期</dt>
-              <dd>{w.period}</dd>
-            </div>
-          )}
-        </dl>
-        <p className="mt-5 max-w-3xl text-[15px] text-steel">{w.summary}</p>
-      </header>
-
-      {/* 写真 */}
-      <figure data-reveal="wipe" className="mt-8 aspect-[16/10] overflow-hidden bg-ink md:aspect-[21/10]">
-        {main ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={main.src} alt={main.caption || w.title} loading="lazy" className="h-full w-full object-cover" />
-        ) : (
-          <WorkVisual category={w.category} alt={w.title} />
-        )}
-      </figure>
-      {main?.caption && <p className="mt-2 text-[13px] text-steel">{main.caption}</p>}
-      {rest.length > 0 && (
-        <ul data-reveal-stagger="100" className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
-          {rest.map((p) => (
-            <li key={p.src}>
-              <figure>
-                <div className="aspect-[4/3] overflow-hidden bg-mist">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.src} alt={p.caption || w.title} loading="lazy" className="h-full w-full object-cover" />
-                </div>
-                {p.caption && <figcaption className="mt-1.5 text-[12px] text-steel">{p.caption}</figcaption>}
-              </figure>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {/* 本文 */}
-      <div data-reveal-stagger="120" className="mt-12 max-w-3xl space-y-10">
-        {w.sections.map((sec, i) => (
-          <section key={i}>
-            <h3 className="flex items-center gap-3 text-lg md:text-xl">
-              <span aria-hidden="true" className="h-5 w-[3px] bg-sky" />
-              {sec.heading}
-            </h3>
-            <p className="mt-3 whitespace-pre-line text-[15px] leading-[2]">{sec.body}</p>
-          </section>
-        ))}
-      </div>
+          <h2 className="mt-4 text-xl leading-relaxed group-hover:text-ai md:text-2xl">{w.title}</h2>
+          <p className="mt-2 text-[14px] text-steel">{w.location}</p>
+          <p className="mt-4 text-[15px] leading-[1.9]">{w.summary}</p>
+          <p className="mt-5 text-[14px] tracking-[0.1em] text-ai">
+            詳しく見る<span aria-hidden="true"> →</span>
+          </p>
+        </div>
+      </Link>
     </article>
   );
 }

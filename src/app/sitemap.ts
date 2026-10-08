@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/config/site";
+import { works } from "@/data/works";
 
 export const dynamic = "force-static";
 
@@ -13,6 +14,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/instagram/", priority: 0.5, freq: "weekly" },
     { path: "/contact/", priority: 0.7, freq: "yearly" },
     { path: "/privacy/", priority: 0.2, freq: "yearly" },
+    // 施工事例の個別ページ
+    ...works.map((w) => ({ path: `/works/${w.slug}/`, priority: 0.8, freq: "monthly" as const })),
   ];
   const now = new Date();
   return pages.map((p) => ({

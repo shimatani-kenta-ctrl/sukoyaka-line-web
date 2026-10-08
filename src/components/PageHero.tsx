@@ -6,10 +6,13 @@ type Props = {
   title: string;
   lead: string;
   path: string;
+  /** 親ページ（例：施工事例の個別記事なら「施工事例」） */
+  parent?: { title: string; path: string };
 };
 
 /** 下層ページ共通の見出し帯＋パンくずリスト */
-export function PageHero({ title, lead, path }: Props) {
+export function PageHero({ title, lead, path, parent }: Props) {
+  const crumbs = [...(parent ? [parent] : []), { title, path }];
   return (
     <section className="relative overflow-hidden bg-ink text-white">
       <svg
@@ -33,6 +36,16 @@ export function PageHero({ title, lead, path }: Props) {
                 トップ
               </Link>
             </li>
+            {parent && (
+              <>
+                <li aria-hidden="true">/</li>
+                <li>
+                  <Link href={parent.path} className="hover:text-sky">
+                    {parent.title}
+                  </Link>
+                </li>
+              </>
+            )}
             <li aria-hidden="true">/</li>
             <li aria-current="page" className="text-white/90">
               {title}
@@ -48,7 +61,12 @@ export function PageHero({ title, lead, path }: Props) {
           "@type": "BreadcrumbList",
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "トップ", item: `${site.url}/` },
-            { "@type": "ListItem", position: 2, name: title, item: `${site.url}${path}` },
+            ...crumbs.map((c, i) => ({
+              "@type": "ListItem",
+              position: i + 2,
+              name: c.title,
+              item: `${site.url}${c.path}`,
+            })),
           ],
         }}
       />

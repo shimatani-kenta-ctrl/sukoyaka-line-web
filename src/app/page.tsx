@@ -114,7 +114,7 @@ export default async function HomePage() {
             <ul data-reveal-stagger="140" className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
               {latestWorks.map((w) => (
                 <li key={w.slug}>
-                  <Link href={`/works/#${w.slug}`} className="group block">
+                  <Link href={`/works/${w.slug}/`} className="group block">
                     <div data-reveal="wipe" className="aspect-[16/10] overflow-hidden">
                       <WorkVisual
                         category={w.category}

@@ -46,7 +46,7 @@ export default function VoicePage() {
                     </blockquote>
                     {v.workSlug && (
                       <Link
-                        href={`/works/#${v.workSlug}`}
+                        href={`/works/${v.workSlug}/`}
                         className="mt-5 inline-block text-[14px] text-ai underline underline-offset-4"
                       >
                         この工事の施工事例を見る
