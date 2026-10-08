@@ -92,6 +92,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&display=swap"
         />
         <JsonLd data={organization} />
+        {/* アクセス数の計測（Googleアナリティクス） */}
+        {site.gaId && (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.gaId}`} />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${site.gaId}');`,
+              }}
+            />
+          </>
+        )}
       </head>
       <body className="min-h-screen antialiased">
         <Intro />

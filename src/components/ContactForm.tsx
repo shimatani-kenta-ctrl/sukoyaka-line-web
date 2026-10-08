@@ -109,6 +109,9 @@ export function ContactForm() {
         body: JSON.stringify({ ...data, type: typeLabel, page: window.location.href }),
       });
       setSend("sent");
+      // アクセス解析：お問い合わせの送信を記録（個人情報は送らない）
+      const w = window as unknown as { gtag?: (...args: unknown[]) => void };
+      w.gtag?.("event", "generate_lead", { form_type: data.type });
       form.reset();
       setZip("");
       setPrefecture("");

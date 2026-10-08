@@ -53,6 +53,9 @@ export const site = {
   formEndpoint:
     "https://script.google.com/macros/s/AKfycbwz0QfeCkDlq9VR_h_sH5YaPn8fQ2I1-CsyZsepBPNNdka3T5nTl_Cb1FqLaDN4fQqs6g/exec",
 
+  /** Googleアナリティクスの測定ID（アクセス数の計測）。空欄なら計測しない */
+  gaId: "G-W15SG7VH9G",
+
   instagram: {
     /** アカウントのURL（例: https://www.instagram.com/xxxx/）。空欄ならフォローボタン非表示 */
     profileUrl: "https://www.instagram.com/sukoyaka0303/",
