@@ -22,7 +22,7 @@ export const INQUIRY_TYPES = [
 type ZipState = { kind: "idle" | "loading" | "found" | "notfound" | "error"; message?: string };
 type SendState = "idle" | "sending" | "sent" | "error";
 
-const ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT ?? "";
+const ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT || site.formEndpoint;
 
 const toHalfWidth = (v: string) =>
   v.replace(/[０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0)).replace(/[ー－‐−]/g, "-");

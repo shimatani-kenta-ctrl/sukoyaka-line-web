@@ -46,6 +46,13 @@ export const site = {
     area: "兵庫県・大阪府を中心に関西一円",
   },
 
+  /**
+   * お問い合わせフォームの送信先（Google Apps Script のウェブアプリURL）。
+   * 送信内容はスプレッドシート「HPお問い合わせ」に記録され、通知メールと自動返信が送られます。
+   */
+  formEndpoint:
+    "https://script.google.com/macros/s/AKfycbwz0QfeCkDlq9VR_h_sH5YaPn8fQ2I1-CsyZsepBPNNdka3T5nTl_Cb1FqLaDN4fQqs6g/exec",
+
   instagram: {
     /** アカウントのURL（例: https://www.instagram.com/xxxx/）。空欄ならフォローボタン非表示 */
     profileUrl: "https://www.instagram.com/sukoyaka0303/",
