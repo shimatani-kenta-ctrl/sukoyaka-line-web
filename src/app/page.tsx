@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PipeHero } from "@/components/PipeHero";
-import { ButtonLink, Container, SampleBadge, SectionHeading } from "@/components/ui";
+import { ButtonLink, Container, JsonLd, SampleBadge, SectionHeading } from "@/components/ui";
 import { Marquee } from "@/components/Marquee";
 import { WorkVisual } from "@/components/WorkVisual";
 import { CtaBand } from "@/components/CtaBand";
@@ -9,6 +9,7 @@ import { InstagramFeed, InstagramFollowButton } from "@/components/InstagramFeed
 import { fullAddress, site, telHref } from "@/config/site";
 import { works } from "@/data/works";
 import { voices } from "@/data/voices";
+import { workFaq } from "@/data/faq";
 import { getInstagramPosts } from "@/lib/instagram";
 
 export const metadata = { alternates: { canonical: "/" } };
@@ -51,10 +52,20 @@ export default async function HomePage() {
   const posts = await getInstagramPosts(6);
   const latestWorks = works.slice(0, 3);
   const voice = voices[0];
+  const faqPage = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: workFaq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
 
   return (
     <>
       <PipeHero />
+      <JsonLd data={faqPage} />
 
       {/* 事業内容 */}
       <section className="py-20 md:py-32">
@@ -166,6 +177,36 @@ export default async function HomePage() {
           </Container>
         </section>
       )}
+
+      {/* よくある質問（工事のご依頼） */}
+      <section className="bg-mist py-20 md:py-28">
+        <Container>
+          <SectionHeading title="よくあるご質問" side="工事のご依頼" />
+          <div data-reveal-stagger="80" className="mt-12 space-y-3">
+            {workFaq.map((f, i) => (
+              <details key={f.q} className="group bg-white" open={i === 0}>
+                <summary className="flex cursor-pointer list-none items-start gap-4 px-5 py-5 md:px-8 [&::-webkit-details-marker]:hidden">
+                  <span className="font-display text-lg font-extrabold text-sky">Q</span>
+                  <span className="flex-1 text-[16px] font-bold leading-relaxed">{f.q}</span>
+                  <span aria-hidden="true" className="mt-1 text-xl leading-none text-ai transition-transform group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <div className="flex gap-4 border-t border-line px-5 py-5 md:px-8">
+                  <span className="font-display text-lg font-extrabold text-ai">A</span>
+                  <p className="flex-1 text-[15px] leading-relaxed text-steel">{f.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <ButtonLink href="/contact/">お問い合わせ・お見積り</ButtonLink>
+            <ButtonLink href="/contact/?type=partner" variant="outline">
+              協力会社のご相談
+            </ButtonLink>
+          </div>
+        </Container>
+      </section>
 
       {/* 採用 */}
       <section className="relative overflow-hidden bg-ink text-white">
