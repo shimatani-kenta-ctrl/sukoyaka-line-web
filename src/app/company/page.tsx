@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
 import { Container, SectionHeading } from "@/components/ui";
 import { LogoFull } from "@/components/Logo";
@@ -67,6 +68,36 @@ export default function CompanyPage() {
         lead="尼崎を拠点に、工場・プラントの配管工事と機器据付を手がけています。"
         path="/company/"
       />
+
+      {/* 会社の要点（最初に結論を書き、検索やAIの要約に引用されやすくする） */}
+      <section className="pt-16 md:pt-24">
+        <Container>
+          <p data-reveal className="max-w-3xl text-[16px] leading-[2] md:text-[17px]">
+            {site.name}は、{c.prefecture}
+            {c.city}に本社を置く配管工事会社です
+            {c.founded ? `（${c.founded}設立、${c.representativeTitle} ${c.representative}）` : ""}
+            。工場・プラントの配管工事を中心に、配管製作、架台製作・据付、溶接工事（TIG・アーク）までを一つの会社で行い、
+            {c.area}の現場に対応しています。
+          </p>
+          <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-[14px]">
+            <li>
+              <Link href="/works/" className="text-ai underline underline-offset-4">
+                施工事例を見る
+              </Link>
+            </li>
+            <li>
+              <Link href="/recruit/" className="text-ai underline underline-offset-4">
+                採用情報（配管工・溶接工）
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact/" className="text-ai underline underline-offset-4">
+                工事のご相談・お問い合わせ
+              </Link>
+            </li>
+          </ul>
+        </Container>
+      </section>
 
       {/* 代表挨拶 */}
       <section className="py-20 md:py-28">
