@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
 import { ButtonLink, Container, JsonLd, SectionHeading } from "@/components/ui";
 import { Marquee } from "@/components/Marquee";
@@ -85,6 +86,33 @@ export default function RecruitPage() {
       <JsonLd data={jobPosting} />
       <JsonLd data={faqPage} />
 
+      {/* 募集の要点（最初に結論を書き、検索やAIの要約に引用されやすくする）。条件は jobs.ts の内容のみ */}
+      <section className="pt-16 md:pt-24">
+        <Container>
+          <p data-reveal className="max-w-3xl text-[16px] leading-[2] md:text-[17px]">
+            {site.name}（{site.company.prefecture}
+            {site.company.city}）では、工場・プラントの配管工事スタッフと溶接工を正社員で募集しています。月給30万円〜、未経験歓迎で、面接は1回だけです。勤務地は尼崎市で、現場は兵庫県・大阪府が中心。勤務時間は8:00〜17:00、日曜・祝日休み（繁忙期を除く）です。
+          </p>
+          <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-[14px]">
+            <li>
+              <a href="#requirements" className="text-ai underline underline-offset-4">
+                募集要項を見る
+              </a>
+            </li>
+            <li>
+              <Link href="/works/" className="text-ai underline underline-offset-4">
+                実際の現場（施工事例）
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact/?type=recruit" className="text-ai underline underline-offset-4">
+                応募・質問する
+              </Link>
+            </li>
+          </ul>
+        </Container>
+      </section>
+
       <section className="py-20 md:py-28">
         <Container>
           <SectionHeading
@@ -148,7 +176,7 @@ export default function RecruitPage() {
 
       <Marquee text="未経験から、一生モノの技術を。" speed={0.3} className="py-12" />
 
-      <section className="bg-mist py-20 md:py-28">
+      <section id="requirements" className="scroll-mt-24 bg-mist py-20 md:py-28">
         <Container>
           <SectionHeading title="募集要項" side="募集中の職種" />
           <article data-reveal className="mt-12 bg-white">
