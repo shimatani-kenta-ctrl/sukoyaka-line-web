@@ -21,7 +21,7 @@ import {
 
 export const metadata: Metadata = {
   title: "配管工・溶接工の求人（兵庫県尼崎市・正社員）｜採用情報",
-  description: `${site.name}の採用情報。尼崎を拠点に、配管工事スタッフ・溶接工を正社員で募集しています。月給30万円〜、未経験歓迎、面接1回のみ。現場見学・カジュアル面談から気軽にどうぞ。`,
+  description: `${site.name}の採用情報。尼崎を拠点に、配管工事スタッフ・溶接工を正社員で募集しています。月給30万円〜、未経験歓迎、面接1回のみ。まずは会いにきてください。`,
   alternates: { canonical: "/recruit/" },
 };
 
@@ -125,7 +125,7 @@ export default function RecruitPage() {
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <ButtonLink href="/contact/?type=recruit" variant="light">
-                  現場見学・面談に申し込む
+                  まずは会いに行く
                 </ButtonLink>
                 <a
                   href={telHref}
@@ -414,11 +414,7 @@ export default function RecruitPage() {
                 </li>
                 <li className="flex gap-3">
                   <span className="font-display font-extrabold text-sky">2</span>
-                  紹介者も一緒に、気軽にカジュアル面談。
-                </li>
-                <li className="flex gap-3">
-                  <span className="font-display font-extrabold text-sky">3</span>
-                  現場見学で、実際の仕事を体感してください。
+                  紹介者も一緒に、まずは会って話しましょう。
                 </li>
               </ol>
             </div>
@@ -481,13 +477,13 @@ export default function RecruitPage() {
               一緒に、<span className="text-sky">業界を変えにいこう。</span>
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-[15px] leading-[2] text-white/80 md:text-[17px]">
-              今の仕事にモヤモヤしているなら、まずは現場を見に来てください。
+              今の仕事にモヤモヤしているなら、まずは会いにきてください。
               <br className="hidden md:inline" />
               話を聞くだけでも大歓迎です。
             </p>
             <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
               <ButtonLink href="/contact/?type=recruit" variant="light">
-                現場見学・面談に申し込む
+                まずは会いに行く
               </ButtonLink>
               <a
                 href={telHref}
