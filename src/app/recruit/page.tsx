@@ -8,6 +8,7 @@ import {
   ceoMessage,
   daySchedule,
   dayScheduleNote,
+  growthRoadmap,
   industryWalls,
   job,
   jobPostedAt,
@@ -287,6 +288,40 @@ export default function RecruitPage() {
               <p className="mt-5 text-[13px] text-steel">入社後のミスマッチを防ぐため、あえてお伝えしています。</p>
             </div>
           </div>
+        </Container>
+      </section>
+
+      {/* 育成ロードマップ */}
+      <section className="bg-ink py-20 text-white md:py-28">
+        <Container>
+          <SectionHeading
+            light
+            title="3年で、一人前の職人へ。"
+            side="GROWTH ROADMAP"
+            lead="「見て覚えろ」で何年も待たせることはしません。いつまでに、何ができるようになるか。ゴールを決めて、先輩と一緒に一段ずつ上がっていきます。"
+          />
+          <ol data-reveal-stagger="160" className="mt-12 grid gap-5 md:grid-cols-3">
+            {growthRoadmap.map((g, i) => (
+              <li key={g.period} className="relative border-t-[4px] border-sky bg-ink-deep px-6 py-8 md:px-8">
+                <p className="font-display text-[13px] tracking-[0.3em] text-sky">STEP 0{i + 1}</p>
+                <p className="mt-3 font-display text-[40px] font-extrabold leading-none md:text-[48px]">
+                  {g.period}
+                </p>
+                <h3 className="mt-4 text-lg md:text-xl">{g.title}</h3>
+                <ul className="mt-5 space-y-2 text-[15px] text-white/85">
+                  {g.items.map((t) => (
+                    <li key={t} className="flex gap-3">
+                      <span aria-hidden="true" className="mt-[9px] h-2 w-2 shrink-0 rounded-full bg-sky" />
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-6 text-[13px] text-white/60">
+            成長のスピードには個人差があります。目安として、先輩と相談しながら進めていきます。
+          </p>
         </Container>
       </section>
 
