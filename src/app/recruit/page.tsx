@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PageHero } from "@/components/PageHero";
 import { ButtonLink, Container, JsonLd, SectionHeading } from "@/components/ui";
 import { Marquee } from "@/components/Marquee";
 import { site, telHref } from "@/config/site";
@@ -9,32 +8,21 @@ import {
   ceoMessage,
   daySchedule,
   dayScheduleNote,
+  industryWalls,
   job,
   jobPostedAt,
   jobSalaryMin,
+  notForPeople,
+  ourActions,
   recruitFaq,
+  wantPeople,
 } from "@/data/jobs";
 
 export const metadata: Metadata = {
   title: "配管工・溶接工の求人（兵庫県尼崎市・正社員）｜採用情報",
-  description: `${site.name}の採用情報。尼崎を拠点に、配管工事スタッフ・溶接工を正社員で募集しています。月給30万円〜、未経験歓迎、面接1回のみ。`,
+  description: `${site.name}の採用情報。尼崎を拠点に、配管工事スタッフ・溶接工を正社員で募集しています。月給30万円〜、未経験歓迎、面接1回のみ。現場見学・カジュアル面談から気軽にどうぞ。`,
   alternates: { canonical: "/recruit/" },
 };
-
-const values = [
-  {
-    title: "仕事は、人がつくる。",
-    body: "技術だけでなく、挨拶や礼儀、責任感、仲間を思いやる気持ちを大切にしています。",
-  },
-  {
-    title: "未経験から、一人前へ。",
-    body: "基礎から段階的に、先輩が現場で丁寧に教えます。分からないことは何でも聞いてください。",
-  },
-  {
-    title: "頑張りが、きちんと報われる。",
-    body: "まだ成長中の会社だからこそ、一人ひとりの努力をしっかり評価します。",
-  },
-];
 
 const highlights: { label: string; value: string; count?: { before: string; to: number; after: string } }[] = [
   { label: "給与", value: "月給30万円〜", count: { before: "月給", to: 30, after: "万円〜" } },
@@ -42,6 +30,11 @@ const highlights: { label: string; value: string; count?: { before: string; to: 
   { label: "選考", value: "面接1回のみ" },
   { label: "経験", value: "未経験歓迎" },
 ];
+
+const heroPhoto = {
+  src: "/works/nara-chemical-plant-cooling-water-2025-08/1.jpg",
+  alt: "健やかラインが施工した、化学工場の冷却水配管と配管支持架台",
+};
 
 export default function RecruitPage() {
   const jobPosting = {
@@ -80,11 +73,82 @@ export default function RecruitPage() {
     })),
   };
 
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "トップ", item: `${site.url}/` },
+      { "@type": "ListItem", position: 2, name: "採用情報", item: `${site.url}/recruit/` },
+    ],
+  };
+
   return (
     <>
-      <PageHero title="採用情報" lead={`${job.catchCopy}${job.title}を募集しています。`} path="/recruit/" />
       <JsonLd data={jobPosting} />
       <JsonLd data={faqPage} />
+      <JsonLd data={breadcrumb} />
+
+      {/* ファーストビュー */}
+      <section className="relative overflow-hidden bg-ink text-white">
+        <Container className="pb-16 pt-10 md:pb-24 md:pt-14">
+          <nav aria-label="パンくずリスト" className="text-[12px] text-white/60">
+            <ol className="flex flex-wrap items-center gap-2">
+              <li>
+                <Link href="/" className="hover:text-sky">
+                  トップ
+                </Link>
+              </li>
+              <li aria-hidden="true">/</li>
+              <li aria-current="page" className="text-white/90">
+                採用情報
+              </li>
+            </ol>
+          </nav>
+          <div className="mt-10 grid items-center gap-12 md:grid-cols-[1.15fr_1fr] md:gap-14">
+            <div data-reveal-stagger="120">
+              <p className="font-display text-[13px] tracking-[0.3em] text-sky">RECRUIT ─ 配管工・溶接工 募集</p>
+              <h1 className="mt-5 text-[40px] font-extrabold leading-[1.25] md:text-[68px]">
+                この業界を、
+                <br />
+                <span className="text-sky">俺たちの世代で</span>
+                <br />
+                変える。
+              </h1>
+              <p className="mt-8 max-w-xl text-[17px] font-bold leading-[1.9] md:text-[19px]">
+                職人の高齢化。人手不足。若手が育たない。
+                <br />
+                「見て覚えろ」で何年も下積みさせる時代は、もう終わりにしたい。
+              </p>
+              <p className="mt-4 max-w-xl text-[15px] leading-[2] text-white/80 md:text-base">
+                健やかラインは、若い力が主役になれる配管会社をつくるために生まれました。経験はいらない。必要なのは、前に進もうとする気持ちだけです。
+              </p>
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+                <ButtonLink href="/contact/?type=recruit" variant="light">
+                  現場見学・面談に申し込む
+                </ButtonLink>
+                <a
+                  href={telHref}
+                  className="inline-flex min-h-12 items-center justify-center rounded-sm border border-sky/70 px-7 text-[15px] tracking-[0.1em] transition-colors hover:bg-white hover:text-ink"
+                >
+                  電話で相談する
+                </a>
+              </div>
+              <p className="mt-4 text-[13px] text-white/60">履歴書不要。話を聞くだけでもOKです。</p>
+            </div>
+            <figure data-reveal="right">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={heroPhoto.src}
+                alt={heroPhoto.alt}
+                width={1200}
+                height={900}
+                className="aspect-[4/3] w-full rounded-sm object-cover"
+              />
+              <figcaption className="mt-3 text-[12px] text-white/60">私たちが施工した、化学工場の冷却水配管と配管支持架台</figcaption>
+            </figure>
+          </div>
+        </Container>
+      </section>
 
       {/* 募集の要点（最初に結論を書き、検索やAIの要約に引用されやすくする）。条件は jobs.ts の内容のみ */}
       <section className="pt-16 md:pt-24">
@@ -110,15 +174,6 @@ export default function RecruitPage() {
               </Link>
             </li>
           </ul>
-        </Container>
-      </section>
-
-      <section className="py-20 md:py-28">
-        <Container>
-          <SectionHeading
-            title="手に職をつけて、家族を守れる収入を。"
-            lead="配管工事は、工場やプラントを動かし続けるために欠かせない、社会のインフラを支える仕事です。「手に職をつけたい」「家族を守れる収入を得たい」という想いを持つ方を待っています。"
-          />
           <dl data-reveal-stagger="100" className="mt-12 grid grid-cols-2 border-l border-t border-line bg-white md:grid-cols-4">
             {highlights.map((h) => (
               <div key={h.label} className="border-b border-r border-line px-4 py-5 md:px-6">
@@ -139,36 +194,97 @@ export default function RecruitPage() {
               </div>
             ))}
           </dl>
-          <div data-reveal-stagger="160" className="mt-16 grid gap-12 md:grid-cols-3 md:gap-10">
-            {values.map((v) => (
-              <div key={v.title} className="reveal-rail pl-6" style={{ ["--rail" as string]: "var(--color-sky)" }}>
-                <h3 className="text-xl leading-relaxed">{v.title}</h3>
-                <p className="mt-4 text-[15px] text-steel">{v.body}</p>
+        </Container>
+      </section>
+
+      {/* 代表メッセージ */}
+      <section className="py-20 md:py-28">
+        <Container>
+          <div className="grid gap-10 md:grid-cols-[260px_1fr] md:gap-16">
+            <div data-reveal="left">
+              <p className="font-display text-[13px] tracking-[0.3em] text-ai">MESSAGE</p>
+              <p className="mt-3 text-[15px] text-steel">代表メッセージ</p>
+            </div>
+            <div data-reveal>
+              <h2 className="text-[32px] font-extrabold leading-snug md:text-[48px]">{ceoMessage.title}</h2>
+              <span aria-hidden="true" className="mt-6 block h-[3px] w-12 bg-sky" />
+              <div className="mt-8 space-y-6 text-[15px] leading-[2.1] md:text-[17px]">
+                {ceoMessage.paragraphs.map((p) => (
+                  <p key={p}>{p}</p>
+                ))}
+                <p className="text-[17px] font-bold leading-[1.9] text-ai md:text-[19px]">{ceoMessage.closing}</p>
+              </div>
+              <p className="mt-10 text-right font-display text-xl font-extrabold">
+                <span className="mr-3 text-[13px] font-normal text-steel">
+                  {site.name}　{site.company.representativeTitle}
+                </span>
+                {site.company.representative}
+              </p>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* 業界の3つの壁と、私たちの取り組み */}
+      <section className="bg-mist py-20 md:py-28">
+        <Container>
+          <SectionHeading
+            title="業界の「当たり前」に、正面から挑む。"
+            side="OUR VISION"
+            lead="見て見ぬふりをされてきた3つの壁。私たちは、ここから逃げません。"
+          />
+          <ol data-reveal-stagger="120" className="mt-12 grid gap-5 md:grid-cols-3">
+            {industryWalls.map((w, i) => (
+              <li key={w.title} className="bg-white px-6 py-8 md:px-8">
+                <p className="font-display text-[13px] font-bold tracking-[0.2em] text-steel">壁 0{i + 1}</p>
+                <h3 className="mt-2 text-xl">{w.title}</h3>
+                <p className="mt-3 text-[15px] text-steel">{w.body}</p>
+              </li>
+            ))}
+          </ol>
+          <div data-reveal="scale" className="mt-6 grid gap-10 bg-ink px-6 py-10 text-white md:grid-cols-2 md:px-12">
+            {ourActions.map((a, i) => (
+              <div key={a.title}>
+                <p className="font-display text-[13px] tracking-[0.3em] text-sky">OUR ACTION 0{i + 1}</p>
+                <h3 className="mt-2 text-xl md:text-2xl">{a.title}</h3>
+                <p className="mt-3 text-[15px] leading-[2] text-white/80">{a.body}</p>
               </div>
             ))}
           </div>
         </Container>
       </section>
 
-      {/* 代表メッセージ */}
-      <section className="bg-ink py-20 text-white md:py-28">
+      {/* 求める人物像 */}
+      <section className="py-20 md:py-28">
         <Container>
-          <div className="grid gap-10 md:grid-cols-[260px_1fr] md:gap-16">
-            <div data-reveal="left">
-              <p className="text-[13px] tracking-[0.3em] text-sky">MESSAGE</p>
-              <p className="mt-3 text-[15px] text-white/70">代表メッセージ</p>
-            </div>
-            <div data-reveal>
-              <h2 className="text-[28px] leading-snug md:text-[40px]">{ceoMessage.title}</h2>
-              <div className="mt-8 space-y-6 text-[15px] leading-[2.1] text-white/85 md:text-base">
-                {ceoMessage.paragraphs.map((p) => (
-                  <p key={p}>{p}</p>
+          <SectionHeading
+            title="経験ゼロでいい。前を向けるなら、それでいい。"
+            side="WHO WE WANT"
+            lead="技術は、入ってから本気で教えます。だから問うのは一つだけ。「どんな時も、前向きに考えられるか」。"
+          />
+          <div data-reveal-stagger="140" className="mt-12 grid gap-5 md:grid-cols-2">
+            <div className="border-t-[4px] border-ai bg-white px-6 py-8 md:px-8">
+              <h3 className="text-xl">こんな人と働きたい</h3>
+              <ul className="mt-5 space-y-3 text-[15px]">
+                {wantPeople.map((t) => (
+                  <li key={t} className="flex gap-3">
+                    <span aria-hidden="true" className="mt-[9px] h-2 w-2 shrink-0 rounded-full bg-sky" />
+                    {t}
+                  </li>
                 ))}
-              </div>
-              <p className="mt-10 text-right font-display text-lg">
-                <span className="mr-3 text-[13px] text-white/60">{site.company.representativeTitle}</span>
-                {site.company.representative}
-              </p>
+              </ul>
+            </div>
+            <div className="border-t-[4px] border-steel/50 bg-white px-6 py-8 md:px-8">
+              <h3 className="text-xl">正直、合わないかもしれない人</h3>
+              <ul className="mt-5 space-y-3 text-[15px]">
+                {notForPeople.map((t) => (
+                  <li key={t} className="flex gap-3">
+                    <span aria-hidden="true" className="mt-[9px] h-2 w-2 shrink-0 rounded-full bg-steel/50" />
+                    {t}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-5 text-[13px] text-steel">入社後のミスマッチを防ぐため、あえてお伝えしています。</p>
             </div>
           </div>
         </Container>
@@ -222,16 +338,66 @@ export default function RecruitPage() {
               </li>
             ))}
           </ol>
+          <div className="mt-12 flex flex-col gap-4 border border-line bg-white px-6 py-6 md:flex-row md:items-center md:justify-between md:px-8">
+            <p className="text-[15px] text-steel">現場の様子や社員のリアルな1日は、Instagramでも発信しています。</p>
+            <a
+              href={site.instagram.profileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-12 shrink-0 items-center justify-center rounded-sm border border-ai px-6 text-[15px] text-ai transition-colors hover:bg-ai hover:text-white"
+            >
+              Instagramを見る {site.instagram.handle}
+            </a>
+          </div>
+        </Container>
+      </section>
+
+      {/* 社員紹介（リファラル） */}
+      <section className="bg-mist py-20 md:py-28">
+        <Container>
+          <div className="grid items-start gap-10 md:grid-cols-[1.2fr_1fr] md:gap-14">
+            <div data-reveal>
+              <p className="font-display text-[13px] tracking-[0.3em] text-ai">REFERRAL</p>
+              <h2 className="mt-3 text-[28px] font-extrabold leading-snug md:text-[38px]">
+                一緒に変えたい仲間を、
+                <br />
+                連れてきてほしい。
+              </h2>
+              <p className="mt-6 text-[15px] leading-[2] md:text-base">
+                「あいつなら、ここで化ける」。そう思える友人・後輩・元同僚がいたら、ぜひ声をかけてください。信頼できる仲間と一緒なら、最初の一歩も怖くない。
+              </p>
+              <p className="mt-4 text-[14px] text-steel">
+                社員のみなさんへ：このページのURLをLINEなどで送るだけで紹介できます。紹介制度の詳細は社内規程をご確認ください。
+              </p>
+            </div>
+            <div data-reveal="right" className="bg-white px-6 py-8 md:px-8">
+              <h3 className="text-lg">紹介で応募する方へ</h3>
+              <ol className="mt-5 space-y-4 text-[15px]">
+                <li className="flex gap-3">
+                  <span className="font-display font-extrabold text-sky">1</span>
+                  お問い合わせフォームで「採用・応募」を選び、内容欄に紹介してくれた社員の名前を書いてください。
+                </li>
+                <li className="flex gap-3">
+                  <span className="font-display font-extrabold text-sky">2</span>
+                  紹介者も一緒に、気軽にカジュアル面談。
+                </li>
+                <li className="flex gap-3">
+                  <span className="font-display font-extrabold text-sky">3</span>
+                  現場見学で、実際の仕事を体感してください。
+                </li>
+              </ol>
+            </div>
+          </div>
         </Container>
       </section>
 
       {/* よくある質問 */}
-      <section className="bg-mist py-20 md:py-28">
+      <section className="py-20 md:py-28">
         <Container>
           <SectionHeading title="よくある質問" side="FAQ" />
           <div data-reveal-stagger="80" className="mt-12 space-y-3">
             {recruitFaq.map((f, i) => (
-              <details key={f.q} className="group bg-white" open={i === 0}>
+              <details key={f.q} className="group border border-line bg-white" open={i === 0}>
                 <summary className="flex cursor-pointer list-none items-start gap-4 px-5 py-5 md:px-8 [&::-webkit-details-marker]:hidden">
                   <span className="font-display text-lg font-extrabold text-sky">Q</span>
                   <span className="flex-1 text-[16px] font-bold leading-relaxed">{f.q}</span>
@@ -249,10 +415,10 @@ export default function RecruitPage() {
         </Container>
       </section>
 
-      <section className="py-20 md:py-28">
+      <section className="bg-mist py-20 md:py-28">
         <Container>
-          <SectionHeading title="応募の流れ" />
-          <ol data-reveal-stagger="200" className="mt-12 grid gap-6 md:grid-cols-3 md:gap-0">
+          <SectionHeading title="選考の流れ" lead="いきなり面接はしません。まずはお互いを知るところから始めます。" />
+          <ol data-reveal-stagger="160" className="mt-12 grid gap-6 md:grid-cols-4 md:gap-0">
             {applySteps.map((s, i) => (
               <li key={s.title} className="relative md:pr-8">
                 <div className="flex items-center gap-4">
@@ -268,25 +434,36 @@ export default function RecruitPage() {
               </li>
             ))}
           </ol>
+        </Container>
+      </section>
 
-          <div data-reveal="scale" className="mt-16 flex flex-col gap-6 bg-ink px-6 py-10 text-white md:flex-row md:items-center md:justify-between md:px-12">
-            <div>
-              <p className="font-display text-xl font-extrabold md:text-2xl">まずは気軽に、話を聞きに来てください。</p>
-              <p className="mt-2 text-[14px] text-white/75">
-                採用担当：{site.company.representative}　TEL {site.company.tel}
-              </p>
-            </div>
-            <div className="flex flex-col gap-3 sm:flex-row">
+      {/* 最後の呼びかけ */}
+      <section className="bg-ink py-20 text-white md:py-28">
+        <Container>
+          <div data-reveal className="text-center">
+            <p className="font-display text-[13px] tracking-[0.3em] text-sky">ENTRY</p>
+            <h2 className="mt-4 text-[32px] font-extrabold leading-snug md:text-[54px]">
+              一緒に、<span className="text-sky">業界を変えにいこう。</span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-xl text-[15px] leading-[2] text-white/80 md:text-[17px]">
+              今の仕事にモヤモヤしているなら、まずは現場を見に来てください。
+              <br className="hidden md:inline" />
+              話を聞くだけでも大歓迎です。
+            </p>
+            <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
               <ButtonLink href="/contact/?type=recruit" variant="light">
-                フォームで応募する
+                現場見学・面談に申し込む
               </ButtonLink>
               <a
                 href={telHref}
                 className="inline-flex min-h-12 items-center justify-center rounded-sm border border-sky/70 px-7 text-[15px] tracking-[0.1em] transition-colors hover:bg-white hover:text-ink"
               >
-                電話で問い合わせる
+                電話で相談する
               </a>
             </div>
+            <p className="mt-6 text-[13px] text-white/60">
+              採用担当：{site.company.representative}　TEL {site.company.tel}
+            </p>
           </div>
         </Container>
       </section>
