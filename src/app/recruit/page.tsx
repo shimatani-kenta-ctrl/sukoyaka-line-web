@@ -42,9 +42,19 @@ export default function RecruitPage() {
     "@context": "https://schema.org",
     "@type": "JobPosting",
     title: job.title,
-    description: `<p>${job.lead}</p>${job.rows.map((r) => `<p>${r.label}：${r.value}</p>`).join("")}`,
+    description: [
+      `<p>${job.lead}</p>`,
+      ...job.rows.map((r) => `<p>${r.label}：${r.value}</p>`),
+      // 未経験の方が気にする「入社後の育ち方」と「応募のしかた」も、Google の求人表示・AIの要約に届くように入れる
+      `<p>育成の目安：${growthRoadmap.map((g) => `${g.period}で${g.items.join("・")}`).join("。")}。</p>`,
+      `<p>選考の流れ：${applySteps.map((s) => s.title).join("→")}。${applySteps[0].body}</p>`,
+    ].join(""),
     datePosted: jobPostedAt,
     employmentType: "FULL_TIME",
+    occupationalCategory: "配管工・溶接工",
+    industry: "配管工事業",
+    // 自社サイトの応募フォームから、そのまま応募できる
+    directApply: true,
     hiringOrganization: { "@type": "Organization", name: site.name, sameAs: site.url, logo: `${site.url}/logo.png` },
     jobLocation: {
       "@type": "Place",
