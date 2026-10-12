@@ -13,7 +13,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name}｜尼崎の配管工事・プラント配管・設備工事`,
+    default: `尼崎市の配管工事・配管製作・溶接｜${site.name}`,
     template: `%s｜${site.name}`,
   },
   description: site.description,
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     locale: "ja_JP",
     url: site.url,
     siteName: site.name,
-    title: `${site.name}｜尼崎の配管工事・プラント配管・設備工事`,
+    title: `尼崎市の配管工事・配管製作・溶接｜${site.name}`,
     description: site.description,
     images: [{ url: "/og.png", width: 1200, height: 630, alt: site.name }],
   },

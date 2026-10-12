@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const path = `/works/${w.slug}/`;
   const image = w.photos[0]?.src;
   return {
-    title: `${w.title}｜施工事例`,
+    title: `${w.title}（${w.location.split(" ")[0].replace(/内$/, "")}）｜施工事例`,
     description: w.summary,
     alternates: { canonical: path },
     openGraph: {

@@ -97,15 +97,15 @@ export function PipeHero() {
       </div>
 
       <div className="mx-auto flex max-w-6xl flex-col justify-center px-4 pt-14 md:min-h-[640px] md:px-8 md:py-20">
-        <p className="hero-in text-[13px] tracking-[0.25em] text-sky" style={{ ["--d" as string]: "0.1s" }}>
-          兵庫・尼崎の配管工事会社
-        </p>
-        <h1 className="mt-6 text-[40px] leading-[1.35] tracking-[0.1em] md:text-[68px]">
+        <h1 className="hero-in text-[13px] font-medium tracking-[0.25em] text-sky" style={{ ["--d" as string]: "0.1s" }}>
+          兵庫県尼崎市の配管工事会社
+        </h1>
+        <p className="mt-6 font-display text-[40px] font-extrabold leading-[1.35] tracking-[0.1em] md:text-[68px]">
           <span className="sr-only">確かな技術を、確かな未来へ。</span>
           <SplitLine text="確かな技術を、" start={0.3} />
           <br />
           <SplitLine text="確かな未来へ。" start={0.78} />
-        </h1>
+        </p>
         <p
           className="hero-in mt-5 text-[13px] font-bold tracking-[0.12em] text-sky-soft md:mt-6 md:text-lg md:tracking-[0.18em]"
           style={{ ["--d" as string]: "1.3s" }}

@@ -16,7 +16,7 @@ import {
 } from "@/data/jobs";
 
 export const metadata: Metadata = {
-  title: "採用情報",
+  title: "配管工・溶接工の求人（兵庫県尼崎市・正社員）｜採用情報",
   description: `${site.name}の採用情報。尼崎を拠点に、配管工事スタッフ・溶接工を正社員で募集しています。月給30万円〜、未経験歓迎、面接1回のみ。`,
   alternates: { canonical: "/recruit/" },
 };
