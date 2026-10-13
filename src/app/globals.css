@@ -394,3 +394,32 @@ html.intro-hold .pipe-flow {
     display: none;
   }
 }
+
+/* ───────── トップの背景写真（現場写真を順番に切り替え） ───────── */
+.hero-slide {
+  opacity: 0;
+  animation: hero-slide 24s linear infinite;
+  animation-delay: calc(var(--i) * 6s);
+}
+.hero-slide:first-child {
+  animation-name: hero-slide-first;
+}
+@keyframes hero-slide {
+  0% { opacity: 0; transform: scale(1.08); }
+  5% { opacity: 1; }
+  25% { opacity: 1; }
+  30% { opacity: 0; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+/* 1枚目は最初から表示しておく */
+@keyframes hero-slide-first {
+  0% { opacity: 1; transform: scale(1.08); }
+  25% { opacity: 1; }
+  30% { opacity: 0; transform: scale(1); }
+  95% { opacity: 0; transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide { animation: none; }
+  .hero-slide:first-child { opacity: 1; }
+}

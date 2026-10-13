@@ -23,9 +23,15 @@ const services: { name: string; body: string; media?: Media[] }[] = [
     media: [
       {
         type: "photo",
-        src: "/photos/white-pipe-elbow-butt-weld.jpg",
-        alt: "白管（亜鉛めっき鋼管）のエルボと直管の突合せ溶接部",
-        caption: "白管のエルボと直管の突合せ溶接",
+        src: "/photos/water-injection-piping.jpg",
+        alt: "注水用の水の配管（バルブ・圧力計付き）",
+        caption: "注水用の水の配管",
+      },
+      {
+        type: "photo",
+        src: "/photos/compressor-air-piping.jpg",
+        alt: "コンプレッサー・ドライヤー・エアタンクまわりのエア配管（白管）",
+        caption: "コンプレッサー・ドライヤー・エアタンクまわりのエア配管",
       },
     ],
   },
@@ -45,6 +51,12 @@ const services: { name: string; body: string; media?: Media[] }[] = [
     name: "架台製作及び据付",
     body: "機器や配管を支える架台を製作し、据付まで行います。ポンプやボイラーなど機器の据付と周辺配管も、あわせてお受けします。",
     media: [
+      {
+        type: "photo",
+        src: "/photos/air-filter-angle-frame.jpg",
+        alt: "アングルの架台に取り付けたエアフィルターと圧縮エア配管",
+        caption: "アングルの架台とエアフィルターまわりの配管",
+      },
       {
         type: "photo",
         src: "/photos/angle-base-weld.jpg",
