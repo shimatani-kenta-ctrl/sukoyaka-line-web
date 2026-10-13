@@ -5,6 +5,8 @@
  *   1. このスプレッドシートの「お問い合わせ」シートに1行ずつ記録し
  *   2. 通知メールを NOTIFY_TO に送り
  *   3. お客様に自動返信メールを送ります
+ *   4. 添付ファイル（3点まで）があれば、Googleドライブの「HPお問い合わせ 添付ファイル」フォルダに保存し、
+ *      通知メールにも添付します（スプレッドシートにはファイルへのリンクを記録）
  *
  * 設置方法は「公開手順.md」の手順3を参照してください。
  * ※このスクリプトを書き換えたら、「デプロイ」→「デプロイを管理」→ 編集 →「新バージョン」で更新してください。
@@ -28,9 +30,11 @@ const SIGNATURE = [
 ].join("\n");
 
 const SHEET_NAME = "お問い合わせ";
+const FOLDER_NAME = "HPお問い合わせ 添付ファイル";
+const MAX_FILES = 3;
 const HEADERS = [
   "受信日時", "種類", "会社名", "お名前", "メール", "電話番号",
-  "郵便番号", "都道府県", "住所", "内容", "送信ページ",
+  "郵便番号", "都道府県", "住所", "内容", "送信ページ", "添付ファイル",
 ];
 
 function doPost(e) {
@@ -42,10 +46,28 @@ function doPost(e) {
     if (!d.name || !d.email || !d.message) return json({ ok: false, error: "missing" });
 
     const now = new Date();
+
+    // 添付ファイル：ドライブに保存し、通知メールにも添付する
+    const blobs = [];
+    const links = [];
+    const files = Array.isArray(d.files) ? d.files.slice(0, MAX_FILES) : [];
+    if (files.length) {
+      const folder = getFolder();
+      const stamp = Utilities.formatDate(now, "Asia/Tokyo", "yyyyMMdd-HHmm");
+      files.forEach(function (f, i) {
+        const name = stamp + "_" + s(d.name).replace(/[\\/:*?"<>|]/g, "") + "_" + (i + 1) + "_" + s(f.name).slice(0, 80);
+        const blob = Utilities.newBlob(Utilities.base64Decode(String(f.data || "")), s(f.type) || "application/octet-stream", name);
+        const file = folder.createFile(blob);
+        blobs.push(blob);
+        links.push(file.getUrl());
+      });
+    }
+
     const row = [
       Utilities.formatDate(now, "Asia/Tokyo", "yyyy/MM/dd HH:mm"),
       s(d.type), s(d.company), s(d.name), s(d.email), s(d.tel),
       s(d.zip), s(d.prefecture), s(d.address), s(d.message), s(d.page),
+      links.join("\n"),
     ];
 
     const sheet = getSheet();
@@ -53,13 +75,15 @@ function doPost(e) {
 
     // 社内通知
     const body = HEADERS.map(function (h, i) { return "■" + h + "\n" + (row[i] || "（未入力）"); }).join("\n\n");
-    MailApp.sendEmail({
+    const notice = {
       to: NOTIFY_TO,
       replyTo: s(d.email),
       subject: "【HP問い合わせ】" + s(d.type) + "／" + s(d.company) + " " + s(d.name) + "様",
       body: "ホームページからお問い合わせがありました。\nこのメールに返信すると、お客様宛てに送れます。\n\n" + body
         + "\n\n記録先：" + SpreadsheetApp.getActiveSpreadsheet().getUrl(),
-    });
+    };
+    if (blobs.length) notice.attachments = blobs;
+    MailApp.sendEmail(notice);
 
     // 自動返信
     if (SEND_AUTO_REPLY) {
@@ -74,6 +98,7 @@ function doPost(e) {
           + "お急ぎの場合は、お電話（080-9123-7037）でもお受けしています。\n\n"
           + "■お問い合わせの種類\n" + s(d.type) + "\n\n"
           + "■お問い合わせ内容\n" + s(d.message) + "\n\n"
+          + (files.length ? "■添付ファイル\n" + files.length + "点を受け付けました\n\n" : "")
           + "※このメールは自動でお送りしています。このメールにご返信いただくと、担当者に届きます。\n"
           + "お心当たりのない場合は、お手数ですが削除してください。\n\n"
           + SIGNATURE,
@@ -95,7 +120,14 @@ function doGet() {
 /** 初回に一度だけ実行：メール送信とシートの権限を許可するため */
 function setup() {
   getSheet();
+  getFolder();
   MailApp.getRemainingDailyQuota();
+}
+
+/** 添付ファイルの保存先フォルダ（なければ作る） */
+function getFolder() {
+  const it = DriveApp.getFoldersByName(FOLDER_NAME);
+  return it.hasNext() ? it.next() : DriveApp.createFolder(FOLDER_NAME);
 }
 
 function getSheet() {
@@ -108,6 +140,9 @@ function getSheet() {
     sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight("bold").setBackground("#EAF4FA");
     sheet.setColumnWidth(10, 400);
   }
+  // 既存のシートに「添付ファイル」列の見出しがなければ足す
+  const head = sheet.getRange(1, HEADERS.length);
+  if (!head.getValue()) head.setValue(HEADERS[HEADERS.length - 1]).setFontWeight("bold").setBackground("#EAF4FA");
   return sheet;
 }
 

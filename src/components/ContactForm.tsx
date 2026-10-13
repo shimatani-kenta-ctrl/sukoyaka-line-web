@@ -24,6 +24,47 @@ type SendState = "idle" | "sending" | "sent" | "error";
 
 const ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT || site.formEndpoint;
 
+/** 添付ファイル：3点まで。写真は送る前に縮小、それ以外は1点8MBまで */
+const MAX_FILES = 3;
+const MAX_FILE_BYTES = 8 * 1024 * 1024;
+const MAX_TOTAL_BYTES = 20 * 1024 * 1024;
+const FILE_ACCEPT = "image/*,.pdf,.doc,.docx,.xls,.xlsx";
+type Attachment = { name: string; type: string; size: number; data: string };
+
+function readAsBase64(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(String(r.result).split(",")[1] ?? "");
+    r.onerror = () => reject(r.error);
+    r.readAsDataURL(blob);
+  });
+}
+
+/** 写真は長い辺2000pxのJPEGに縮小して送る（スマホの写真でも重くならないように） */
+async function shrinkImage(file: File): Promise<Blob> {
+  try {
+    const bmp = await createImageBitmap(file);
+    const scale = Math.min(1, 2000 / Math.max(bmp.width, bmp.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(bmp.width * scale);
+    canvas.height = Math.round(bmp.height * scale);
+    canvas.getContext("2d")?.drawImage(bmp, 0, 0, canvas.width, canvas.height);
+    const blob = await new Promise<Blob | null>((res) => canvas.toBlob(res, "image/jpeg", 0.85));
+    return blob && blob.size < file.size ? blob : file;
+  } catch {
+    return file;
+  }
+}
+
+async function toAttachment(file: File): Promise<Attachment> {
+  const isImage = file.type.startsWith("image/") && !file.type.includes("svg");
+  const blob = isImage ? await shrinkImage(file) : file;
+  const name = isImage && blob !== file ? file.name.replace(/\.[^.]+$/, "") + ".jpg" : file.name;
+  return { name, type: blob.type || file.type || "application/octet-stream", size: blob.size, data: await readAsBase64(blob) };
+}
+
+const formatSize = (n: number) => (n >= 1024 * 1024 ? `${(n / 1024 / 1024).toFixed(1)}MB` : `${Math.max(1, Math.round(n / 1024))}KB`);
+
 const toHalfWidth = (v: string) =>
   v.replace(/[０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0)).replace(/[ー－‐−]/g, "-");
 
@@ -37,6 +78,9 @@ export function ContactForm() {
   const [zipState, setZipState] = useState<ZipState>({ kind: "idle" });
   const [send, setSend] = useState<SendState>("idle");
   const [experience, setExperience] = useState("");
+  const [files, setFiles] = useState<Attachment[]>([]);
+  const [fileMsg, setFileMsg] = useState("");
+  const [fileBusy, setFileBusy] = useState(false);
   const isRecruit = type === "recruit";
   const lastLookup = useRef("");
 
@@ -89,6 +133,31 @@ export function ContactForm() {
     else if (zipState.kind !== "idle") setZipState({ kind: "idle" });
   }
 
+  async function onAddFiles(list: FileList | null) {
+    if (!list || list.length === 0) return;
+    setFileMsg("");
+    const room = MAX_FILES - files.length;
+    const picked = Array.from(list).slice(0, room);
+    if (list.length > room) setFileMsg(`添付できるのは${MAX_FILES}点までです。`);
+    setFileBusy(true);
+    const added: Attachment[] = [];
+    for (const f of picked) {
+      const a = await toAttachment(f);
+      if (a.size > MAX_FILE_BYTES) {
+        setFileMsg(`「${f.name}」は大きすぎるため添付できません（1点${formatSize(MAX_FILE_BYTES)}まで）。`);
+        continue;
+      }
+      added.push(a);
+    }
+    const next = [...files, ...added];
+    if (next.reduce((t, a) => t + a.size, 0) > MAX_TOTAL_BYTES) {
+      setFileMsg(`添付ファイルの合計は${formatSize(MAX_TOTAL_BYTES)}までです。`);
+    } else {
+      setFiles(next);
+    }
+    setFileBusy(false);
+  }
+
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
@@ -104,7 +173,8 @@ export function ContactForm() {
     setSend("sending");
     try {
       const typeLabel = INQUIRY_TYPES.find((i) => i.value === data.type)?.label ?? data.type;
-      let payload: Record<string, string> = { ...data, type: typeLabel, page: window.location.href };
+      delete data.attachments;
+      let payload: Record<string, unknown> = { ...data, type: typeLabel, page: window.location.href };
       if (data.type === "recruit") {
         // 応募の項目は「内容」にまとめて送る（受信側のスプレッドシート・メールはそのまま使える）
         const exp = data.experience === "経験あり" ? `経験あり（${data.experienceYears}）` : data.experience;
@@ -122,6 +192,7 @@ export function ContactForm() {
         ];
         payload = { ...payload, address: data.city ?? "", message: lines.join("\n") };
       }
+      if (files.length) payload.files = files.map(({ name, type, data }) => ({ name, type, data }));
       await fetch(ENDPOINT, {
         method: "POST",
         mode: "no-cors",
@@ -137,6 +208,8 @@ export function ContactForm() {
       setPrefecture("");
       setAddress("");
       setExperience("");
+      setFiles([]);
+      setFileMsg("");
       setZipState({ kind: "idle" });
       window.scrollTo({ top: (formRef.current?.offsetTop ?? 0) - 100, behavior: "smooth" });
     } catch {
@@ -459,6 +532,60 @@ export function ContactForm() {
         />
       </div>
 
+      {/* 添付ファイル（任意・3点まで） */}
+      <div className="border-t border-line pt-8">
+        <p className={label}>
+          添付ファイル<span className="ml-2 text-[11px] font-normal text-steel">任意・{MAX_FILES}点まで</span>
+        </p>
+        <p className="mt-1 text-[13px] text-steel">
+          {isRecruit
+            ? "履歴書・資格証の写真などがあれば添付してください。"
+            : "図面・現場の写真・仕様書などがあれば添付してください。"}
+          写真・PDF・Word・Excelに対応しています。
+        </p>
+        {files.length > 0 && (
+          <ul className="mt-4 space-y-2">
+            {files.map((f, i) => (
+              <li key={`${f.name}-${i}`} className="flex items-center gap-3 rounded-sm border border-line bg-white px-4 py-3 text-[14px]">
+                <span className="min-w-0 flex-1 truncate">{f.name}</span>
+                <span className="shrink-0 text-[12px] text-steel">{formatSize(f.size)}</span>
+                <button
+                  type="button"
+                  onClick={() => setFiles(files.filter((_, j) => j !== i))}
+                  className="shrink-0 text-[13px] text-ai underline underline-offset-4"
+                  aria-label={`${f.name}を取り消す`}
+                >
+                  取消
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        {files.length < MAX_FILES && (
+          <label className="mt-4 inline-flex min-h-12 cursor-pointer items-center gap-2 rounded-sm border border-ai px-5 text-[14px] text-ai hover:bg-ai hover:text-white">
+            <span aria-hidden="true">＋</span>
+            {fileBusy ? "読み込み中…" : "ファイルを選ぶ"}
+            <input
+              type="file"
+              name="attachments"
+              multiple
+              accept={FILE_ACCEPT}
+              className="sr-only"
+              disabled={fileBusy}
+              onChange={(e) => {
+                void onAddFiles(e.target.files);
+                e.target.value = "";
+              }}
+            />
+          </label>
+        )}
+        {fileMsg && (
+          <p role="alert" className="mt-2 text-[13px] text-[#b4232a]">
+            {fileMsg}
+          </p>
+        )}
+      </div>
+
       {/* スパム対策：人には見えない欄 */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
         <label htmlFor="website">ウェブサイト</label>
@@ -486,7 +613,7 @@ export function ContactForm() {
 
       <button
         type="submit"
-        disabled={send === "sending"}
+        disabled={send === "sending" || fileBusy}
         className="flex min-h-14 w-full items-center justify-center rounded-sm bg-ai text-[16px] tracking-[0.15em] text-white transition-colors hover:bg-ai-bright disabled:opacity-60 md:w-80"
       >
         {send === "sending" ? "送信しています…" : "内容を送信する"}
