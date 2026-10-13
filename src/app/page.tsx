@@ -14,23 +14,63 @@ import { getInstagramPosts } from "@/lib/instagram";
 
 export const metadata = { alternates: { canonical: "/" } };
 
-const services: { name: string; body: string; photo?: { src: string; alt: string; caption: string } }[] = [
+type Media = { type: "photo" | "video"; src: string; poster?: string; alt: string; caption: string };
+
+const services: { name: string; body: string; media?: Media[] }[] = [
   {
     name: "各種配管工事",
     body: "工場・プラントの蒸気、冷却水、エア、各種流体の配管を施工します。設備の新設・増設・改修から、休止期間に合わせた短工期の工事まで対応します。",
+    media: [
+      {
+        type: "photo",
+        src: "/photos/white-pipe-elbow-butt-weld.jpg",
+        alt: "白管（亜鉛めっき鋼管）のエルボと直管の突合せ溶接部",
+        caption: "白管のエルボと直管の突合せ溶接",
+      },
+    ],
   },
   {
     name: "各種配管製作",
     body: "現場の寸法や取合いに合わせて、配管を加工・製作します。製作から取付けまで一貫して行うので、現場での手戻りを減らせます。",
+    media: [
+      {
+        type: "photo",
+        src: "/photos/sus-flange-spools.jpg",
+        alt: "ステンレス（SUSF304 10K 25A）のフランジ付き短管",
+        caption: "ステンレスのフランジ付き短管（25A）の製作",
+      },
+    ],
   },
   {
     name: "架台製作及び据付",
     body: "機器や配管を支える架台を製作し、据付まで行います。ポンプやボイラーなど機器の据付と周辺配管も、あわせてお受けします。",
+    media: [
+      {
+        type: "photo",
+        src: "/photos/angle-base-weld.jpg",
+        alt: "アングルと架台のベースの溶接部",
+        caption: "アングルと架台のベースの溶接",
+      },
+    ],
   },
   {
     name: "溶接工事",
     body: "ステンレス・鋼管のTIG溶接、アーク溶接に対応します。見えない内面まで品質にこだわり、確かな溶接部をお引き渡しします。",
-    photo: { src: "/photos/tig-socket-weld.jpg", alt: "配管にねじ込みソケットをTIG溶接した溶接部", caption: "配管にねじ込みソケットをTIG溶接したところ" },
+    media: [
+      {
+        type: "video",
+        src: "/photos/sus-tank-tig-weld.mp4",
+        poster: "/photos/sus-tank-tig-weld.jpg",
+        alt: "ステンレス製タンクのTIG溶接部の動画",
+        caption: "ステンレス製タンクのTIG溶接部",
+      },
+      {
+        type: "photo",
+        src: "/photos/tig-socket-weld.jpg",
+        alt: "配管にねじ込みソケットをTIG溶接した溶接部",
+        caption: "配管にねじ込みソケットをTIG溶接したところ",
+      },
+    ],
   },
 ];
 
@@ -88,19 +128,37 @@ export default async function HomePage() {
                 </h3>
                 <div>
                   <p className="text-[15px] text-steel">{s.body}</p>
-                  {s.photo && (
-                    <figure data-reveal="scale" className="mt-6 max-w-[320px]">
-                      <img
-                        src={s.photo.src}
-                        alt={s.photo.alt}
-                        width={900}
-                        height={1200}
-                        loading="lazy"
-                        decoding="async"
-                        className="aspect-[4/5] w-full object-cover"
-                      />
-                      <figcaption className="mt-2 text-[13px] text-steel">{s.photo.caption}</figcaption>
-                    </figure>
+                  {s.media && (
+                    <div className={`mt-6 grid gap-4 ${s.media.length > 1 ? "max-w-[520px] grid-cols-2" : "max-w-[320px]"}`}>
+                      {s.media.map((m) => (
+                        <figure key={m.src} data-reveal="scale">
+                          {m.type === "video" ? (
+                            <video
+                              src={m.src}
+                              poster={m.poster}
+                              aria-label={m.alt}
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                              preload="metadata"
+                              className="aspect-[4/5] w-full bg-mist object-cover"
+                            />
+                          ) : (
+                            <img
+                              src={m.src}
+                              alt={m.alt}
+                              width={900}
+                              height={1200}
+                              loading="lazy"
+                              decoding="async"
+                              className="aspect-[4/5] w-full bg-mist object-cover"
+                            />
+                          )}
+                          <figcaption className="mt-2 text-[13px] leading-relaxed text-steel">{m.caption}</figcaption>
+                        </figure>
+                      ))}
+                    </div>
                   )}
                 </div>
               </li>

@@ -25,6 +25,13 @@ export const metadata: Metadata = {
   alternates: { canonical: "/recruit/" },
 };
 
+const fieldPhotos = [
+  { src: "/photos/flange-inner-weld.jpg", alt: "フランジ内側の溶接部", caption: "フランジ内側の溶接" },
+  { src: "/photos/sus-flange-spool-end.jpg", alt: "ステンレスフランジ（SUSF304 10K 25A）付き短管の溶接部", caption: "ステンレスのフランジ付き短管" },
+  { src: "/photos/tig-socket-weld.jpg", alt: "配管にねじ込みソケットをTIG溶接した溶接部", caption: "ねじ込みソケットのTIG溶接" },
+  { src: "/photos/angle-base-weld.jpg", alt: "アングルと架台のベースの溶接部", caption: "アングルと架台のベースの溶接" },
+];
+
 const highlights: { label: string; value: string; count?: { before: string; to: number; after: string } }[] = [
   { label: "給与", value: "月給30万円〜", count: { before: "月給", to: 30, after: "万円〜" } },
   { label: "雇用形態", value: "正社員" },
@@ -336,6 +343,35 @@ export default function RecruitPage() {
       </section>
 
       <Marquee text="未経験から、一生モノの技術を。" speed={0.3} className="py-12" />
+
+      {/* 現場の仕事 */}
+      <section className="pb-20 md:pb-28">
+        <Container>
+          <SectionHeading
+            title="この手で、つくる仕事。"
+            side="現場の仕事"
+            lead="実際の現場で、私たちが手がけた溶接・配管製作です。未経験の方も、先輩と組んで一つずつ身につけていきます。"
+          />
+          <ul data-reveal-stagger="100" className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+            {fieldPhotos.map((p) => (
+              <li key={p.src}>
+                <figure>
+                  <img
+                    src={p.src}
+                    alt={p.alt}
+                    width={900}
+                    height={1200}
+                    loading="lazy"
+                    decoding="async"
+                    className="aspect-[4/5] w-full bg-mist object-cover"
+                  />
+                  <figcaption className="mt-2 text-[13px] leading-relaxed text-steel">{p.caption}</figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
 
       <section id="requirements" className="scroll-mt-24 bg-mist py-20 md:py-28">
         <Container>
