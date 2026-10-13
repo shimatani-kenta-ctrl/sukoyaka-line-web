@@ -14,7 +14,7 @@ import { getInstagramPosts } from "@/lib/instagram";
 
 export const metadata = { alternates: { canonical: "/" } };
 
-const services = [
+const services: { name: string; body: string; photo?: { src: string; alt: string; caption: string } }[] = [
   {
     name: "各種配管工事",
     body: "工場・プラントの蒸気、冷却水、エア、各種流体の配管を施工します。設備の新設・増設・改修から、休止期間に合わせた短工期の工事まで対応します。",
@@ -30,6 +30,7 @@ const services = [
   {
     name: "溶接工事",
     body: "ステンレス・鋼管のTIG溶接、アーク溶接に対応します。見えない内面まで品質にこだわり、確かな溶接部をお引き渡しします。",
+    photo: { src: "/photos/tig-socket-weld.jpg", alt: "配管にねじ込みソケットをTIG溶接した溶接部", caption: "配管にねじ込みソケットをTIG溶接したところ" },
   },
 ];
 
@@ -85,7 +86,23 @@ export default async function HomePage() {
                   <span aria-hidden="true" className="h-[10px] w-[10px] shrink-0 bg-sky" />
                   {s.name}
                 </h3>
-                <p className="text-[15px] text-steel">{s.body}</p>
+                <div>
+                  <p className="text-[15px] text-steel">{s.body}</p>
+                  {s.photo && (
+                    <figure data-reveal="scale" className="mt-6 max-w-[320px]">
+                      <img
+                        src={s.photo.src}
+                        alt={s.photo.alt}
+                        width={900}
+                        height={1200}
+                        loading="lazy"
+                        decoding="async"
+                        className="aspect-[4/5] w-full object-cover"
+                      />
+                      <figcaption className="mt-2 text-[13px] text-steel">{s.photo.caption}</figcaption>
+                    </figure>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
