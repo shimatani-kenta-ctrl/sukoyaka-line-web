@@ -7,12 +7,13 @@ import { LogoFull } from "@/components/Logo";
 import { GoogleMap, mapLinkUrl } from "@/components/GoogleMap";
 import { CtaBand } from "@/components/CtaBand";
 import { fullAddress, site, telHref } from "@/config/site";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "会社概要",
   description: `${site.name}の会社概要、代表挨拶、所在地・アクセスのご案内です。兵庫県尼崎市を拠点に、関西一円で配管工事・設備工事を行っています。`,
-  alternates: { canonical: "/company/" },
-};
+  path: "/company/",
+});
 
 export default function CompanyPage() {
   const c = site.company;

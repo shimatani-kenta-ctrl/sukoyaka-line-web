@@ -4,12 +4,13 @@ import { Container } from "@/components/ui";
 import { ContactForm } from "@/components/ContactForm";
 import { GoogleMap } from "@/components/GoogleMap";
 import { fullAddress, site, telHref } from "@/config/site";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "お問い合わせ",
   description: `${site.name}へのお問い合わせ・お見積りのご依頼はこちら。配管工事、機器据付、協力会社のご相談、採用へのご応募も受け付けています。`,
-  alternates: { canonical: "/contact/" },
-};
+  path: "/contact/",
+});
 
 export default function ContactPage() {
   return (

@@ -4,12 +4,13 @@ import { Container } from "@/components/ui";
 import { WorksList } from "@/components/WorksList";
 import { CtaBand } from "@/components/CtaBand";
 import { site } from "@/config/site";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "施工事例",
   description: `${site.name}の施工事例です。プラント配管、設備配管、機器据付・周辺配管、ステンレス配管のTIG溶接など、兵庫・大阪を中心とした工事実績をご紹介します。`,
-  alternates: { canonical: "/works/" },
-};
+  path: "/works/",
+});
 
 export default function WorksPage() {
   return (

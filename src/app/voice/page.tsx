@@ -5,12 +5,13 @@ import { Container, SampleBadge } from "@/components/ui";
 import { CtaBand } from "@/components/CtaBand";
 import { site } from "@/config/site";
 import { voices } from "@/data/voices";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "お客様の声",
   description: `${site.name}に配管工事・機器据付をご依頼いただいたお客様からの声をご紹介します。`,
-  alternates: { canonical: "/voice/" },
-};
+  path: "/voice/",
+});
 
 export default function VoicePage() {
   return (

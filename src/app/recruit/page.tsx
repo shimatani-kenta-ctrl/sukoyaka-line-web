@@ -18,12 +18,14 @@ import {
   recruitFaq,
   wantPeople,
 } from "@/data/jobs";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "配管工・溶接工の求人（兵庫県尼崎市・正社員）｜採用情報",
   description: `${site.name}の採用情報。尼崎を拠点に、配管工事スタッフ・溶接工を正社員で募集しています。月給30万円〜、未経験歓迎、面接1回のみ。まずは会いにきてください。`,
-  alternates: { canonical: "/recruit/" },
-};
+  path: "/recruit/",
+  image: { url: "/og-recruit.jpg", width: 1200, height: 630, alt: "配管工・溶接工 募集（月給30万円〜・未経験歓迎・面接1回のみ）" },
+});
 
 const fieldPhotos = [
   { src: "/photos/ceiling-air-piping-work.jpg", alt: "天井パネルの上でエア配管を敷設する作業", caption: "天井パネル上でのエア配管の敷設作業" },
