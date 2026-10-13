@@ -36,6 +36,8 @@ export function ContactForm() {
   const [address, setAddress] = useState("");
   const [zipState, setZipState] = useState<ZipState>({ kind: "idle" });
   const [send, setSend] = useState<SendState>("idle");
+  const [experience, setExperience] = useState("");
+  const isRecruit = type === "recruit";
   const lastLookup = useRef("");
 
   // ?type=recruit などで種別を初期選択
@@ -102,11 +104,29 @@ export function ContactForm() {
     setSend("sending");
     try {
       const typeLabel = INQUIRY_TYPES.find((i) => i.value === data.type)?.label ?? data.type;
+      let payload: Record<string, string> = { ...data, type: typeLabel, page: window.location.href };
+      if (data.type === "recruit") {
+        // 応募の項目は「内容」にまとめて送る（受信側のスプレッドシート・メールはそのまま使える）
+        const exp = data.experience === "経験あり" ? `経験あり（${data.experienceYears}）` : data.experience;
+        const lines = [
+          `ふりがな：${data.kana}`,
+          `年齢：${data.age}歳`,
+          `経験：${exp}`,
+          `普通自動車免許：${data.license}`,
+          `お持ちの資格：${data.qualifications || "（未入力）"}`,
+          `お住まいの市区町村：${data.city || "（未入力）"}`,
+          `面談の希望日時：${data.interviewDate || "（未入力）"}`,
+          "",
+          "ご質問・自己PR：",
+          data.message || "（未入力）",
+        ];
+        payload = { ...payload, address: data.city ?? "", message: lines.join("\n") };
+      }
       await fetch(ENDPOINT, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ ...data, type: typeLabel, page: window.location.href }),
+        body: JSON.stringify(payload),
       });
       setSend("sent");
       // アクセス解析：お問い合わせの送信を記録（個人情報は送らない）
@@ -116,6 +136,7 @@ export function ContactForm() {
       setZip("");
       setPrefecture("");
       setAddress("");
+      setExperience("");
       setZipState({ kind: "idle" });
       window.scrollTo({ top: (formRef.current?.offsetTop ?? 0) - 100, behavior: "smooth" });
     } catch {
@@ -179,18 +200,49 @@ export function ContactForm() {
       </fieldset>
 
       <div className="grid gap-8 md:grid-cols-2">
-        <div>
-          <label htmlFor="company" className={label}>
-            会社名・団体名
-          </label>
-          <input id="company" name="company" autoComplete="organization" className={input} />
-        </div>
+        {!isRecruit && (
+          <div>
+            <label htmlFor="company" className={label}>
+              会社名・団体名
+            </label>
+            <input id="company" name="company" autoComplete="organization" className={input} />
+          </div>
+        )}
         <div>
           <label htmlFor="name" className={label}>
             お名前{req}
           </label>
           <input id="name" name="name" autoComplete="name" required className={input} placeholder="山田 太郎" />
         </div>
+        {isRecruit && (
+          <>
+            <div>
+              <label htmlFor="kana" className={label}>
+                ふりがな{req}
+              </label>
+              <input id="kana" name="kana" required className={input} placeholder="やまだ たろう" />
+            </div>
+            <div>
+              <label htmlFor="age" className={label}>
+                年齢{req}
+              </label>
+              <div className="mt-2 flex items-center gap-2">
+                <input
+                  id="age"
+                  name="age"
+                  type="number"
+                  inputMode="numeric"
+                  min={15}
+                  max={99}
+                  required
+                  className={`${input} mt-0 max-w-[120px]`}
+                  placeholder="25"
+                />
+                <span className="text-[15px]">歳</span>
+              </div>
+            </div>
+          </>
+        )}
         <div>
           <label htmlFor="email" className={label}>
             メールアドレス{req}
@@ -203,12 +255,12 @@ export function ContactForm() {
             autoComplete="email"
             required
             className={input}
-            placeholder="example@company.co.jp"
+            placeholder={isRecruit ? "example@gmail.com" : "example@company.co.jp"}
           />
         </div>
         <div>
           <label htmlFor="tel" className={label}>
-            電話番号
+            電話番号{isRecruit && req}
           </label>
           <input
             id="tel"
@@ -216,12 +268,14 @@ export function ContactForm() {
             type="tel"
             inputMode="tel"
             autoComplete="tel"
+            required={isRecruit}
             className={input}
-            placeholder="06-1234-5678"
+            placeholder={isRecruit ? "090-1234-5678" : "06-1234-5678"}
           />
         </div>
       </div>
 
+      {!isRecruit && (
       <div className="border-t border-line pt-8">
         <p className="text-[14px] font-medium">ご住所・工事場所</p>
         <p className="mt-1 text-[13px] text-steel">郵便番号を入れると、住所が自動で入力されます。</p>
@@ -301,20 +355,105 @@ export function ContactForm() {
           />
         </div>
       </div>
+      )}
+
+      {isRecruit && (
+        <div className="space-y-8 border-t border-line pt-8">
+          <fieldset>
+            <legend className={label}>経験の有無{req}</legend>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {["未経験", "経験あり"].map((v) => (
+                <label
+                  key={v}
+                  className={`flex cursor-pointer items-center gap-3 rounded-sm border px-4 py-3 text-[15px] transition-colors ${
+                    experience === v ? "border-ai bg-mist" : "border-line bg-white hover:border-sky"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="experience"
+                    value={v}
+                    checked={experience === v}
+                    onChange={() => setExperience(v)}
+                    required
+                    className="h-4 w-4 accent-[#003479]"
+                  />
+                  {v}
+                </label>
+              ))}
+            </div>
+            {experience === "経験あり" && (
+              <div className="mt-4">
+                <label htmlFor="experienceYears" className={label}>
+                  経験年数・内容{req}
+                </label>
+                <input
+                  id="experienceYears"
+                  name="experienceYears"
+                  required
+                  className={input}
+                  placeholder="例：配管工として3年、TIG溶接の経験あり"
+                />
+              </div>
+            )}
+          </fieldset>
+
+          <fieldset>
+            <legend className={label}>普通自動車免許{req}</legend>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {["あり", "なし", "取得予定"].map((v) => (
+                <label
+                  key={v}
+                  className="flex cursor-pointer items-center gap-3 rounded-sm border border-line bg-white px-4 py-3 text-[15px] transition-colors hover:border-sky has-[:checked]:border-ai has-[:checked]:bg-mist"
+                >
+                  <input type="radio" name="license" value={v} required className="h-4 w-4 accent-[#003479]" />
+                  {v}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <div className="grid gap-8 md:grid-cols-2">
+            <div>
+              <label htmlFor="qualifications" className={label}>
+                お持ちの資格
+              </label>
+              <input id="qualifications" name="qualifications" className={input} placeholder="例：玉掛け、ガス溶接" />
+            </div>
+            <div>
+              <label htmlFor="city" className={label}>
+                お住まいの市区町村
+              </label>
+              <input id="city" name="city" autoComplete="address-level2" className={input} placeholder="例：尼崎市" />
+            </div>
+            <div className="md:col-span-2">
+              <label htmlFor="interviewDate" className={label}>
+                面談の希望日時
+              </label>
+              <input
+                id="interviewDate"
+                name="interviewDate"
+                className={input}
+                placeholder="例：平日の夕方、10月20日以降の土曜 など"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="border-t border-line pt-8">
         <label htmlFor="message" className={label}>
-          お問い合わせ内容{req}
+          {isRecruit ? "ご質問・自己PR" : <>お問い合わせ内容{req}</>}
         </label>
         <textarea
           id="message"
           name="message"
-          required
-          rows={7}
+          required={!isRecruit}
+          rows={isRecruit ? 5 : 7}
           className={input}
           placeholder={
-            type === "recruit"
-              ? "ご経験の有無、ご希望の職種、面談のご希望日時など"
+            isRecruit
+              ? "気になること、仕事への思いなど、自由にご記入ください"
               : "工事の内容、場所、ご希望の時期、図面の有無など、分かる範囲でご記入ください"
           }
         />
