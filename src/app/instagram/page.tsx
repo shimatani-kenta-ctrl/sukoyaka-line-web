@@ -4,12 +4,13 @@ import { ButtonLink, Container, SectionHeading } from "@/components/ui";
 import { InstagramFeed, InstagramFollowButton } from "@/components/InstagramFeed";
 import { site } from "@/config/site";
 import { getInstagramPosts } from "@/lib/instagram";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Instagram",
   description: `${site.name}の公式Instagram。配管工事の現場の様子や、職人たちの日常を発信しています。`,
-  alternates: { canonical: "/instagram/" },
-};
+  path: "/instagram/",
+});
 
 const topics = [
   { title: "現場の様子", body: "配管が組み上がっていく過程や、溶接の手元を紹介しています。" },

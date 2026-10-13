@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Container } from "@/components/ui";
 import { fullAddress, site } from "@/config/site";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "個人情報の取り扱い",
   description: `${site.name}における個人情報の取り扱いについて。`,
-  alternates: { canonical: "/privacy/" },
-};
+  path: "/privacy/",
+});
 
 const sections = [
   {
