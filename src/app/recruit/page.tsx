@@ -26,10 +26,14 @@ export const metadata: Metadata = {
 };
 
 const fieldPhotos = [
+  { src: "/photos/ceiling-air-piping-work.jpg", alt: "天井パネルの上でエア配管を敷設する作業", caption: "天井パネル上でのエア配管の敷設作業" },
+  { src: "/photos/ahu-piping-frame-1.jpg", alt: "空調機まわりの配管と架台（保温は別工事）", caption: "空調機まわりの配管と架台（保温は別工事）" },
+  { src: "/photos/ahu-piping-frame-2.jpg", alt: "空調機まわりの配管と架台（保温は別工事）", caption: "空調機まわりの配管と架台（保温は別工事）" },
   { src: "/photos/flange-inner-weld.jpg", alt: "フランジ内側の溶接部", caption: "フランジ内側の溶接" },
   { src: "/photos/sus-flange-spool-end.jpg", alt: "ステンレスフランジ（SUSF304 10K 25A）付き短管の溶接部", caption: "ステンレスのフランジ付き短管" },
   { src: "/photos/tig-socket-weld.jpg", alt: "配管にねじ込みソケットをTIG溶接した溶接部", caption: "ねじ込みソケットのTIG溶接" },
   { src: "/photos/angle-base-weld.jpg", alt: "アングルと架台のベースの溶接部", caption: "アングルと架台のベースの溶接" },
+  { src: "/photos/white-pipe-elbow-butt-weld.jpg", alt: "白管のエルボと直管の突合せ溶接部", caption: "白管のエルボと直管の突合せ溶接" },
 ];
 
 const highlights: { label: string; value: string; count?: { before: string; to: number; after: string } }[] = [
@@ -350,9 +354,9 @@ export default function RecruitPage() {
           <SectionHeading
             title="この手で、つくる仕事。"
             side="現場の仕事"
-            lead="実際の現場で、私たちが手がけた溶接・配管製作です。未経験の方も、先輩と組んで一つずつ身につけていきます。"
+            lead="実際の現場で、私たちが手がけた配管・溶接の仕事です。未経験の方も、先輩と組んで一つずつ身につけていきます。"
           />
-          <ul data-reveal-stagger="100" className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+          <ul data-reveal-stagger="100" className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
             {fieldPhotos.map((p) => (
               <li key={p.src}>
                 <figure>
