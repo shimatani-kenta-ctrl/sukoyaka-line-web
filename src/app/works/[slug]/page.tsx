@@ -20,6 +20,28 @@ export function generateStaticParams() {
 
 type Props = { params: Promise<{ slug: string }> };
 
+/** 施工事例の最後に出す「次の一歩」。文言はサイト掲載済みの事実のみ（faq.ts・jobs.ts） */
+const nextSteps = [
+  {
+    who: "工事をご検討の方",
+    label: "工事を相談する",
+    note: "図面がまだない段階のご相談もお受けしています。お見積りは無料です。",
+    href: "/contact/",
+  },
+  {
+    who: "機器メーカー・工事会社の方",
+    label: "協力会社のご相談",
+    note: "配管工事・配管製作・架台製作及び据付・溶接工事でのお取引のご相談はこちら。",
+    href: "/contact/?type=partner",
+  },
+  {
+    who: "この仕事に興味がある方",
+    label: "配管工・溶接工の採用情報",
+    note: "正社員・未経験歓迎。こうした現場を一緒に担う仲間を募集しています。",
+    href: "/recruit/",
+  },
+];
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const w = works.find((x) => x.slug === slug);
@@ -168,11 +190,26 @@ export default async function WorkPage({ params }: Props) {
             </div>
           )}
 
-          <div className="mt-12 flex flex-col gap-3 sm:flex-row">
+          {/* 読んだ人の目的別の次の一歩（工事の依頼／協力会社／採用） */}
+          <div className="mt-16 border-t border-line pt-12">
+            <h2 className="text-xl md:text-2xl">この事例を見た方へ</h2>
+            <ul className="mt-8 grid gap-4 md:grid-cols-3">
+              {nextSteps.map((n) => (
+                <li key={n.href}>
+                  <Link href={n.href} className="group flex h-full flex-col border border-line bg-white p-5 transition-colors hover:border-ai">
+                    <span className="text-[12px] text-steel">{n.who}</span>
+                    <span className="mt-1 font-bold leading-relaxed group-hover:text-ai">{n.label} →</span>
+                    <span className="mt-2 text-[13px] leading-relaxed text-steel">{n.note}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-10">
             <ButtonLink href="/works/" variant="outline">
               施工事例の一覧へ
             </ButtonLink>
-            <ButtonLink href="/contact/">工事を相談する</ButtonLink>
           </div>
         </Container>
       </section>
