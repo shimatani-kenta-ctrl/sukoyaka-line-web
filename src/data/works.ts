@@ -13,7 +13,8 @@
  *   category: "配管工事",                      // 配管工事 / 配管製作 / 架台製作・据付 / 溶接工事
  *   location: "兵庫県内 工場",
  *   period: "約1週間",
- *   date: "2026年10月",
+ *   date: "2026年10月",                        // 工事の時期
+ *   published: "2026-10-20",                   // サイトに載せた日（検索エンジン向け。年-月-日）
  *   summary: "一覧に表示する2〜3行の紹介文。",
  *   photos: [
  *     { src: "/works/pump-install-2026-10/1.jpg", caption: "据付完了後の全景" },
@@ -35,6 +36,10 @@ export type Work = {
   location: string;
   period: string;
   date: string;
+  /** サイトに載せた日（年-月-日）。検索エンジンに「いつの記事か」を伝える */
+  published: string;
+  /** 内容を書き直した日（年-月-日）。書き直したときだけ入れる */
+  updated?: string;
   summary: string;
   photos: { src: string; caption: string }[];
   sections: { heading: string; body: string }[];
@@ -50,6 +55,7 @@ export const works: Work[] = [
     location: "兵庫県尼崎市内 金属加工工場",
     period: "3日間（2名で施工）",
     date: "2026年4月",
+    published: "2026-10-08",
     summary:
       "薬剤と熱で傷んでいた電解槽まわりの配管を、耐熱塩ビ管とHIVP管（50A）で更新しました。「電解槽の蓋を開け閉めするので、配管支持を取らないでほしい」というご要望に、継手とフランジの配置を工夫してお応えしています。",
     photos: [
@@ -89,6 +95,7 @@ export const works: Work[] = [
     location: "奈良県内 化学工場",
     period: "",
     date: "2025年8月",
+    published: "2026-10-08",
     summary:
       "化学工場の新築に伴い、屋外に設置する冷却水配管（白管）と、配管を支える架台を施工しました。配管の本数が多いため、バルブやフランジの高さ・向きをそろえて見やすく仕上げ、屋外ならではの水はけとさびへの対策にも気を配っています。",
     photos: [
