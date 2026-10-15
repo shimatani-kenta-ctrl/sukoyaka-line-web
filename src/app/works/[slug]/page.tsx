@@ -78,6 +78,8 @@ export default async function WorkPage({ params }: Props) {
     headline: w.title,
     description: w.summary,
     articleSection: w.category,
+    datePublished: w.published,
+    dateModified: w.updated || w.published,
     mainEntityOfPage: `${site.url}/works/${w.slug}/`,
     ...(w.photos.length > 0 ? { image: w.photos.map((p) => `${site.url}${p.src}`) } : {}),
     author: {
