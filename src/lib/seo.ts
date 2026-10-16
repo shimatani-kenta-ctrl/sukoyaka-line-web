@@ -3,7 +3,7 @@ import { site } from "@/config/site";
 
 type OgImage = { url: string; width?: number; height?: number; alt: string };
 
-const defaultImage: OgImage = { url: "/og.jpg", width: 1200, height: 630, alt: `${site.name}｜兵庫県尼崎市の配管工事会社（現場の配管写真）` };
+const defaultImage: OgImage = { url: "/og.jpg", width: 1200, height: 630, alt: `${site.name}｜兵庫県尼崎市の配管工事会社（注水用配管とフランジ内側の溶接の現場写真）` };
 
 /**
  * 各ページのタイトル・説明文・SNSで共有したときの表示（OGP）をまとめて作る。

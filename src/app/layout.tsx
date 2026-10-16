@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `尼崎市の配管工事・配管製作・溶接｜${site.name}`,
     description: site.description,
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: `${site.name}｜兵庫県尼崎市の配管工事会社（現場の配管写真）` }],
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: `${site.name}｜兵庫県尼崎市の配管工事会社（注水用配管とフランジ内側の溶接の現場写真）` }],
   },
   twitter: {
     card: "summary_large_image",
