@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       locale: "ja_JP",
       siteName: site.name,
-      images: [image ? { url: image, alt: w.photos[0]?.caption || w.title } : { url: "/og.png", width: 1200, height: 630, alt: site.name }],
+      images: [image ? { url: image, alt: w.photos[0]?.caption || w.title } : { url: "/og.jpg", width: 1200, height: 630, alt: site.name }],
     },
   };
 }
