@@ -10,7 +10,7 @@
 - 選んだ改善：公開のたびに IndexNow で Bing などへ更新を通知（deploy.yml に手順追加・鍵ファイル追加。失敗しても公開に影響しない）。理由：優先6・AI検索。見た目・文言の変化なし
 - プルリクエスト：#23（Netlifyプレビューでビルド成功を確認） → 島谷さん「公開」で取り込み・公開（Actions 成功 2026-10-17 22:20 UTC。IndexNow は公開サイトのサイトマップから10ページを送信し HTTP 202＝受付）
 - 島谷さんが Bing Webmaster Tools に Search Console から取り込み（2026-10-18 7:22）。その画面で「Total Sitemaps found: -」＝ Search Console にサイトマップ未送信と判明 → Bing・Search Console の両方で https://sukoyaka-line.com/sitemap.xml を送るようお願い
-- Bing にサイトマップ送信済み（7:29。エラー0、見つかったURLは処理待ちで0）。Search Console 側の送信は確認待ち
+- Bing にサイトマップ送信済み（7:29。エラー0、見つかったURLは処理待ちで0）。Search Console にもサイトマップ送信済み（7:33。ドメインプロパティのため完全なURLで入力）。これで Google・Bing とも送信済み
 - 島谷さんへのお願い：Bing Webmaster Tools に登録（Search Console から取り込み・数分）。Search Console の登録状況の質問は4回続けて未回答のため、今回はこちらを優先
 - 次の候補：「架台製作 尼崎」は会社サイトが少なく狙い目。架台の施工事例の材料をもらえれば事例化
 
