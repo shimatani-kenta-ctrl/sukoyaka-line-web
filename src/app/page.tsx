@@ -2,6 +2,8 @@ import Link from "next/link";
 import { PipeHero } from "@/components/PipeHero";
 import { ButtonLink, Container, JsonLd, SampleBadge, SectionHeading } from "@/components/ui";
 import { Marquee } from "@/components/Marquee";
+import { OneStop } from "@/components/OneStop";
+import { ConsultPanel } from "@/components/ConsultPanel";
 import { WorkVisual } from "@/components/WorkVisual";
 import { CtaBand } from "@/components/CtaBand";
 import { GoogleMap } from "@/components/GoogleMap";
@@ -86,20 +88,6 @@ const services: { name: string; body: string; media?: Media[] }[] = [
   },
 ];
 
-const strengths = [
-  {
-    title: "急ぎの案件にも、すぐ動く。",
-    body: "設備トラブルや工程の前倒しなど、急なご依頼にも人員と段取りを組んで対応します。まずはお電話でご相談ください。",
-  },
-  {
-    title: "若い職人が、現場を支える。",
-    body: "若手を中心とした機動力のあるチームです。先輩から後輩へ技術をつなぎ、長くお付き合いできる施工体制をつくっています。",
-  },
-  {
-    title: "仕上がりで、信頼を残す。",
-    body: "溶接部の外観、配管の通り、現場の片付けまで。見えるところも見えないところも、同じ基準で仕上げます。",
-  },
-];
 
 export default async function HomePage() {
   const posts = await getInstagramPosts(6);
@@ -189,20 +177,11 @@ export default async function HomePage() {
         <Marquee text="兵庫・大阪の現場へ、すぐに動く。" speed={-0.3} />
       </div>
 
-      {/* 強み */}
-      <section data-bg="sky" className="py-20 md:py-32">
-        <Container>
-          <SectionHeading title="選ばれる理由" side="私たちの強み" />
-          <div data-reveal-stagger="160" className="mt-14 grid gap-12 md:grid-cols-3 md:gap-10">
-            {strengths.map((s) => (
-              <div key={s.title} className="reveal-rail pl-6">
-                <h3 className="text-xl leading-relaxed md:text-[22px]">{s.title}</h3>
-                <p className="mt-4 text-[15px] text-steel">{s.body}</p>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
+      {/* 選ばれる理由（一貫対応の図と3つの強み） */}
+      <OneStop />
+
+      {/* よくあるご相談と、3つの約束 */}
+      <ConsultPanel />
 
       {/* 施工事例 */}
       <section data-bg="porcelain" className="py-20 md:py-32">
