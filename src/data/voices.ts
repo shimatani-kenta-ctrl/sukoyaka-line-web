@@ -14,6 +14,12 @@ export type Voice = {
 
 export const voices: Voice[] = [
   {
+    who: "大阪府内 研究施設様",
+    work: "製造装置の冷却水分岐ヘッダー 更新工事",
+    body: "「要望通りに仕上げてもらい満足しております」",
+    workSlug: "osaka-lab-cooling-water-header",
+  },
+  {
     who: "兵庫県尼崎市内 金属加工工場様",
     work: "電解槽まわりの薬剤配管 更新工事（2026年4月）",
     body: "「蓋の開け閉めがしやすい」「仕上がりがきれい」",

@@ -28,6 +28,7 @@ export const metadata: Metadata = pageMeta({
 });
 
 const fieldPhotos = [
+  { src: "/works/osaka-lab-cooling-water-header/1.jpg", alt: "研究施設の冷却水分岐ヘッダー（HIVP管・SU管）", caption: "研究施設の冷却水分岐ヘッダー" },
   { src: "/photos/ceiling-air-piping-work.jpg", alt: "天井パネルの上でエア配管を敷設する作業", caption: "天井パネル上でのエア配管の敷設作業" },
   { src: "/photos/ahu-piping-frame-1.jpg", alt: "空調機まわりの配管と架台（保温は別工事）", caption: "空調機まわりの配管と架台（保温は別工事）" },
   { src: "/photos/ahu-piping-frame-2.jpg", alt: "空調機まわりの配管と架台（保温は別工事）", caption: "空調機まわりの配管と架台（保温は別工事）" },
