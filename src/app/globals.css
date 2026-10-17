@@ -423,34 +423,3 @@ html.intro-hold .pipe-flow {
   .hero-slide { animation: none; }
   .hero-slide:first-child { opacity: 1; }
 }
-
-/* ───────── 現場写真が流れる帯 ───────── */
-.photo-marquee-track {
-  animation: marquee-flow var(--marquee-duration, 60s) linear infinite;
-}
-.photo-marquee-track.photo-marquee-reverse {
-  animation-direction: reverse;
-}
-.photo-marquee:hover .photo-marquee-track {
-  animation-play-state: paused;
-}
-
-/* ───────── トップ：背景写真の手前に、別の現場写真をカードで重ねる（PC） ───────── */
-.hero-card {
-  opacity: 0;
-  clip-path: inset(100% 0 0 0);
-  animation: hero-card 24s cubic-bezier(0.7, 0, 0.2, 1) infinite;
-  animation-delay: calc(var(--i) * 6s + 1.2s);
-}
-@keyframes hero-card {
-  0% { opacity: 1; clip-path: inset(100% 0 0 0); transform: translateY(24px); }
-  4% { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
-  22% { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
-  26% { opacity: 1; clip-path: inset(0 0 100% 0); transform: translateY(-24px); }
-  27%, 100% { opacity: 0; clip-path: inset(0 0 100% 0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .photo-marquee-track { animation: none; }
-  .hero-card { animation: none; }
-  .hero-card:first-child { opacity: 1; clip-path: none; }
-}
