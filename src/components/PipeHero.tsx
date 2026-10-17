@@ -5,7 +5,7 @@ import { heroShuffleScript } from "@/lib/heroPhotos";
 /** トップの背景に使う現場写真（お客様の了承済み） */
 const heroPhotos = ["/photos/hero/1.jpg", "/photos/hero/2.jpg", "/photos/hero/3.jpg", "/photos/hero/4.jpg"];
 /** 縮んだあと、手前に重なる2枚目のカード */
-const subPhoto = "/photos/tig-socket-weld.jpg";
+const subPhoto = "/photos/air-filter-angle-frame.jpg";
 
 
 
