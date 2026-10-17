@@ -514,3 +514,30 @@ html.js [data-reveal]:not(.is-visible) .reveal-blur {
 @media (prefers-reduced-motion: reduce) {
   .page-bg, .reveal-blur { transition: none; }
 }
+
+/* ───────── 一貫対応の図・ご相談パネル ───────── */
+.onestop-glow {
+  background: radial-gradient(circle, rgba(0, 194, 203, 0.28) 0%, rgba(0, 194, 203, 0.08) 55%, transparent 72%);
+  animation: onestop-glow 4s ease-in-out infinite;
+}
+@keyframes onestop-glow {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+.consult-panel {
+  background: linear-gradient(120deg, #1f5a96 0%, #2b86b8 45%, #00b3bd 100%);
+  background-size: 200% 200%;
+  animation: consult-flow 14s ease-in-out infinite;
+}
+@keyframes consult-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.consult-panel a[class*="border-sky"] {
+  border-color: rgba(255, 255, 255, 0.85);
+  border-radius: 9999px;
+  min-width: 18rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .onestop-glow, .consult-panel { animation: none; }
+}
