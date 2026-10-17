@@ -423,3 +423,71 @@ html.intro-hold .pipe-flow {
   .hero-slide { animation: none; }
   .hero-slide:first-child { opacity: 1; }
 }
+
+/* ───────── トップ：写真が右上のカードへ縮み、背景が明るくなる（--p：0→1） ───────── */
+.hero-pin {
+  --q: calc(1 - var(--p));
+  /* 見出しを画面にとどめておく長さ（この間に写真が縮む） */
+  height: calc(100vh + 50vh);
+  height: calc(100svh + 50svh);
+}
+.hero-stage {
+  top: 4rem;
+  height: calc(100vh - 4rem);
+  height: calc(100svh - 4rem);
+  min-height: 560px;
+}
+@media (min-width: 768px) {
+  .hero-stage { top: 5rem; height: calc(100vh - 5rem); min-height: 600px; }
+}
+.hero-frame {
+  top: calc(var(--p) * 2%);
+  right: calc(var(--p) * 18%);
+  width: calc(100% - var(--p) * 64%);
+  height: calc(100% - var(--p) * 84%);
+  border-radius: calc(var(--p) * 6px);
+}
+.hero-shade {
+  opacity: var(--q);
+}
+.hero-sub {
+  top: 8%;
+  right: 3%;
+  width: 24%;
+  height: 12%;
+  opacity: var(--p);
+  transform: translateY(calc(var(--q) * 40px));
+}
+.hero-ghost {
+  opacity: calc(var(--p) * 0.35);
+  filter: blur(28px);
+}
+@media (min-width: 768px) {
+  .hero-frame {
+    top: calc(var(--p) * 8%);
+    right: calc(var(--p) * 5%);
+    width: calc(100% - var(--p) * 72%);
+    height: calc(100% - var(--p) * 62%);
+  }
+  .hero-sub { top: 34%; right: 2%; width: 18%; height: 30%; }
+}
+.hero-text {
+  color: color-mix(in srgb, #ffffff calc(var(--q) * 100%), var(--color-ink));
+}
+.hero-label {
+  color: color-mix(in srgb, var(--color-sky) calc(var(--q) * 100%), var(--color-ai));
+}
+.hero-sub-copy {
+  color: color-mix(in srgb, var(--color-sky-soft) calc(var(--q) * 100%), var(--color-ai));
+}
+.hero-body {
+  color: color-mix(in srgb, rgb(255 255 255 / 0.85) calc(var(--q) * 100%), var(--color-steel));
+}
+/* 明るくなったら、白抜きのボタンを紺の枠に */
+.hero-pin.is-light .hero-buttons a:first-child {
+  box-shadow: inset 0 0 0 1px var(--color-ai);
+}
+.hero-pin.is-light .hero-buttons a:last-child {
+  border-color: var(--color-ai);
+  color: var(--color-ai);
+}
