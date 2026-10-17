@@ -92,12 +92,20 @@ export function ScrollEffects() {
     // 視差（PCのみ）と、横に流れる文字
     const parallax = Array.from(document.querySelectorAll<HTMLElement>("[data-parallax]"));
     const marquees = Array.from(document.querySelectorAll<HTMLElement>("[data-marquee]"));
+    // トップの背景写真：画面に固定したまま、スクロールに合わせて透けて消える
+    const heroFixed = document.querySelector<HTMLElement>("[data-hero-fixed]");
     const desktop = window.matchMedia("(min-width: 768px)");
     let raf = 0;
     const update = () => {
       raf = 0;
       const y = window.scrollY;
       const vh = window.innerHeight;
+      if (heroFixed) {
+        const p = Math.min(1, Math.max(0, y / (vh * 0.85)));
+        heroFixed.style.opacity = String(1 - p);
+        heroFixed.style.transform = `scale(${1 + p * 0.06})`;
+        heroFixed.style.visibility = p >= 1 ? "hidden" : "visible";
+      }
       parallax.forEach((el) => {
         if (!desktop.matches) {
           el.style.transform = "";
@@ -117,7 +125,7 @@ export function ScrollEffects() {
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
     };
-    if (parallax.length || marquees.length) {
+    if (parallax.length || marquees.length || heroFixed) {
       window.addEventListener("scroll", onScroll, { passive: true });
       window.addEventListener("resize", onScroll);
       update();

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { PipeHero } from "@/components/PipeHero";
-import { PhotoMarquee } from "@/components/PhotoMarquee";
 import { ButtonLink, Container, JsonLd, SampleBadge, SectionHeading } from "@/components/ui";
 import { Marquee } from "@/components/Marquee";
 import { WorkVisual } from "@/components/WorkVisual";
@@ -120,11 +119,6 @@ export default async function HomePage() {
     <>
       <PipeHero />
 
-      {/* 現場写真が流れる帯 */}
-      <div className="space-y-3 bg-ink pb-3 pt-3 md:space-y-5 md:pb-5 md:pt-5">
-        <PhotoMarquee seconds={70} />
-        <PhotoMarquee reverse seconds={80} />
-      </div>
       <JsonLd data={faqPage} />
 
       {/* 事業内容 */}
