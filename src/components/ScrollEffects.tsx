@@ -1,5 +1,7 @@
 "use client";
 
+import { heroShuffleScript } from "@/lib/heroPhotos";
+
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
@@ -94,6 +96,12 @@ export function ScrollEffects() {
     const marquees = Array.from(document.querySelectorAll<HTMLElement>("[data-marquee]"));
     // トップの見出し：スクロールに合わせて写真が右上のカードへ縮む（--p を 0→1）
     const heroPin = document.querySelector<HTMLElement>("[data-hero-pin]");
+    // 別のページからトップへ移動してきたときも、写真をランダムに選び直す
+    if (heroPin && !heroPin.dataset.shuffled) {
+      const w = window as unknown as { __heroShuffle?: () => void };
+      if (w.__heroShuffle) w.__heroShuffle();
+      else new Function(heroShuffleScript)();
+    }
     // ページの地の色：画面の中ほどにある部分の色へ、ゆっくり切り替える
     const pageBg = document.querySelector<HTMLElement>("[data-page-bg]");
     const bgParts = Array.from(document.querySelectorAll<HTMLElement>("[data-bg]"));

@@ -1,10 +1,13 @@
 import type { CSSProperties } from "react";
 import { ButtonLink } from "./ui";
+import { heroShuffleScript } from "@/lib/heroPhotos";
 
 /** トップの背景に使う現場写真（お客様の了承済み） */
 const heroPhotos = ["/photos/hero/1.jpg", "/photos/hero/2.jpg", "/photos/hero/3.jpg", "/photos/hero/4.jpg"];
 /** 縮んだあと、手前に重なる2枚目のカード */
 const subPhoto = "/photos/tig-socket-weld.jpg";
+
+
 
 /** 見出しを1文字ずつ現れさせる（読み上げは sr-only の文で行う） */
 function SplitLine({ text, start }: { text: string; start: number }) {
@@ -29,11 +32,11 @@ export function PipeHero() {
     <section data-hero-pin className="hero-pin relative" style={{ ["--p" as string]: 0 } as CSSProperties}>
       <div className="hero-stage sticky overflow-hidden bg-porcelain">
         {/* 縮んだあとに背景に残る、ぼかした写真 */}
-        <img aria-hidden="true" src={heroPhotos[0]} alt="" className="hero-ghost pointer-events-none absolute -bottom-[10%] -right-[10%] h-[70%] w-[80%] object-cover" />
+        <img aria-hidden="true" data-hero-ghost suppressHydrationWarning src={heroPhotos[0]} alt="" className="hero-ghost pointer-events-none absolute -bottom-[10%] -right-[10%] h-[70%] w-[80%] object-cover" />
 
         {/* 2枚目のカード（縮んだあとに現れる） */}
         <div aria-hidden="true" className="hero-sub pointer-events-none absolute z-[1] overflow-hidden shadow-xl">
-          <img src={subPhoto} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+          <img data-hero-sub suppressHydrationWarning src={subPhoto} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
         </div>
 
         {/* メインの写真：画面いっぱい → 右上のカードへ縮む */}
@@ -41,6 +44,8 @@ export function PipeHero() {
           {heroPhotos.map((src, i) => (
             <img
               key={src}
+              data-hero-photo
+              suppressHydrationWarning
               src={src}
               alt=""
               loading={i === 0 ? "eager" : "lazy"}
@@ -49,6 +54,7 @@ export function PipeHero() {
               style={{ ["--i" as string]: i }}
             />
           ))}
+          <script dangerouslySetInnerHTML={{ __html: heroShuffleScript }} />
           <div className="hero-shade absolute inset-0 bg-ink/60 md:bg-transparent md:bg-gradient-to-r md:from-ink/95 md:via-ink/75 md:to-ink/30" />
         </div>
 
