@@ -491,3 +491,26 @@ html.intro-hold .pipe-flow {
   border-color: var(--color-ai);
   color: var(--color-ai);
 }
+
+/* ───────── ページの地の色が、スクロールに合わせて切り替わる（トップ） ───────── */
+.page-bg {
+  background-color: var(--color-porcelain);
+  transition: background-color 0.9s ease;
+}
+.page-bg[data-color="white"] { background-color: #ffffff; }
+.page-bg[data-color="mist"] { background-color: var(--color-mist); }
+.page-bg[data-color="sky"] { background-color: #d9f2f4; }
+.page-bg[data-color="ink"] { background-color: var(--color-ink); }
+
+/* ───────── 見出しが、ぼかしからくっきり現れる ───────── */
+.reveal-blur {
+  transition: filter 1.1s ease, opacity 1.1s ease, letter-spacing 1.1s ease;
+}
+html.js [data-reveal]:not(.is-visible) .reveal-blur {
+  filter: blur(12px);
+  opacity: 0;
+  letter-spacing: 0.2em;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-bg, .reveal-blur { transition: none; }
+}

@@ -121,8 +121,11 @@ export default async function HomePage() {
 
       <JsonLd data={faqPage} />
 
+      {/* スクロール位置に合わせて色が変わるページの地（ScrollEffects が担当） */}
+      <div aria-hidden="true" data-page-bg className="page-bg pointer-events-none fixed inset-0 z-[-2]" />
+
       {/* 事業内容 */}
-      <section className="py-20 md:py-32">
+      <section data-bg="porcelain" className="py-20 md:py-32">
         <Container>
           <SectionHeading
             title="私たちの仕事"
@@ -181,13 +184,13 @@ export default async function HomePage() {
       </section>
 
       {/* 横に流れる文字 */}
-      <div className="space-y-3 pb-4">
+      <div data-bg="porcelain" className="space-y-3 pb-4">
         <Marquee text="各種配管工事 ／ 配管製作 ／ 架台製作・据付 ／ 溶接工事 ／" speed={0.35} />
         <Marquee text="兵庫・大阪の現場へ、すぐに動く。" speed={-0.3} />
       </div>
 
       {/* 強み */}
-      <section className="bg-mist py-20 md:py-32">
+      <section data-bg="sky" className="py-20 md:py-32">
         <Container>
           <SectionHeading title="選ばれる理由" side="私たちの強み" />
           <div data-reveal-stagger="160" className="mt-14 grid gap-12 md:grid-cols-3 md:gap-10">
@@ -202,7 +205,7 @@ export default async function HomePage() {
       </section>
 
       {/* 施工事例 */}
-      <section className="py-20 md:py-32">
+      <section data-bg="porcelain" className="py-20 md:py-32">
         <Container>
           <SectionHeading title="施工事例" side="これまでの仕事" />
           {latestWorks.length === 0 ? (
@@ -243,7 +246,7 @@ export default async function HomePage() {
 
       {/* お客様の声 */}
       {voice && (
-        <section className="border-y border-line bg-white py-20 md:py-28">
+        <section data-bg="white" className="py-20 md:py-28">
           <Container className="grid gap-10 md:grid-cols-[1fr_2fr] md:gap-16">
             <SectionHeading title="お客様の声" />
             <figure data-reveal="right">
@@ -267,7 +270,7 @@ export default async function HomePage() {
       )}
 
       {/* よくある質問（工事のご依頼） */}
-      <section className="bg-mist py-20 md:py-28">
+      <section data-bg="mist" className="py-20 md:py-28">
         <Container>
           <SectionHeading title="よくあるご質問" side="工事のご依頼" />
           <div data-reveal-stagger="80" className="mt-12 space-y-3">
@@ -297,7 +300,7 @@ export default async function HomePage() {
       </section>
 
       {/* 採用 */}
-      <section className="relative overflow-hidden bg-ink text-white">
+      <section data-bg="ink" className="relative overflow-hidden text-white">
         <svg data-reveal="draw" aria-hidden="true" viewBox="0 0 600 400" className="absolute -right-24 top-0 h-full opacity-50 md:right-0" fill="none">
           <path className="draw-line" pathLength={1} d="M600 60 H300 a60 60 0 0 0 -60 60 V420" stroke="#1f5a96" strokeWidth="26" />
           <path className="draw-line" pathLength={1} d="M600 60 H300 a60 60 0 0 0 -60 60 V420" stroke="#00c2cb" strokeWidth="1" />
@@ -326,12 +329,12 @@ export default async function HomePage() {
       <Marquee
         text="未経験から、一生モノの技術を。"
         speed={0.3}
-        className="bg-ink pb-10"
+        className="pb-10"
         stroke="rgba(184,236,239,0.9)"
       />
 
       {/* Instagram */}
-      <section className="py-20 md:py-32">
+      <section data-bg="porcelain" className="py-20 md:py-32">
         <Container>
           <SectionHeading title="現場の様子" side="インスタグラム" lead="施工中の現場や、職人たちの日常をInstagramで発信しています。" />
           <div data-reveal className="mt-12">
@@ -347,7 +350,7 @@ export default async function HomePage() {
       </section>
 
       {/* 会社情報・アクセス */}
-      <section className="bg-mist py-20 md:py-28">
+      <section data-bg="mist" className="py-20 md:py-28">
         <Container className="grid gap-12 md:grid-cols-2 md:items-center">
           <div>
             <SectionHeading title="会社情報" side="アクセス" />

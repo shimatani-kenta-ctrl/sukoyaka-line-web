@@ -94,12 +94,26 @@ export function ScrollEffects() {
     const marquees = Array.from(document.querySelectorAll<HTMLElement>("[data-marquee]"));
     // トップの見出し：スクロールに合わせて写真が右上のカードへ縮む（--p を 0→1）
     const heroPin = document.querySelector<HTMLElement>("[data-hero-pin]");
+    // ページの地の色：画面の中ほどにある部分の色へ、ゆっくり切り替える
+    const pageBg = document.querySelector<HTMLElement>("[data-page-bg]");
+    const bgParts = Array.from(document.querySelectorAll<HTMLElement>("[data-bg]"));
+    let currentBg = "";
     const desktop = window.matchMedia("(min-width: 768px)");
     let raf = 0;
     const update = () => {
       raf = 0;
       const y = window.scrollY;
       const vh = window.innerHeight;
+      if (pageBg && bgParts.length) {
+        let next = bgParts[0].dataset.bg ?? "";
+        for (const el of bgParts) {
+          if (el.getBoundingClientRect().top < vh * 0.55) next = el.dataset.bg ?? next;
+        }
+        if (next !== currentBg) {
+          currentBg = next;
+          pageBg.dataset.color = next;
+        }
+      }
       if (heroPin) {
         const raw = Math.min(1, Math.max(0, y / (vh * 0.45)));
         const p = raw < 0.5 ? 2 * raw * raw : 1 - Math.pow(-2 * raw + 2, 2) / 2; // なめらかに加速・減速
@@ -125,7 +139,7 @@ export function ScrollEffects() {
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
     };
-    if (parallax.length || marquees.length || heroPin) {
+    if (parallax.length || marquees.length || heroPin || pageBg) {
       window.addEventListener("scroll", onScroll, { passive: true });
       window.addEventListener("resize", onScroll);
       update();
