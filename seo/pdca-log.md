@@ -8,7 +8,8 @@
 - 確認：site:sukoyaka-line.com は自社未表示のまま（公開から約11日）。「架台製作 尼崎」は部品通販・市の資料が中心で会社サイトがほぼない、「配管工 未経験 兵庫」は Indeed・ハローワーク・ジモティーが中心（検索ツールは米国基準のため傾向）
 - 確認：新しいトップも h1・本文・FAQ構造化データは HTML に残っており、検索向けの要素は維持。robots・サイトマップ・canonical も問題なし。Bing（ChatGPT検索・Copilot の検索元）向けの対策はまだ何もない
 - 選んだ改善：公開のたびに IndexNow で Bing などへ更新を通知（deploy.yml に手順追加・鍵ファイル追加。失敗しても公開に影響しない）。理由：優先6・AI検索。見た目・文言の変化なし
-- プルリクエスト：#23（Netlifyプレビューでビルド成功を確認）
+- プルリクエスト：#23（Netlifyプレビューでビルド成功を確認） → 島谷さん「公開」で取り込み・公開（Actions 成功 2026-10-17 22:20 UTC。IndexNow は公開サイトのサイトマップから10ページを送信し HTTP 202＝受付）
+- 島谷さんが Bing Webmaster Tools に Search Console から取り込み（2026-10-18 7:22）。その画面で「Total Sitemaps found: -」＝ Search Console にサイトマップ未送信と判明 → Bing・Search Console の両方で https://sukoyaka-line.com/sitemap.xml を送るようお願い
 - 島谷さんへのお願い：Bing Webmaster Tools に登録（Search Console から取り込み・数分）。Search Console の登録状況の質問は4回続けて未回答のため、今回はこちらを優先
 - 次の候補：「架台製作 尼崎」は会社サイトが少なく狙い目。架台の施工事例の材料をもらえれば事例化
 
