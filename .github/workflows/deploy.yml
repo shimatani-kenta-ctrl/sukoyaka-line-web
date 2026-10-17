@@ -47,3 +47,24 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # 公開のあと、Bing など（ChatGPT の検索・Copilot が使う検索エンジン）に「更新した」と知らせる（IndexNow）。
+  # 失敗しても公開そのものには影響しない。鍵のファイルは public/160d93818bfb4f7acc590fff7649b932.txt。
+  indexnow:
+    needs: deploy
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    env:
+      KEY: 160d93818bfb4f7acc590fff7649b932
+      HOST: sukoyaka-line.com
+    steps:
+      - name: 公開サイトに反映されるのを待ってから、サイトマップのURLを送る
+        run: |
+          sleep 90
+          URLS=$(curl -fsS "https://$HOST/sitemap.xml" | grep -o '<loc>[^<]*</loc>' | sed -e 's/<loc>//' -e 's/<\/loc>//')
+          test -n "$URLS"
+          BODY=$(printf '%s\n' $URLS | jq -R . | jq -s --arg host "$HOST" --arg key "$KEY" \
+            '{host: $host, key: $key, keyLocation: ("https://" + $host + "/" + $key + ".txt"), urlList: .}')
+          echo "$BODY"
+          curl -sS -o /dev/null -w "IndexNow: HTTP %{http_code}\n" -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json; charset=utf-8" -d "$BODY"
