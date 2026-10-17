@@ -2,6 +2,13 @@ import { ButtonLink } from "./ui";
 
 /** トップの背景に使う現場写真（お客様の了承済み） */
 const heroPhotos = ["/photos/hero/1.jpg", "/photos/hero/2.jpg", "/photos/hero/3.jpg", "/photos/hero/4.jpg"];
+/** 手前のカードに重ねる写真（背景とは別の現場を見せる） */
+const cardPhotos = [
+  "/photos/tig-socket-weld.jpg",
+  "/photos/sus-flange-spools.jpg",
+  "/photos/air-filter-angle-frame.jpg",
+  "/photos/white-pipe-elbow-butt-weld.jpg",
+];
 
 /** 見出しを1文字ずつ現れさせる（読み上げは sr-only の文で行う） */
 function SplitLine({ text, start }: { text: string; start: number }) {
@@ -35,6 +42,22 @@ export function PipeHero() {
         ))}
         <div className="absolute inset-0 bg-ink/60 md:bg-transparent md:bg-gradient-to-r md:from-ink/95 md:via-ink/75 md:to-ink/30" />
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-ink/80 to-transparent" />
+      </div>
+
+      {/* 手前のカード（PCのみ）：背景とずらして別の現場写真を下から現す */}
+      <div aria-hidden="true" className="pointer-events-none absolute bottom-16 right-[6%] hidden h-[380px] w-[290px] md:block lg:right-[10%]">
+        <span className="absolute -left-4 -top-4 h-full w-full border border-sky/50" />
+        {cardPhotos.map((src, i) => (
+          <img
+            key={src}
+            src={src}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            className="hero-card absolute inset-0 h-full w-full object-cover shadow-2xl"
+            style={{ ["--i" as string]: i }}
+          />
+        ))}
       </div>
 
       <div className="mx-auto flex min-h-[640px] max-w-6xl flex-col justify-center px-4 pb-16 pt-14 md:min-h-[680px] md:px-8 md:py-20">
