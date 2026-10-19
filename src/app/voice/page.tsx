@@ -9,7 +9,7 @@ import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   title: "お客様の声",
-  description: `${site.name}に配管工事・機器据付をご依頼いただいたお客様からの声をご紹介します。`,
+  description: `${site.name}に配管工事をご依頼いただいたお客様から、実際にいただいた言葉を施工事例とあわせてご紹介します。`,
   path: "/voice/",
 });
 
