@@ -356,6 +356,9 @@ export default function RecruitPage() {
           <p className="mt-6 text-[13px] text-white/60">
             成長のスピードには個人差があります。目安として、先輩と相談しながら進めていきます。
           </p>
+          <Link href="/column/pipefitter-job/" className="mt-4 inline-block text-[14px] text-sky underline underline-offset-4">
+            配管工の仕事内容と年収（コラム）
+          </Link>
         </Container>
       </section>
 
