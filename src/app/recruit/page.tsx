@@ -218,6 +218,17 @@ export default function RecruitPage() {
               </div>
             ))}
           </dl>
+
+          {/* 直接受注と、社員への還元（比べる数字は使わない。根拠のある事実のみ） */}
+          <div data-reveal className="mt-8 rounded-[16px] border-l-[4px] border-pipe bg-white px-6 py-6 md:px-8">
+            <p className="text-[13px] font-bold tracking-[0.15em] text-ai">利益を、社員へ</p>
+            <p className="mt-2 text-[15px] leading-[2] text-ink md:text-base">
+              お客様から直接お受けする仕事を増やしています。間に入る会社がない分、工事の利益を社員の給与や待遇に還元しやすい仕組みです。
+            </p>
+            <Link href="/column/direct-contract/" className="mt-3 inline-block text-[14px] text-ai underline underline-offset-4">
+              直接受注のしくみを詳しく（コラム）
+            </Link>
+          </div>
         </Container>
       </section>
 
