@@ -15,6 +15,24 @@ export const metadata: Metadata = pageMeta({
 /** コラムの一覧（新しいものを上に） */
 const columns = [
   {
+    href: "/column/shutdown-piping-work/",
+    date: "2026年10月22日",
+    title: "工場の休止期間に配管工事を終わらせるには｜段取りの流れとポイント",
+    summary: "定期修理や長期休暇など、限られた休止期間のうちに配管の更新・改修を終わらせるための段取りを解説します。",
+  },
+  {
+    href: "/column/construction-aging/",
+    date: "2026年10月22日",
+    title: "建設業の高齢化と人手不足｜データで見る現状と、若手が育つ現場づくり",
+    summary: "国土交通省のデータで、建設業の働き手の減少と高齢化を整理し、健やかラインの取り組みを紹介します。",
+  },
+  {
+    href: "/column/pipefitter-job/",
+    date: "2026年10月22日",
+    title: "配管工の仕事内容と年収｜未経験から一人前になるまで",
+    summary: "配管工の仕事・年収・求人の多さを厚生労働省のデータで紹介し、未経験から一人前になるまでの目安を解説します。",
+  },
+  {
     href: "/column/direct-contract/",
     date: "2026年10月22日",
     title: "多重下請と直接依頼の違い｜配管工事を直接頼むメリット",
