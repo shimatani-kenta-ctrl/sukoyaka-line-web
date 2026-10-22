@@ -75,6 +75,7 @@ export const site = {
     { href: "/", label: "トップ" },
     { href: "/company/", label: "会社概要" },
     { href: "/works/", label: "施工事例" },
+    { href: "/column/", label: "コラム" },
     { href: "/voice/", label: "お客様の声" },
     { href: "/recruit/", label: "採用情報" },
     { href: "/instagram/", label: "Instagram" },
