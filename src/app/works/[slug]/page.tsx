@@ -20,6 +20,12 @@ export function generateStaticParams() {
 
 type Props = { params: Promise<{ slug: string }> };
 
+/** 施工事例の最後に出す関連コラム（発注をご検討の方向け）。題名は各コラムの title と同じ */
+const relatedColumns = [
+  { label: "工場の休止期間に配管工事を終わらせるには｜段取りの流れとポイント", href: "/column/shutdown-piping-work/" },
+  { label: "多重下請と直接依頼の違い｜配管工事を直接頼むメリット", href: "/column/direct-contract/" },
+];
+
 /** 施工事例の最後に出す「次の一歩」。文言はサイト掲載済みの事実のみ（faq.ts・jobs.ts） */
 const nextSteps = [
   {
@@ -191,6 +197,20 @@ export default async function WorkPage({ params }: Props) {
               </ul>
             </div>
           )}
+
+          {/* 発注をご検討の方向けのコラム（内部リンク） */}
+          <div className="mt-16 border-t border-line pt-12">
+            <h2 className="text-xl md:text-2xl">工事をご検討の方へ（コラム）</h2>
+            <ul className="mt-6 space-y-3 text-[15px]">
+              {relatedColumns.map((c) => (
+                <li key={c.href}>
+                  <Link href={c.href} className="text-ai underline underline-offset-4">
+                    {c.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           {/* 読んだ人の目的別の次の一歩（工事の依頼／協力会社／採用） */}
           <div className="mt-16 border-t border-line pt-12">
