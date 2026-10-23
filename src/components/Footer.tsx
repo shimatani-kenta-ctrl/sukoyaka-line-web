@@ -25,6 +25,18 @@ export function Footer() {
                 {c.email}
               </a>
             </p>
+            {site.googleBusiness.profileUrl && (
+              <p>
+                <a
+                  href={site.googleBusiness.profileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-4 hover:text-sky"
+                >
+                  Googleマップで会社を見る（写真・クチコミ）
+                </a>
+              </p>
+            )}
           </address>
         </div>
         <nav aria-label="フッターメニュー">

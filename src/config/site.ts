@@ -58,6 +58,14 @@ export const site = {
   /** Googleアナリティクスの測定ID（アクセス数の計測）。空欄なら計測しない */
   gaId: "G-W15SG7VH9G",
 
+  /**
+   * Googleビジネスプロフィール（Googleマップの会社ページ）の共有リンク。
+   * マップアプリの「共有」→「コピー」で取れるURL（末尾の ?g_st=… は不要）。空欄ならリンク非表示
+   */
+  googleBusiness: {
+    profileUrl: "https://maps.app.goo.gl/EbXSA5qVuGkEigd68",
+  },
+
   instagram: {
     /** アカウントのURL（例: https://www.instagram.com/xxxx/）。空欄ならフォローボタン非表示 */
     profileUrl: "https://www.instagram.com/sukoyaka0303/",

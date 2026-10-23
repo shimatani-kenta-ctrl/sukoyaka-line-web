@@ -164,6 +164,16 @@ export default function CompanyPage() {
           >
             Googleマップで開く
           </a>
+          {site.googleBusiness.profileUrl && (
+            <a
+              href={site.googleBusiness.profileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 block w-fit text-[14px] text-ai underline underline-offset-4"
+            >
+              Googleビジネスプロフィール（写真・クチコミ）
+            </a>
+          )}
         </Container>
       </section>
 
