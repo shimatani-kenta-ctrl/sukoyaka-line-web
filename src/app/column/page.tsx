@@ -4,6 +4,7 @@ import { Container, JsonLd } from "@/components/ui";
 import { CtaBand } from "@/components/CtaBand";
 import { site } from "@/config/site";
 import { pageMeta } from "@/lib/seo";
+import { columns } from "@/data/columns";
 
 export const metadata: Metadata = pageMeta({
   title: "コラム",
@@ -17,38 +18,6 @@ const DAY = 24 * 60 * 60 * 1000;
 /** NEWを外す日時（公開日の日本時間0時 + 表示日数） */
 const newUntil = (published?: string) =>
   published ? new Date(`${published}T00:00:00+09:00`).getTime() + NEW_DAYS * DAY : 0;
-
-/** コラムの一覧（新しいものを上に）。published は「年-月-日」 */
-const columns = [
-  {
-    href: "/column/shutdown-piping-work/",
-    published: "2026-10-22",
-    date: "2026年10月22日",
-    title: "工場の休止期間に配管工事を終わらせるには｜段取りの流れとポイント",
-    summary: "定期修理や長期休暇など、限られた休止期間のうちに配管の更新・改修を終わらせるための段取りを解説します。",
-  },
-  {
-    href: "/column/construction-aging/",
-    published: "2026-10-22",
-    date: "2026年10月22日",
-    title: "建設業の高齢化と人手不足｜データで見る現状と、若手が育つ現場づくり",
-    summary: "国土交通省のデータで、建設業の働き手の減少と高齢化を整理し、健やかラインの取り組みを紹介します。",
-  },
-  {
-    href: "/column/pipefitter-job/",
-    published: "2026-10-22",
-    date: "2026年10月22日",
-    title: "配管工の仕事内容と年収｜未経験から一人前になるまで",
-    summary: "配管工の仕事・年収・求人の多さを厚生労働省のデータで紹介し、未経験から一人前になるまでの目安を解説します。",
-  },
-  {
-    href: "/column/direct-contract/",
-    published: "2026-10-22",
-    date: "2026年10月22日",
-    title: "多重下請と直接依頼の違い｜配管工事を直接頼むメリット",
-    summary: "国土交通省のデータをもとに、多重下請構造の仕組みと、施工する会社へ直接ご依頼いただくメリットを解説します。",
-  },
-];
 
 export default function ColumnIndex() {
   return (
