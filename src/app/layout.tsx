@@ -45,6 +45,8 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+const sameAs = [site.instagram.profileUrl, site.googleBusiness.profileUrl].filter(Boolean);
+
 const organization = {
   "@context": "https://schema.org",
   "@type": "GeneralContractor",
@@ -70,8 +72,11 @@ const organization = {
   ...(site.company.foundedIso ? { foundingDate: site.company.foundedIso } : {}),
   founder: { "@type": "Person", name: site.company.representative, jobTitle: site.company.representativeTitle },
   knowsAbout: [...site.company.business],
-  ...(site.instagram.profileUrl ? { sameAs: [site.instagram.profileUrl] } : {}),
-  hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`,
+  // 同じ会社の公式ページ（Instagram・Googleビジネスプロフィール）。Google・AI検索に同一の会社だと伝える
+  ...(sameAs.length ? { sameAs } : {}),
+  hasMap:
+    site.googleBusiness.profileUrl ||
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`,
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
