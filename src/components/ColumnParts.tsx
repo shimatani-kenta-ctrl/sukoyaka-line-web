@@ -4,6 +4,7 @@ import { PageHero } from "@/components/PageHero";
 import { ButtonLink, Container, JsonLd } from "@/components/ui";
 import { CtaBand } from "@/components/CtaBand";
 import { site } from "@/config/site";
+import { columns } from "@/data/columns";
 
 /**
  * コラム記事の共通部品。
@@ -57,6 +58,7 @@ export function ColumnArticle({
             <div className="mt-3 text-[16px] leading-[2] text-ink md:text-[17px]">{summary}</div>
           </section>
           {children}
+          <RelatedColumns path={path} />
           <section className="mt-16 border-t border-line pt-8 text-[13px] leading-relaxed text-steel">
             {sources.length > 0 && <h2 className="text-[14px] font-bold text-ink">出典</h2>}
             <ul className="mt-2 space-y-3">
@@ -80,6 +82,36 @@ export function ColumnArticle({
       </article>
       <CtaBand />
     </>
+  );
+}
+
+/**
+ * 記事下の「関連コラム」。同じ読者向けの記事を先に、もう一方の読者向けの新しい記事を次に、最大2本。
+ * 一覧は src/data/columns.ts から自動で選ぶ（記事を足せば自動で載る）
+ */
+export function RelatedColumns({ path }: { path: string }) {
+  const self = columns.find((c) => c.href === path);
+  const others = columns.filter((c) => c.href !== path);
+  const same = others.filter((c) => c.audience === self?.audience);
+  const rest = others.filter((c) => c.audience !== self?.audience);
+  const picks = [...same.slice(0, 1), ...rest.slice(0, 1), ...same.slice(1)].slice(0, 2);
+  if (picks.length === 0) return null;
+  return (
+    <section aria-labelledby="related-columns" className="mt-16">
+      <h2 id="related-columns" className="text-[18px] text-ink md:text-[20px]">
+        あわせて読みたいコラム
+      </h2>
+      <ul className="mt-5 space-y-3">
+        {picks.map((c) => (
+          <li key={c.href}>
+            <Link href={c.href} className="block rounded-[12px] border-l-[3px] border-ai bg-white px-5 py-4 transition-shadow hover:shadow-lg">
+              <span className="block text-[12px] text-steel">{c.audience === "client" ? "工事をご検討の方へ" : "働きたい方へ"}</span>
+              <span className="mt-1 block text-[15px] leading-relaxed text-ink md:text-base">{c.title}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
