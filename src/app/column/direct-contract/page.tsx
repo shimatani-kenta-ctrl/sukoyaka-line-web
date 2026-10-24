@@ -4,6 +4,7 @@ import { PageHero } from "@/components/PageHero";
 import { ButtonLink, Container, JsonLd } from "@/components/ui";
 import { CtaBand } from "@/components/CtaBand";
 import { StructureDiagram, TierChart } from "@/components/TierChart";
+import { RelatedColumns } from "@/components/ColumnParts";
 import { site } from "@/config/site";
 import { pageMeta } from "@/lib/seo";
 
@@ -204,6 +205,8 @@ export default function DirectContractColumn() {
               </ButtonLink>
             </div>
           </section>
+
+          <RelatedColumns path={path} />
 
           <section className="mt-16 border-t border-line pt-8 text-[13px] leading-relaxed text-steel">
             <h2 className="text-[14px] font-bold text-ink">出典</h2>
