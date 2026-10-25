@@ -40,6 +40,9 @@ export function ColumnArticle({
     headline: title,
     description,
     datePublished: published,
+    dateModified: published,
+    // 共有画像（OGP）と同じ現場写真。Google は記事の構造化データに画像を入れることを推奨している
+    image: [`${site.url}/og.jpg`],
     author: { "@type": "Organization", name: site.name, url: site.url },
     publisher: { "@type": "Organization", name: site.name, logo: { "@type": "ImageObject", url: `${site.url}/logo.png` } },
     mainEntityOfPage: `${site.url}${path}`,
