@@ -117,7 +117,13 @@ export function IsoHero() {
               <br />
               <SplitLine text="確かな未来へ。" start={0.78} />
             </p>
-            <div className="hero-in mt-6 flex flex-col gap-3 sm:flex-row md:mt-8" style={{ ["--d" as string]: "1.5s" }}>
+            <p className="hero-in mt-4 text-[13px] font-bold tracking-[0.12em] text-sky-soft md:mt-6 md:text-lg md:tracking-[0.18em]" style={{ ["--d" as string]: "1.3s" }}>
+              ― 配管から生まれる、トータルソリューション ―
+            </p>
+            <p className="hero-in mt-4 max-w-xl text-[14px] leading-[1.9] text-white/85 md:mt-6 md:text-base md:leading-loose" style={{ ["--d" as string]: "1.4s" }}>
+              配管工事・配管製作から、架台の製作・据付、溶接まで一貫して対応。急ぎの案件にも動ける機動力で、現場の「止められない」に応えます。
+            </p>
+            <div className="hero-in mt-5 flex flex-col gap-3 sm:flex-row md:mt-8" style={{ ["--d" as string]: "1.5s" }}>
               <ButtonLink href="/contact/" variant="light">
                 工事を相談する
               </ButtonLink>
