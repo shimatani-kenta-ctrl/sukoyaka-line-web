@@ -541,3 +541,55 @@ html.js [data-reveal]:not(.is-visible) .reveal-blur {
 @media (prefers-reduced-motion: reduce) {
   .onestop-glow, .consult-panel { animation: none; }
 }
+
+/* ───────── トップの見出し（アイソメ図のデザイン） ───────── */
+.iso-hero {
+  /* 見出しを画面にとどめておく長さ（この間に事業内容が切り替わる） */
+  height: 240vh;
+  height: 240svh;
+}
+.iso-stage {
+  top: 4rem;
+  height: calc(100vh - 4rem);
+  height: calc(100svh - 4rem);
+  min-height: 600px;
+}
+@media (min-width: 768px) {
+  .iso-stage { top: 5rem; height: calc(100vh - 5rem); min-height: 640px; }
+}
+.iso-grid {
+  background-image:
+    repeating-linear-gradient(30deg, rgb(255 255 255 / 0.06) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(150deg, rgb(255 255 255 / 0.06) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.035) 0 1px, transparent 1px 69px);
+}
+.iso-bg {
+  left: calc(55% + var(--r) * 25%);
+  top: 50%;
+  height: 150%;
+  width: auto;
+  overflow: visible;
+  opacity: 0.3;
+  transform: translate(-50%, calc(-50% + 14vh - var(--r) * 34vh)) rotate(calc(-8deg + var(--r) * 16deg)) scale(calc(1.05 + var(--r) * 0.35));
+  filter: blur(calc(3px + var(--r) * 3px));
+}
+.iso-bg path { stroke-dasharray: 1; }
+.iso-l1 { stroke-dashoffset: max(0, calc(1 - (0.3 + var(--r) * 1.1) * 1.1)); }
+.iso-l2 { stroke-dashoffset: max(0, calc(1 - (0.3 + var(--r) * 1.1 - 0.35) / 0.4)); }
+.iso-l3 { stroke-dashoffset: max(0, calc(1 - (0.3 + var(--r) * 1.1 - 0.5) / 0.5)); }
+.iso-photo { animation: iso-photo-in 0.5s ease both; }
+@keyframes iso-photo-in {
+  from { opacity: 0; transform: scale(1.04); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .iso-bg { transform: translate(-50%, -50%) rotate(-4deg); }
+  .iso-bg path { stroke-dashoffset: 0; }
+  .iso-photo { animation: none; }
+}
+.iso-catch { font-size: clamp(42px, 12vw, 64px); line-height: 1.18; }
+.iso-card { flex: 1 1 100%; grid-template-columns: 104px minmax(0, 1fr); }
+@media (min-width: 768px) {
+  .iso-catch { font-size: clamp(64px, 8.2vw, 124px); line-height: 1.12; }
+  .iso-card { flex: 1 1 480px; grid-template-columns: 200px minmax(0, 1fr); }
+}

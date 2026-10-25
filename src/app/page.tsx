@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PipeHero } from "@/components/PipeHero";
+import { IsoHero } from "@/components/IsoHero";
 import { ButtonLink, Container, JsonLd, SampleBadge, SectionHeading } from "@/components/ui";
 import { Marquee } from "@/components/Marquee";
 import { OneStop } from "@/components/OneStop";
@@ -105,7 +105,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <PipeHero />
+      <IsoHero />
 
       <JsonLd data={faqPage} />
 
