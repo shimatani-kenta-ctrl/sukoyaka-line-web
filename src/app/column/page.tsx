@@ -5,6 +5,7 @@ import { CtaBand } from "@/components/CtaBand";
 import { site } from "@/config/site";
 import { pageMeta } from "@/lib/seo";
 import { columns } from "@/data/columns";
+import { ColumnVisuals } from "@/components/ColumnVisuals";
 
 export const metadata: Metadata = pageMeta({
   title: "コラム",
@@ -50,6 +51,7 @@ export default function ColumnIndex() {
             {columns.map((c) => (
               <li key={c.href}>
                 <Link href={c.href} className="block rounded-[16px] border-t-[3px] border-ai bg-white px-6 py-7 transition-shadow hover:shadow-lg md:px-8">
+                  {c.visuals && c.visuals.length > 0 && <ColumnVisuals keys={c.visuals} />}
                   <p className="flex items-center gap-3 text-[13px] text-steel">
                     {Date.now() < newUntil(c.published) && (
                       <span
