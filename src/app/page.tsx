@@ -113,7 +113,20 @@ export default async function HomePage() {
       <div aria-hidden="true" data-page-bg className="page-bg pointer-events-none fixed inset-0 z-[-2]" />
 
       {/* 事業内容 */}
-      <section data-bg="porcelain" className="py-20 md:py-32">
+      <section data-bg="porcelain" className="relative isolate py-20 md:py-32">
+        {/* 背景：作業風景の写真（スクロールしても画面に残り、薄く透けて見える） */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+          <div className="sticky top-0 h-screen overflow-hidden">
+            <img
+              src="/photos/ceiling-air-piping-work.jpg"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover object-[50%_45%]"
+            />
+            <div className="absolute inset-0 bg-porcelain/80" />
+          </div>
+        </div>
         <Container>
           <SectionHeading
             title="私たちの仕事"
