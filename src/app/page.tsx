@@ -112,6 +112,23 @@ export default async function HomePage() {
       {/* スクロール位置に合わせて色が変わるページの地（ScrollEffects が担当） */}
       <div aria-hidden="true" data-page-bg className="page-bg pointer-events-none fixed inset-0 z-[-2]" />
 
+      {/* 現場の作業風景（見出しのすぐ下に、画面幅いっぱいで） */}
+      <div data-bg="ink" className="bg-ink md:px-8 md:pb-16 md:pt-4">
+      <figure className="relative m-0 mx-auto h-[56vh] min-h-[340px] max-w-5xl overflow-hidden md:h-[64vh] md:max-h-[620px] md:rounded-sm">
+        <img
+          src="/photos/ceiling-air-piping-work.jpg"
+          alt="天井パネルの上でエア配管を敷設する作業員"
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover object-[50%_45%]"
+        />
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/80 to-transparent" />
+        <figcaption className="absolute bottom-5 left-4 text-[13px] tracking-[0.12em] text-white md:bottom-7 md:left-8 md:text-[15px]">
+          天井パネル上でのエア配管の敷設作業
+        </figcaption>
+      </figure>
+      </div>
+
       {/* 事業内容 */}
       <section data-bg="porcelain" className="py-20 md:py-32">
         <Container>
