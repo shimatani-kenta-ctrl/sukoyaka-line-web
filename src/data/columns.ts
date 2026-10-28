@@ -17,6 +17,15 @@ export const columns: {
   visuals?: ColumnVisualKey[];
 }[] = [
   {
+    href: "/column/tig-arc-welding/",
+    published: "2026-10-29",
+    date: "2026年10月29日",
+    title: "TIG溶接とアーク溶接の違い｜配管での使われ方と、溶接工になるには",
+    summary: "TIG溶接と被覆アーク溶接の違いを比較表で整理し、配管工事での使われ方や、溶接工に必要な特別教育・資格、求人データを紹介します。",
+    audience: "jobseeker",
+    visuals: ["arcfamily", "twohands", "weldratio"],
+  },
+  {
     href: "/column/shutdown-piping-work/",
     published: "2026-10-22",
     date: "2026年10月22日",
