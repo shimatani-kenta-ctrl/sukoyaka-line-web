@@ -7,7 +7,7 @@ import { fullAddress, site, telHref } from "@/config/site";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
-  title: "お問い合わせ",
+  title: "お問い合わせ・お見積り（配管工事・協力会社・採用）",
   description: `${site.name}へのお問い合わせ・お見積りのご依頼はこちら。配管工事、機器据付、協力会社のご相談、採用へのご応募も受け付けています。`,
   path: "/contact/",
 });
