@@ -10,7 +10,7 @@ import { fullAddress, site, telHref } from "@/config/site";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
-  title: "会社概要",
+  title: "会社概要（兵庫県尼崎市の配管工事会社）",
   description: `${site.name}の会社概要、代表挨拶、所在地・アクセスのご案内です。兵庫県尼崎市を拠点に、関西一円で配管工事・設備工事を行っています。`,
   path: "/company/",
 });
