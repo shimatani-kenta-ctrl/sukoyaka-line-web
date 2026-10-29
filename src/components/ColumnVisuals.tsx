@@ -15,7 +15,10 @@ export type ColumnVisualKey =
   | "steps"
   | "tiers"
   | "deep"
-  | "direct";
+  | "direct"
+  | "arcfamily"
+  | "twohands"
+  | "weldratio";
 
 const AI = "#003479";
 const SKY = "#00c2cb";
@@ -217,6 +220,50 @@ const visuals: Record<ColumnVisualKey, { label: string; svg: React.ReactNode }> 
         <path d="M60 32 l-5 -3.5 v7 z" fill={SKY} />
         <line x1="44" y1="42" x2="60" y2="42" stroke={SKY} strokeWidth="2.5" />
         <path d="M40 42 l5 -3.5 v7 z" fill={SKY} />
+      </>
+    ),
+  },
+  /* TIG溶接とアーク溶接の違い */
+  arcfamily: {
+    label: "TIGもアーク溶接",
+    svg: (
+      <>
+        <rect x="22" y="6" width="56" height="16" rx="3" fill={AI} />
+        <text x="50" y="17" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="#fff">アーク溶接</text>
+        <path d="M50 22 V30 M28 30 H72 M28 30 V38 M72 30 V38" fill="none" stroke={STEEL} strokeWidth="1.5" />
+        <rect x="6" y="38" width="44" height="16" rx="3" fill={SOFT} />
+        <text x="28" y="49" textAnchor="middle" fontSize="7.5" fontWeight="700" fill={INK}>被覆アーク</text>
+        <rect x="54" y="38" width="40" height="16" rx="3" fill={SKY} />
+        <text x="74" y="49" textAnchor="middle" fontSize="8" fontWeight="800" fill={INK}>TIG</text>
+      </>
+    ),
+  },
+  twohands: {
+    label: "違いを比較表で",
+    svg: (
+      <>
+        <rect x="10" y="10" width="80" height="52" rx="4" fill="#fff" stroke={AI} strokeWidth="2" />
+        <rect x="10" y="10" width="80" height="13" rx="4" fill={AI} />
+        <text x="35" y="19.5" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="#fff">TIG</text>
+        <text x="70" y="19.5" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="#fff">被覆アーク</text>
+        <line x1="52" y1="23" x2="52" y2="62" stroke={SOFT} strokeWidth="1.5" />
+        {[0, 1, 2].map((r) => (
+          <g key={r}>
+            <rect x="18" y={29 + r * 11} width="28" height="5" rx="2" fill={SKY} />
+            <rect x="58" y={29 + r * 11} width="26" height="5" rx="2" fill={SOFT} />
+          </g>
+        ))}
+      </>
+    ),
+  },
+  weldratio: {
+    label: "溶接工の求人倍率",
+    svg: (
+      <>
+        <rect x="12" y="20" width="40" height="13" rx="2" fill={AI} />
+        <text x="56" y="30" fontSize="9" fontWeight="800" fill={INK}>2.67倍</text>
+        <rect x="12" y="44" width="15" height="13" rx="2" fill={SOFT} />
+        <text x="31" y="54" fontSize="8.5" fill={STEEL}>基準 1倍</text>
       </>
     ),
   },
