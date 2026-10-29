@@ -356,9 +356,14 @@ export default function RecruitPage() {
           <p className="mt-6 text-[13px] text-white/60">
             成長のスピードには個人差があります。目安として、先輩と相談しながら進めていきます。
           </p>
-          <Link href="/column/pipefitter-job/" className="mt-4 inline-block text-[14px] text-sky underline underline-offset-4">
-            配管工の仕事内容と年収（コラム）
-          </Link>
+          <div className="mt-4 flex flex-col gap-2 text-[14px] md:flex-row md:gap-6">
+            <Link href="/column/pipefitter-job/" className="text-sky underline underline-offset-4">
+              配管工の仕事内容と年収（コラム）
+            </Link>
+            <Link href="/column/tig-arc-welding/" className="text-sky underline underline-offset-4">
+              TIG溶接とアーク溶接の違い・溶接工になるには（コラム）
+            </Link>
+          </div>
         </Container>
       </section>
 
