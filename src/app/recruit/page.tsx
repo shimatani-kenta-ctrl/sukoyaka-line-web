@@ -22,7 +22,7 @@ import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   title: "配管工・溶接工の求人（兵庫県尼崎市・正社員）｜採用情報",
-  description: `${site.name}の採用情報。尼崎を拠点に、配管工事スタッフ・溶接工を正社員で募集しています。月給30万円〜、未経験歓迎、面接1回のみ。まずは会いにきてください。`,
+  description: `${site.name}の採用情報。尼崎を拠点に、兵庫・大阪の工場やプラントで働く配管工事スタッフ・溶接工を正社員で募集しています。月給30万円〜、未経験歓迎、面接1回のみ。まずは会いにきてください。`,
   path: "/recruit/",
   image: { url: "/og-recruit.jpg", width: 1200, height: 630, alt: "配管工・溶接工 募集（月給30万円〜・未経験歓迎・面接1回のみ）" },
 });
