@@ -5,14 +5,15 @@ import { ButtonLink } from "./ui";
 
 /**
  * 見出しを1文字ずつ現れさせる（読み上げは sr-only の文で行う）。
- * accent に指定した言葉（例：「技術」「未来」）は白い輪郭の文字にし、あとから中に水色を満たす。
+ * accent に指定した言葉（例：「技術」「未来」）は白い外枠の文字にし、あとから中に水色を満たす。
+ * 外枠は data-ch の文字を後ろに重ねて描き、前の文字で内側を隠すことで、文字の外側だけに付ける。
  */
 function SplitLine({ text, start, accent, lineDelay }: { text: string; start: number; accent?: string; lineDelay?: number }) {
   const chars = Array.from(text);
   const a = accent ? text.indexOf(accent) : -1;
   const aLen = accent ? Array.from(accent).length : 0;
   const char = (ch: string, i: number) => (
-    <span key={i} className="hero-char" style={{ ["--d" as string]: `${(start + i * 0.06).toFixed(2)}s` }}>
+    <span key={i} className="hero-char" data-ch={ch} style={{ ["--d" as string]: `${(start + i * 0.06).toFixed(2)}s` }}>
       {ch}
     </span>
   );

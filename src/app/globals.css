@@ -820,16 +820,18 @@ html.intro-hold .iso-timer {
   .iso-bg .iso-flow { animation: none; opacity: 0; }
 }
 
-/* ───────── キャッチコピーの「技術」「未来」：白い輪郭の文字の中に、下から水色が満ちる ───────── */
+/* ───────── キャッチコピーの「技術」「未来」：白い外枠の文字の中に、下から水色が満ちる ─────────
+ * 白い線は後ろに重ねた同じ文字（::before）に付け、前の文字（紺→水色）で線の内側半分を隠す。
+ * こうすると、白い線が文字の外側だけに見える。 */
 .hero-accent {
   position: relative;
   display: inline-block;
 }
 .hero-accent .hero-char {
+  position: relative;
+  z-index: 0;
   color: transparent;
-  -webkit-text-stroke: 0.014em #ffffff;
-  paint-order: stroke fill;
-  background: linear-gradient(0deg, var(--color-sky) 0 50%, transparent 50% 100%);
+  background: linear-gradient(0deg, var(--color-sky) 0 50%, var(--color-ink) 50% 100%);
   background-size: 100% 200%;
   background-position: 0 0;
   -webkit-background-clip: text;
@@ -837,6 +839,14 @@ html.intro-hold .iso-timer {
   animation:
     char-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s) both,
     hero-accent-fill 1s cubic-bezier(0.65, 0, 0.35, 1) var(--ld, 1.5s) forwards;
+}
+.hero-accent .hero-char::before {
+  content: attr(data-ch);
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  color: transparent;
+  -webkit-text-stroke: 0.028em #ffffff;
 }
 @keyframes hero-accent-fill {
   to { background-position: 0 100%; }
