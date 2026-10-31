@@ -857,3 +857,21 @@ html.intro-hold .ha-front {
 @media (prefers-reduced-motion: reduce) {
   .ha-front { animation: none; background-position: 0 100%; }
 }
+
+/* ───────── ヘッダーの英字ロゴ：水色の光が3秒ごとに左から右へ流れる ───────── */
+.logo-shine {
+  aspect-ratio: 168.5 / 15;
+  -webkit-mask: url("/logo-text.svg") left center / contain no-repeat;
+  mask: url("/logo-text.svg") left center / contain no-repeat;
+  background: linear-gradient(100deg, var(--color-ai) 0 40%, #7fe9ee 48%, var(--color-sky) 52%, var(--color-ai) 60% 100%);
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  animation: logo-shine 3s linear infinite;
+}
+@keyframes logo-shine {
+  from { background-position: 100% 0; }
+  to { background-position: 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-shine { animation: none; background: var(--color-ai); }
+}
