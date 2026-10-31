@@ -820,38 +820,27 @@ html.intro-hold .iso-timer {
   .iso-bg .iso-flow { animation: none; opacity: 0; }
 }
 
-/* ───────── キャッチコピーの「技術」「未来」：水色のグラデーションと、あとから引かれる下線 ───────── */
+/* ───────── キャッチコピーの「技術」「未来」：白い輪郭の文字の中に、下から水色が満ちる ───────── */
 .hero-accent {
   position: relative;
   display: inline-block;
 }
 .hero-accent .hero-char {
-  background: linear-gradient(180deg, #e6fbfc 0%, var(--color-sky-soft) 35%, var(--color-sky) 100%);
+  color: transparent;
+  -webkit-text-stroke: 0.014em #ffffff;
+  paint-order: stroke fill;
+  background: linear-gradient(0deg, var(--color-sky) 0 50%, transparent 50% 100%);
+  background-size: 100% 200%;
+  background-position: 0 0;
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
-  text-shadow: none;
+  animation:
+    char-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s) both,
+    hero-accent-fill 1s cubic-bezier(0.65, 0, 0.35, 1) var(--ld, 1.5s) forwards;
 }
-.hero-accent::after {
-  content: "";
-  position: absolute;
-  left: 0.04em;
-  right: 0.04em;
-  bottom: -0.07em;
-  height: 0.07em;
-  border-radius: 9999px;
-  background: linear-gradient(90deg, var(--color-sky), var(--color-sky-soft));
-  box-shadow: 0 0 18px rgb(0 194 203 / 0.55);
-  transform: scaleX(0);
-  transform-origin: left center;
-  animation: hero-accent-line 0.8s cubic-bezier(0.65, 0, 0.35, 1) var(--ld, 1.5s) forwards;
-}
-@keyframes hero-accent-line {
-  to { transform: scaleX(1); }
-}
-html.intro-hold .hero-accent::after {
-  animation-play-state: paused;
+@keyframes hero-accent-fill {
+  to { background-position: 0 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-accent::after { animation: none; transform: none; }
+  .hero-accent .hero-char { background-position: 0 100%; }
 }
