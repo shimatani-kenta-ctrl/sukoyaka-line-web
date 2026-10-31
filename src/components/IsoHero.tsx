@@ -5,7 +5,7 @@ import { ButtonLink } from "./ui";
 
 /**
  * 見出しを1文字ずつ現れさせる（読み上げは sr-only の文で行う）。
- * accent に指定した言葉（例：「技術」「未来」）は水色のグラデーションにし、あとから下線を引く。
+ * accent に指定した言葉（例：「技術」「未来」）は白い輪郭の文字にし、あとから中に水色を満たす。
  */
 function SplitLine({ text, start, accent, lineDelay }: { text: string; start: number; accent?: string; lineDelay?: number }) {
   const chars = Array.from(text);
