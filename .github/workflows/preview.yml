@@ -1,0 +1,34 @@
+# 確認用の組み立て（本番には公開しません）
+# preview/ で始まるブランチに変更が入ると、サイトを組み立てて、
+# 組み立てたファイルを「preview-site」ブランチに置きます（確認用。本番の公開には使いません）。
+name: 確認用に組み立て
+
+on:
+  push:
+    branches: ["preview/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+      - name: 組み立てたファイルを preview-site ブランチに置く
+        run: |
+          cd out
+          git init -q -b preview-site
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A
+          git commit -qm "確認用：${GITHUB_REF_NAME} @ ${GITHUB_SHA::7}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" preview-site

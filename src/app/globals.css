@@ -593,3 +593,155 @@ html.js [data-reveal]:not(.is-visible) .reveal-blur {
   .iso-catch { font-size: clamp(64px, 8.2vw, 124px); line-height: 1.12; }
   .iso-card { flex: 1 1 480px; grid-template-columns: 200px minmax(0, 1fr); }
 }
+
+/* ───────── 育成ロードマップ：スクロールで配管に水色が流れ込む（--sp：0→1） ───────── */
+.roadmap {
+  --sp: 0;
+}
+.roadmap-track {
+  position: absolute;
+  left: 13px;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  border-radius: 9999px;
+  background: rgb(31 90 150 / 0.55);
+  overflow: hidden;
+}
+.roadmap-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, var(--color-sky-soft), var(--color-sky));
+  box-shadow: 0 0 16px rgb(0 194 203 / 0.7);
+  transform-origin: top center;
+  transform: scaleY(var(--sp));
+}
+.roadmap-list {
+  padding-left: 44px;
+}
+.roadmap-node {
+  position: absolute;
+  left: -40px;
+  top: 34px;
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  border: 3px solid rgb(31 90 150);
+  background: var(--color-ink);
+  transition:
+    background-color 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease,
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.roadmap-card {
+  transition:
+    opacity 0.6s ease,
+    border-color 0.6s ease;
+}
+html.js .roadmap-step:not(.is-reached) .roadmap-card {
+  opacity: 0.45;
+  border-top-color: rgb(31 90 150);
+}
+.roadmap-step.is-reached .roadmap-node,
+html:not(.js) .roadmap-node {
+  border-color: var(--color-sky);
+  background: var(--color-sky);
+  box-shadow: 0 0 0 6px rgb(0 194 203 / 0.18), 0 0 18px rgb(0 194 203 / 0.6);
+  transform: scale(1.08);
+}
+@media (min-width: 768px) {
+  .roadmap-track {
+    left: calc(100% / 6);
+    right: calc(100% / 6);
+    top: 11px;
+    bottom: auto;
+    width: auto;
+    height: 6px;
+  }
+  .roadmap-fill {
+    background: linear-gradient(90deg, var(--color-sky-soft), var(--color-sky));
+    transform-origin: left center;
+    transform: scaleX(var(--sp));
+  }
+  .roadmap-list {
+    padding-left: 0;
+    padding-top: 52px;
+  }
+  .roadmap-node {
+    left: 50%;
+    top: -52px;
+    margin-left: -14px;
+    width: 28px;
+    height: 28px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roadmap { --sp: 1 !important; }
+  .roadmap-node, .roadmap-card { transition: none; }
+}
+
+/* ───────── 写真カード：マウスの動きに合わせて少し傾き、光が当たる（マウス操作のPCのみ） ───────── */
+/* 「現れる動き」の transform: none より優先させるため、:not(#_) で優先度を上げている */
+.tilt,
+html.js .tilt.is-visible:not(#_) {
+  position: relative;
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.tilt.is-tilting:not(#_) {
+  transition-duration: 0.12s;
+}
+.tilt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgb(255 255 255 / 0.28), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.tilt.is-tilting::before {
+  opacity: 1;
+}
+
+/* ───────── よくある質問：開け閉めをなめらかに（対応ブラウザのみ） ───────── */
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+  details::details-content {
+    height: 0;
+    overflow: clip;
+    transition:
+      height 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+      content-visibility 0.45s allow-discrete;
+  }
+  details[open]::details-content {
+    height: auto;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    details::details-content { transition: none; }
+  }
+}
+
+/* ───────── 事業内容の行：マウスを乗せると、下の罫線に水色の線が走る ───────── */
+.service-row::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-ai), var(--color-sky));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+}
+@media (hover: hover) {
+  .service-row:hover::after {
+    transform: scaleX(1);
+  }
+}

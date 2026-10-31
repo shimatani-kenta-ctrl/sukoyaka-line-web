@@ -56,7 +56,7 @@ function WorkCard({ work: w }: { work: Work }) {
   return (
     <article id={w.slug} className="scroll-mt-28">
       <Link href={`/works/${w.slug}/`} className="group grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10">
-        <div data-reveal="wipe" className="aspect-[16/10] overflow-hidden bg-ink">
+        <div data-reveal="wipe" data-tilt className="tilt aspect-[16/10] overflow-hidden bg-ink">
           <WorkVisual
             category={w.category}
             image={w.photos[0]?.src}

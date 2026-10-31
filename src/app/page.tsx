@@ -134,13 +134,18 @@ export default async function HomePage() {
             lead="配管の製作から架台の据付、溶接、施工まで。現場で必要な仕事を、一つの会社で完結します。"
           />
           <ul data-reveal-stagger="120" className="mt-14 border-t border-line">
-            {services.map((s) => (
+            {services.map((s, i) => (
               <li
                 key={s.name}
-                className="grid gap-3 border-b border-line py-8 md:grid-cols-[280px_1fr] md:gap-10 md:py-10"
+                className="service-row group relative grid gap-3 border-b border-line py-8 md:grid-cols-[280px_1fr] md:gap-10 md:py-10"
               >
                 <h3 className="flex items-center gap-4 text-xl md:text-2xl">
-                  <span aria-hidden="true" className="h-[10px] w-[10px] shrink-0 bg-sky" />
+                  <span
+                    aria-hidden="true"
+                    className="font-display text-[13px] font-medium tracking-[0.2em] text-sky transition-colors group-hover:text-ai"
+                  >
+                    0{i + 1}
+                  </span>
                   {s.name}
                 </h3>
                 <div>
@@ -205,11 +210,14 @@ export default async function HomePage() {
               施工事例は、順次掲載していきます。日々の現場の様子はInstagramでもご覧いただけます。
             </p>
           ) : (
-            <ul data-reveal-stagger="140" className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
+            <ul
+              data-reveal-stagger="140"
+              className={`mt-14 grid gap-10 md:gap-8 ${latestWorks.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}
+            >
               {latestWorks.map((w) => (
                 <li key={w.slug}>
                   <Link href={`/works/${w.slug}/`} className="group block">
-                    <div data-reveal="wipe" className="aspect-[16/10] overflow-hidden">
+                    <div data-reveal="wipe" data-tilt className="tilt aspect-[16/10] overflow-hidden">
                       <WorkVisual
                         category={w.category}
                         image={w.photos[0]?.src}
