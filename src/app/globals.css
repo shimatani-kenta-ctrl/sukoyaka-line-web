@@ -683,12 +683,14 @@ html:not(.js) .roadmap-node {
 }
 
 /* ───────── 写真カード：マウスの動きに合わせて少し傾き、光が当たる（マウス操作のPCのみ） ───────── */
-.tilt {
+/* 「現れる動き」の transform: none より優先させるため、:not(#_) で優先度を上げている */
+.tilt,
+html.js .tilt.is-visible:not(#_) {
   position: relative;
   transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
   transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.tilt.is-tilting {
+.tilt.is-tilting:not(#_) {
   transition-duration: 0.12s;
 }
 .tilt::before {
