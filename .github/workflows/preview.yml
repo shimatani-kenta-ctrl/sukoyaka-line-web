@@ -1,5 +1,6 @@
 # 確認用の組み立て（本番には公開しません）
-# preview/ で始まるブランチに変更が入ると、サイトを組み立てて「site」という名前で保存します。
+# preview/ で始まるブランチに変更が入ると、サイトを組み立てて、
+# 組み立てたファイルを「preview-site」ブランチに置きます（確認用。本番の公開には使いません）。
 name: 確認用に組み立て
 
 on:
@@ -8,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -22,8 +23,12 @@ jobs:
       - run: npm run build
         env:
           NEXT_TELEMETRY_DISABLED: "1"
-      - uses: actions/upload-artifact@v4
-        with:
-          name: site
-          path: out
-          retention-days: 7
+      - name: 組み立てたファイルを preview-site ブランチに置く
+        run: |
+          cd out
+          git init -q -b preview-site
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A
+          git commit -qm "確認用：${GITHUB_REF_NAME} @ ${GITHUB_SHA::7}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" preview-site
