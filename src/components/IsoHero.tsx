@@ -24,10 +24,10 @@ function SplitLine({ text, start, accent, lineDelay }: { text: string; start: nu
       )}
     </span>
   );
-  if (a < 0) return <span aria-hidden="true" className="inline-block">{chars.map(char)}</span>;
+  if (a < 0) return <span aria-hidden="true" className="inline-block">{chars.map((ch, i) => char(ch, i))}</span>;
   return (
     <span aria-hidden="true" className="inline-block">
-      {chars.slice(0, a).map(char)}
+      {chars.slice(0, a).map((ch, i) => char(ch, i))}
       <span className="hero-accent" style={{ ["--ld" as string]: `${(lineDelay ?? start + 1).toFixed(2)}s` }}>
         {chars.slice(a, a + aLen).map((ch, j) => char(ch, a + j, true))}
       </span>
