@@ -846,7 +846,7 @@ html.intro-hold .iso-timer {
   inset: 0;
   z-index: -1;
   color: transparent;
-  -webkit-text-stroke: 0.028em #ffffff;
+  -webkit-text-stroke: 0.018em #ffffff;
 }
 @keyframes hero-accent-fill {
   to { background-position: 0 100%; }
