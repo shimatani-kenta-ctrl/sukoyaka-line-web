@@ -819,3 +819,39 @@ html.intro-hold .iso-timer {
   .iso-bg { translate: none; transition: none; }
   .iso-bg .iso-flow { animation: none; opacity: 0; }
 }
+
+/* ───────── キャッチコピーの「技術」「未来」：水色のグラデーションと、あとから引かれる下線 ───────── */
+.hero-accent {
+  position: relative;
+  display: inline-block;
+}
+.hero-accent .hero-char {
+  background: linear-gradient(180deg, #e6fbfc 0%, var(--color-sky-soft) 35%, var(--color-sky) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+}
+.hero-accent::after {
+  content: "";
+  position: absolute;
+  left: 0.04em;
+  right: 0.04em;
+  bottom: -0.07em;
+  height: 0.07em;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--color-sky), var(--color-sky-soft));
+  box-shadow: 0 0 18px rgb(0 194 203 / 0.55);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: hero-accent-line 0.8s cubic-bezier(0.65, 0, 0.35, 1) var(--ld, 1.5s) forwards;
+}
+@keyframes hero-accent-line {
+  to { transform: scaleX(1); }
+}
+html.intro-hold .hero-accent::after {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-accent::after { animation: none; transform: none; }
+}

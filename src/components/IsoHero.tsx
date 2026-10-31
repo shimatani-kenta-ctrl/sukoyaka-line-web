@@ -3,15 +3,27 @@
 import { useEffect, useRef, useState } from "react";
 import { ButtonLink } from "./ui";
 
-/** 見出しを1文字ずつ現れさせる（読み上げは sr-only の文で行う） */
-function SplitLine({ text, start }: { text: string; start: number }) {
+/**
+ * 見出しを1文字ずつ現れさせる（読み上げは sr-only の文で行う）。
+ * accent に指定した言葉（例：「技術」「未来」）は水色のグラデーションにし、あとから下線を引く。
+ */
+function SplitLine({ text, start, accent, lineDelay }: { text: string; start: number; accent?: string; lineDelay?: number }) {
+  const chars = Array.from(text);
+  const a = accent ? text.indexOf(accent) : -1;
+  const aLen = accent ? Array.from(accent).length : 0;
+  const char = (ch: string, i: number) => (
+    <span key={i} className="hero-char" style={{ ["--d" as string]: `${(start + i * 0.06).toFixed(2)}s` }}>
+      {ch}
+    </span>
+  );
+  if (a < 0) return <span aria-hidden="true" className="inline-block">{chars.map(char)}</span>;
   return (
     <span aria-hidden="true" className="inline-block">
-      {Array.from(text).map((ch, i) => (
-        <span key={i} className="hero-char" style={{ ["--d" as string]: `${(start + i * 0.06).toFixed(2)}s` }}>
-          {ch}
-        </span>
-      ))}
+      {chars.slice(0, a).map(char)}
+      <span className="hero-accent" style={{ ["--ld" as string]: `${(lineDelay ?? start + 1).toFixed(2)}s` }}>
+        {chars.slice(a, a + aLen).map((ch, j) => char(ch, a + j))}
+      </span>
+      {chars.slice(a + aLen).map((ch, j) => char(ch, a + aLen + j))}
     </span>
   );
 }
@@ -156,9 +168,9 @@ export function IsoHero() {
             </h1>
             <p className="iso-catch mt-4 font-display font-extrabold tracking-[0.06em] md:mt-6">
               <span className="sr-only">確かな技術を、確かな未来へ。</span>
-              <SplitLine text="確かな技術を、" start={0.3} />
+              <SplitLine text="確かな技術を、" start={0.3} accent="技術" lineDelay={1.5} />
               <br />
-              <SplitLine text="確かな未来へ。" start={0.78} />
+              <SplitLine text="確かな未来へ。" start={0.78} accent="未来" lineDelay={1.8} />
             </p>
             <div className="hero-in mt-6 flex flex-col gap-3 sm:flex-row md:mt-8" style={{ ["--d" as string]: "1.5s" }}>
               <ButtonLink href="/contact/" variant="light">
