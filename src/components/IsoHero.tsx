@@ -6,15 +6,22 @@ import { ButtonLink } from "./ui";
 /**
  * 見出しを1文字ずつ現れさせる（読み上げは sr-only の文で行う）。
  * accent に指定した言葉（例：「技術」「未来」）は白い外枠の文字にし、あとから中に水色を満たす。
- * 外枠は data-ch の文字を後ろに重ねて描き、前の文字で内側を隠すことで、文字の外側だけに付ける。
+ * 外枠は後ろの文字（ha-back）に白い線を付け、前の文字（ha-front）で内側を隠すことで、文字の外側だけに付ける。
  */
 function SplitLine({ text, start, accent, lineDelay }: { text: string; start: number; accent?: string; lineDelay?: number }) {
   const chars = Array.from(text);
   const a = accent ? text.indexOf(accent) : -1;
   const aLen = accent ? Array.from(accent).length : 0;
-  const char = (ch: string, i: number) => (
-    <span key={i} className="hero-char" data-ch={ch} style={{ ["--d" as string]: `${(start + i * 0.06).toFixed(2)}s` }}>
-      {ch}
+  const char = (ch: string, i: number, accented = false) => (
+    <span key={i} className="hero-char" style={{ ["--d" as string]: `${(start + i * 0.06).toFixed(2)}s` }}>
+      {accented ? (
+        <>
+          <span className="ha-back">{ch}</span>
+          <span className="ha-front">{ch}</span>
+        </>
+      ) : (
+        ch
+      )}
     </span>
   );
   if (a < 0) return <span aria-hidden="true" className="inline-block">{chars.map(char)}</span>;
@@ -22,7 +29,7 @@ function SplitLine({ text, start, accent, lineDelay }: { text: string; start: nu
     <span aria-hidden="true" className="inline-block">
       {chars.slice(0, a).map(char)}
       <span className="hero-accent" style={{ ["--ld" as string]: `${(lineDelay ?? start + 1).toFixed(2)}s` }}>
-        {chars.slice(a, a + aLen).map((ch, j) => char(ch, a + j))}
+        {chars.slice(a, a + aLen).map((ch, j) => char(ch, a + j, true))}
       </span>
       {chars.slice(a + aLen).map((ch, j) => char(ch, a + aLen + j))}
     </span>
