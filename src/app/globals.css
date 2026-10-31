@@ -827,7 +827,7 @@ html.intro-hold .iso-timer {
 }
 .hero-accent .hero-char {
   color: transparent;
-  -webkit-text-stroke: 0.028em #ffffff;
+  -webkit-text-stroke: 0.014em #ffffff;
   paint-order: stroke fill;
   background: linear-gradient(0deg, var(--color-sky) 0 50%, transparent 50% 100%);
   background-size: 100% 200%;
