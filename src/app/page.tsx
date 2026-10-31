@@ -18,7 +18,7 @@ export const metadata = { alternates: { canonical: "/" } };
 
 type Media = { type: "photo" | "video"; src: string; poster?: string; alt: string; caption: string };
 
-const services: { name: string; body: string; media?: Media[] }[] = [
+const services: { name: string; body: string; media?: Media[]; link?: { href: string; label: string } }[] = [
   {
     name: "各種配管工事",
     body: "工場・プラントの蒸気、冷却水、エア、各種流体の配管を施工します。設備の新設・増設・改修から、休止期間に合わせた短工期の工事まで対応します。",
@@ -39,7 +39,8 @@ const services: { name: string; body: string; media?: Media[] }[] = [
   },
   {
     name: "各種配管製作",
-    body: "現場の寸法や取合いに合わせて、配管を加工・製作します。製作から取付けまで一貫して行うので、現場での手戻りを減らせます。",
+    body: "現場の寸法や取合いに合わせて、配管を加工・製作します。工場の休止期間の前に製作しておけば、休止中は取付けと接続が中心になり、現場での作業時間を短くできます。製作から取付けまで一貫して行うので、現場での手戻りを減らせます。",
+    link: { href: "/column/shutdown-piping-work/", label: "コラム：工場の休止期間に配管工事を終わらせるには" },
     media: [
       {
         type: "photo",
@@ -70,6 +71,7 @@ const services: { name: string; body: string; media?: Media[] }[] = [
   {
     name: "溶接工事",
     body: "ステンレス・鋼管のTIG溶接、アーク溶接に対応します。熱による歪みを抑えるため、仮付けを細かく増やす、治具で固定する、あらかじめ逆方向へ少し曲げたり傾けたりして固定するといった段取りをしてから溶接します。見えない内面まで品質にこだわり、確かな溶接部をお引き渡しします。",
+    link: { href: "/column/tig-arc-welding/", label: "コラム：TIG溶接とアーク溶接の違い" },
     media: [
       {
         type: "video",
@@ -150,6 +152,13 @@ export default async function HomePage() {
                 </h3>
                 <div>
                   <p className="text-[15px] text-steel">{s.body}</p>
+                  {s.link && (
+                    <p className="mt-3 text-[14px]">
+                      <Link href={s.link.href} className="text-ai underline underline-offset-4 hover:no-underline">
+                        {s.link.label} →
+                      </Link>
+                    </p>
+                  )}
                   {s.media && (
                     <div className={`mt-6 grid gap-4 ${s.media.length > 1 ? "max-w-[520px] grid-cols-2" : "max-w-[320px]"}`}>
                       {s.media.map((m) => (
