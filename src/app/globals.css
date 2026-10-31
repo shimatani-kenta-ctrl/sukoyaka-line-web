@@ -837,8 +837,8 @@ html.intro-hold .iso-timer {
   position: absolute;
   left: 0.04em;
   right: 0.04em;
-  bottom: 0.02em;
-  height: 0.08em;
+  bottom: -0.07em;
+  height: 0.07em;
   border-radius: 9999px;
   background: linear-gradient(90deg, var(--color-sky), var(--color-sky-soft));
   box-shadow: 0 0 18px rgb(0 194 203 / 0.55);
