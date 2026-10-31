@@ -334,25 +334,34 @@ export default function RecruitPage() {
             side="GROWTH ROADMAP"
             lead="「見て覚えろ」で何年も待たせることはしません。いつまでに、何ができるようになるか。ゴールを決めて、先輩と一緒に一段ずつ上がっていきます。"
           />
-          <ol data-reveal-stagger="160" className="mt-12 grid gap-5 md:grid-cols-3">
-            {growthRoadmap.map((g, i) => (
-              <li key={g.period} className="relative border-t-[4px] border-sky bg-ink-deep px-6 py-8 md:px-8">
-                <p className="font-display text-[13px] tracking-[0.3em] text-sky">STEP 0{i + 1}</p>
-                <p className="mt-3 font-display text-[40px] font-extrabold leading-none md:text-[48px]">
-                  {g.period}
-                </p>
-                <h3 className="mt-4 text-lg md:text-xl">{g.title}</h3>
-                <ul className="mt-5 space-y-2 text-[15px] text-white/85">
-                  {g.items.map((t) => (
-                    <li key={t} className="flex gap-3">
-                      <span aria-hidden="true" className="mt-[9px] h-2 w-2 shrink-0 rounded-full bg-sky" />
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ol>
+          {/* スクロールに合わせて、配管の線に水色が流れ込み、到達した段階が点灯する */}
+          <div data-progress className="roadmap relative mt-12">
+            <div aria-hidden="true" data-progress-track className="roadmap-track">
+              <span className="roadmap-fill" />
+            </div>
+            <ol data-reveal-stagger="160" className="roadmap-list grid gap-5 md:grid-cols-3">
+              {growthRoadmap.map((g, i) => (
+                <li key={g.period} data-progress-step className="roadmap-step relative">
+                  <span aria-hidden="true" data-progress-node className="roadmap-node" />
+                  <div className="roadmap-card border-t-[4px] border-sky bg-ink-deep px-6 py-8 md:px-8">
+                    <p className="font-display text-[13px] tracking-[0.3em] text-sky">STEP 0{i + 1}</p>
+                    <p className="mt-3 font-display text-[40px] font-extrabold leading-none md:text-[48px]">
+                      {g.period}
+                    </p>
+                    <h3 className="mt-4 text-lg md:text-xl">{g.title}</h3>
+                    <ul className="mt-5 space-y-2 text-[15px] text-white/85">
+                      {g.items.map((t) => (
+                        <li key={t} className="flex gap-3">
+                          <span aria-hidden="true" className="mt-[9px] h-2 w-2 shrink-0 rounded-full bg-sky" />
+                          {t}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
           <p className="mt-6 text-[13px] text-white/60">
             成長のスピードには個人差があります。目安として、先輩と相談しながら進めていきます。
           </p>
@@ -381,15 +390,17 @@ export default function RecruitPage() {
             {fieldPhotos.map((p) => (
               <li key={p.src}>
                 <figure>
-                  <img
-                    src={p.src}
-                    alt={p.alt}
-                    width={900}
-                    height={1200}
-                    loading="lazy"
-                    decoding="async"
-                    className="aspect-[4/5] w-full bg-mist object-cover"
-                  />
+                  <div data-tilt className="tilt overflow-hidden">
+                    <img
+                      src={p.src}
+                      alt={p.alt}
+                      width={900}
+                      height={1200}
+                      loading="lazy"
+                      decoding="async"
+                      className="aspect-[4/5] w-full bg-mist object-cover"
+                    />
+                  </div>
                   <figcaption className="mt-2 text-[13px] leading-relaxed text-steel">{p.caption}</figcaption>
                 </figure>
               </li>

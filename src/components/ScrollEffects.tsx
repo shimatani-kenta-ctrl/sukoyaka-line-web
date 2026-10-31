@@ -3,7 +3,7 @@
 import { heroShuffleScript } from "@/lib/heroPhotos";
 
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * スクロールの動きをまとめて管理します。
@@ -11,11 +11,62 @@ import { useEffect } from "react";
  * - data-reveal          … 画面に入ったときにふわっと現れる（"up"・"left"・"right"・"scale"・"draw"）
  * - data-reveal-stagger  … 子要素を少しずつ時間差で現れさせる
  * - data-parallax="0.15" … スクロールに合わせてゆっくり動く（PCのみ）
+ * - data-progress       … スクロールに合わせて線を伸ばし、届いた段階（data-progress-step）を点灯
+ * - data-tilt           … マウスの位置に合わせて写真カードが少し傾き、光が当たる（マウス操作のPCのみ）
  *
  * JavaScriptが無効な環境や「視差効果を減らす」設定の方には、最初からすべて表示します。
  */
 export function ScrollEffects() {
   const pathname = usePathname();
+  const firstPath = useRef(true);
+
+  // ページを移動したとき、新しいページをふわっと表示する（最初に開いたときは表示を遅らせない）
+  useEffect(() => {
+    if (firstPath.current) {
+      firstPath.current = false;
+      return;
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const main = document.getElementById("main");
+    main?.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 550, easing: "cubic-bezier(0.2, 0.7, 0.2, 1)" });
+  }, [pathname]);
+
+  // 写真カード（data-tilt）：マウスの位置に合わせて少し傾け、光を当てる。マウス操作のPCのみ
+  useEffect(() => {
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let active: HTMLElement | null = null;
+    const reset = (el: HTMLElement) => {
+      el.classList.remove("is-tilting");
+      el.style.removeProperty("--rx");
+      el.style.removeProperty("--ry");
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!fine.matches || reduce.matches || e.pointerType !== "mouse") return;
+      const el = (e.target as Element | null)?.closest<HTMLElement>("[data-tilt]") ?? null;
+      if (active && active !== el) reset(active);
+      active = el;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width;
+      const y = (e.clientY - r.top) / r.height;
+      el.classList.add("is-tilting");
+      el.style.setProperty("--mx", `${(x * 100).toFixed(1)}%`);
+      el.style.setProperty("--my", `${(y * 100).toFixed(1)}%`);
+      el.style.setProperty("--rx", `${((0.5 - y) * 6).toFixed(2)}deg`);
+      el.style.setProperty("--ry", `${((x - 0.5) * 8).toFixed(2)}deg`);
+    };
+    const onLeave = () => {
+      if (active) reset(active);
+      active = null;
+    };
+    document.addEventListener("pointermove", onMove, { passive: true });
+    document.documentElement.addEventListener("pointerleave", onLeave);
+    return () => {
+      document.removeEventListener("pointermove", onMove);
+      document.documentElement.removeEventListener("pointerleave", onLeave);
+    };
+  }, []);
 
   useEffect(() => {
     (window as Window & { __scrollFx?: boolean }).__scrollFx = true;
@@ -102,6 +153,37 @@ export function ScrollEffects() {
       if (w.__heroShuffle) w.__heroShuffle();
       else new Function(heroShuffleScript)();
     }
+    // 育成ロードマップなど：スクロールに合わせて線を伸ばし、線が届いた段階を点灯させる
+    const progressBoxes = Array.from(document.querySelectorAll<HTMLElement>("[data-progress]"));
+    if (reduce) {
+      progressBoxes.forEach((box) => {
+        box.style.setProperty("--sp", "1");
+        box.querySelectorAll("[data-progress-step]").forEach((s) => s.classList.add("is-reached"));
+      });
+    }
+    const updateProgress = (vh: number) => {
+      if (reduce) return;
+      progressBoxes.forEach((box) => {
+        const rect = box.getBoundingClientRect();
+        if (rect.bottom < -vh || rect.top > vh * 2) return;
+        // 箱の上端が画面の下から2割の位置に来たら伸び始め、下端が画面の中ほどに来たら伸びきる
+        const start = vh * 0.8;
+        const end = vh * 0.5;
+        const sp = Math.min(1, Math.max(0, (start - rect.top) / Math.max(1, rect.height - end + start)));
+        box.style.setProperty("--sp", sp.toFixed(4));
+        const track = box.querySelector<HTMLElement>("[data-progress-track]");
+        if (!track) return;
+        const t = track.getBoundingClientRect();
+        const horizontal = t.width > t.height;
+        const len = horizontal ? t.width : t.height;
+        box.querySelectorAll<HTMLElement>("[data-progress-step]").forEach((step) => {
+          const node = step.querySelector<HTMLElement>("[data-progress-node]") ?? step;
+          const n = node.getBoundingClientRect();
+          const pos = horizontal ? n.left + n.width / 2 - t.left : n.top + n.height / 2 - t.top;
+          step.classList.toggle("is-reached", pos <= sp * len + 2);
+        });
+      });
+    };
     // ページの地の色：画面の中ほどにある部分の色へ、ゆっくり切り替える
     const pageBg = document.querySelector<HTMLElement>("[data-page-bg]");
     const bgParts = Array.from(document.querySelectorAll<HTMLElement>("[data-bg]"));
@@ -112,6 +194,7 @@ export function ScrollEffects() {
       raf = 0;
       const y = window.scrollY;
       const vh = window.innerHeight;
+      updateProgress(vh);
       if (pageBg && bgParts.length) {
         let next = bgParts[0].dataset.bg ?? "";
         for (const el of bgParts) {
@@ -147,7 +230,7 @@ export function ScrollEffects() {
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
     };
-    if (parallax.length || marquees.length || heroPin || pageBg) {
+    if (parallax.length || marquees.length || heroPin || pageBg || progressBoxes.length) {
       window.addEventListener("scroll", onScroll, { passive: true });
       window.addEventListener("resize", onScroll);
       update();
