@@ -54,6 +54,10 @@ export function IsoHero() {
   const [idx, setIdx] = useState(0);
   const picked = useRef(false);
 
+  // ページの一番上にいる間は、写真カードを5秒ごとに自動で切り替える（ボタンを押した後・スクロール後は止める）
+  const [auto, setAuto] = useState(false);
+  const atTop = useRef(true);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -64,21 +68,43 @@ export function IsoHero() {
       const range = Math.max(1, el.offsetHeight - window.innerHeight);
       const r = Math.min(1, Math.max(0, -rect.top / range));
       el.style.setProperty("--r", r.toFixed(4));
-      if (!picked.current) setIdx(Math.min(items.length - 1, Math.floor(r * items.length)));
+      const top = r < 0.02;
+      if (top !== atTop.current) {
+        atTop.current = top;
+        setAuto(top && !picked.current);
+      }
+      if (!picked.current && !top) setIdx(Math.min(items.length - 1, Math.floor(r * items.length)));
     };
     const onScroll = () => {
       picked.current = false;
       if (!raf) raf = requestAnimationFrame(update);
     };
+    // マウスの位置に合わせて、背景の図面がゆっくり逆方向へずれる（マウス操作のPCのみ）
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const onPointer = (e: PointerEvent) => {
+      if (!fine.matches || e.pointerType !== "mouse") return;
+      el.style.setProperty("--hx", ((e.clientX / window.innerWidth) * 2 - 1).toFixed(3));
+      el.style.setProperty("--hy", ((e.clientY / window.innerHeight) * 2 - 1).toFixed(3));
+    };
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     update();
+    setAuto(atTop.current && !reduce);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
+    if (!reduce) el.addEventListener("pointermove", onPointer, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      el.removeEventListener("pointermove", onPointer);
       cancelAnimationFrame(raf);
     };
   }, []);
+
+  useEffect(() => {
+    if (!auto) return;
+    const t = window.setTimeout(() => setIdx((i) => (i + 1) % items.length), 5000);
+    return () => window.clearTimeout(t);
+  }, [auto, idx]);
 
   const cur = items[idx];
 
@@ -98,11 +124,28 @@ export function IsoHero() {
               strokeWidth={6}
             />
           </g>
+          {/* 描かれた部分の配管の中を、白い水の粒が流れ続ける */}
+          <defs>
+            <mask id="iso-drawn" maskUnits="userSpaceOnUse" x="0" y="0" width="419" height="651">
+              <path pathLength={1} className="iso-l1" d="M60,71.5 L338.9,232.5 L338.9,94.5 L99.8,232.5 L99.8,370.5 L338.9,508.5" fill="none" stroke="#fff" strokeWidth={12} strokeLinecap="round" strokeLinejoin="round" />
+            </mask>
+          </defs>
+          <path
+            pathLength={1}
+            className="iso-flow"
+            mask="url(#iso-drawn)"
+            d="M60,71.5 L338.9,232.5 L338.9,94.5 L99.8,232.5 L99.8,370.5 L338.9,508.5"
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth={4}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
           <g fill="#00c2cb">
-            <circle cx="338.9" cy="232.5" r="10" />
-            <circle cx="338.9" cy="94.5" r="10" />
-            <circle cx="99.8" cy="232.5" r="10" />
-            <circle cx="99.8" cy="370.5" r="10" />
+            <circle className="iso-joint" style={{ ["--j" as string]: 0 }} cx="338.9" cy="232.5" r="10" />
+            <circle className="iso-joint" style={{ ["--j" as string]: 1 }} cx="338.9" cy="94.5" r="10" />
+            <circle className="iso-joint" style={{ ["--j" as string]: 2 }} cx="99.8" cy="232.5" r="10" />
+            <circle className="iso-joint" style={{ ["--j" as string]: 3 }} cx="99.8" cy="370.5" r="10" />
           </g>
         </svg>
 
@@ -130,7 +173,7 @@ export function IsoHero() {
           <div className="hero-in flex flex-wrap items-stretch gap-3 md:gap-6" style={{ ["--d" as string]: "1.7s" }}>
             <div className="iso-card grid min-w-0 items-center gap-4 rounded-sm border border-white/30 bg-ink-deep/70 p-2.5 md:gap-5 md:p-3">
               <img key={cur.photo} src={cur.photo} alt={cur.alt} className="iso-photo aspect-[4/3] w-full object-cover" />
-              <div className="min-w-0" aria-live="polite">
+              <div key={cur.name} className="iso-text min-w-0" aria-live="polite">
                 <p className="text-[17px] font-bold md:text-[22px]">{cur.name}</p>
                 <p className="mt-1.5 text-[12.5px] leading-[1.8] text-white/75 md:mt-2 md:text-[14px]">{cur.body}</p>
               </div>
@@ -143,13 +186,15 @@ export function IsoHero() {
                   aria-pressed={i === idx}
                   onClick={() => {
                     picked.current = true;
+                    setAuto(false);
                     setIdx(i);
                   }}
-                  className={`min-h-11 whitespace-nowrap rounded-full border px-3 text-[12.5px] font-bold transition-colors md:min-h-12 md:px-5 md:text-[14px] ${
+                  className={`relative min-h-11 overflow-hidden whitespace-nowrap rounded-full border px-3 text-[12.5px] font-bold transition-colors md:min-h-12 md:px-5 md:text-[14px] ${
                     i === idx ? "border-sky bg-sky text-ink" : "border-white/50 bg-ink/80 text-white hover:border-sky"
                   }`}
                 >
                   {it.name}
+                  {auto && i === idx && <span key={`timer-${idx}`} aria-hidden="true" className="iso-timer" />}
                 </button>
               ))}
             </div>

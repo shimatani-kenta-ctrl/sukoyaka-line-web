@@ -745,3 +745,77 @@ html.js .tilt.is-visible:not(#_) {
     transform: scaleX(1);
   }
 }
+
+/* ───────── トップの見出し：デザインはそのままに、動きを足す ───────── */
+/* 方眼がゆっくり上へ流れる（斜めの線の繰り返し幅 80/√3 ≒ 46.188px の10倍ずつ動かして、継ぎ目を見せない） */
+.iso-grid {
+  animation: iso-grid-drift 60s linear infinite;
+}
+@keyframes iso-grid-drift {
+  from { background-position: 0 0; }
+  to { background-position: 0 -461.88px; }
+}
+/* 背景の図面：マウスの位置と逆方向へ、ゆっくりずれる（--hx・--hy：-1〜1） */
+.iso-bg {
+  translate: calc(var(--hx, 0) * -22px) calc(var(--hy, 0) * -14px);
+  transition: translate 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+/* 配管の中を流れる水の粒 */
+.iso-bg .iso-flow {
+  stroke-dasharray: 0.012 0.05;
+  stroke-dashoffset: 0;
+  opacity: 0;
+  animation:
+    fade-in 1s ease 1.8s forwards,
+    iso-flow 14s linear 1.8s infinite;
+}
+@keyframes iso-flow {
+  to { stroke-dashoffset: -1; }
+}
+/* 継手が順番に、ふわっと光る */
+.iso-joint {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: iso-joint 3.2s ease-in-out calc(var(--j) * 0.8s) infinite;
+}
+@keyframes iso-joint {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  45% { transform: scale(1.45); opacity: 1; }
+}
+/* 写真カード：写真は左から幕が開くように、文字は下からふわっと */
+.iso-photo {
+  animation: iso-photo-wipe 0.8s cubic-bezier(0.77, 0, 0.18, 1) both;
+}
+@keyframes iso-photo-wipe {
+  from { clip-path: inset(0 100% 0 0); transform: scale(1.06); }
+  to { clip-path: inset(0 0 0 0); transform: none; }
+}
+.iso-text {
+  animation: rise-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both;
+}
+/* 自動切り替え中：選択中のボタンの下に、次へ進むまでの残り時間の線 */
+.iso-timer {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 9999px;
+  background: rgb(14 42 71 / 0.55);
+  transform-origin: left center;
+  animation: iso-timer 5s linear both;
+}
+@keyframes iso-timer {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+/* オープニング中は止めておき、幕が上がってから動かす */
+html.intro-hold .iso-flow,
+html.intro-hold .iso-timer {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .iso-grid, .iso-joint, .iso-photo, .iso-text, .iso-timer { animation: none; }
+  .iso-bg { translate: none; transition: none; }
+  .iso-bg .iso-flow { animation: none; opacity: 0; }
+}
