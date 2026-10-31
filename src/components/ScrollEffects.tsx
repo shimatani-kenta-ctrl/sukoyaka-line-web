@@ -166,9 +166,9 @@ export function ScrollEffects() {
       progressBoxes.forEach((box) => {
         const rect = box.getBoundingClientRect();
         if (rect.bottom < -vh || rect.top > vh * 2) return;
-        // 箱の上端が画面の下から2割の位置に来たら伸び始め、下端が画面の中ほどに来たら伸びきる
+        // 箱の上端が画面の下から2割の位置に来たら伸び始め、下端が画面の下から3割の位置に来たら伸びきる
         const start = vh * 0.8;
-        const end = vh * 0.5;
+        const end = vh * 0.7;
         const sp = Math.min(1, Math.max(0, (start - rect.top) / Math.max(1, rect.height - end + start)));
         box.style.setProperty("--sp", sp.toFixed(4));
         const track = box.querySelector<HTMLElement>("[data-progress-track]");
