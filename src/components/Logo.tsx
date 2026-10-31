@@ -22,14 +22,19 @@ export function Logo({ light = false, size = "md" }: Props) {
         className={`shrink-0 object-contain ${lg ? "h-14 w-14" : "h-11 w-11 md:h-[52px] md:w-[52px]"}`}
       />
       <span className="flex flex-col items-start gap-1.5">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={light ? "/logo-text-light.svg" : "/logo-text.svg"}
-          alt="SUKOYAKA LINE"
-          width={169}
-          height={15}
-          className={`w-auto ${lg ? "h-[18px]" : "h-[14px] md:h-[17px]"}`}
-        />
+        {light ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src="/logo-text-light.svg"
+            alt="SUKOYAKA LINE"
+            width={169}
+            height={15}
+            className={`w-auto ${lg ? "h-[18px]" : "h-[14px] md:h-[17px]"}`}
+          />
+        ) : (
+          // ヘッダーの英字ロゴ：文字の形で切り抜き、中を水色の光がときどき流れる
+          <span role="img" aria-label="SUKOYAKA LINE" className={`logo-shine block ${lg ? "h-[18px]" : "h-[14px] md:h-[17px]"}`} />
+        )}
         <span
           className={`font-display font-extrabold leading-none tracking-[0.22em] ${
             lg ? "text-[13px]" : "text-[11px] md:text-[12.5px]"
