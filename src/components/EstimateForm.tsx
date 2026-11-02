@@ -3,6 +3,15 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { site, telHref } from "@/config/site";
+import {
+  FILE_ACCEPT,
+  MAX_FILES,
+  MAX_FILE_BYTES,
+  MAX_TOTAL_BYTES,
+  formatSize,
+  toAttachment,
+  type Attachment,
+} from "@/lib/attachments";
 
 /**
  * かんたん見積もり依頼。
@@ -110,6 +119,10 @@ export function EstimateForm() {
   const [missing, setMissing] = useState<string[]>([]);
   const [send, setSend] = useState<SendState>("idle");
   const [from, setFrom] = useState("");
+  const [files, setFiles] = useState<Attachment[]>([]);
+  const [fileMsg, setFileMsg] = useState("");
+  const [fileBusy, setFileBusy] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // ?from=instagram などで、どこから来たかを記録する
   useEffect(() => {
@@ -151,12 +164,39 @@ export function EstimateForm() {
     scrollTop();
   }
 
+  async function onAddFiles(list: FileList | null) {
+    if (!list || list.length === 0) return;
+    setFileMsg("");
+    const room = MAX_FILES - files.length;
+    const picked = Array.from(list).slice(0, room);
+    if (list.length > room) setFileMsg(`添付できるのは${MAX_FILES}点までです。`);
+    setFileBusy(true);
+    const added: Attachment[] = [];
+    for (const f of picked) {
+      const a = await toAttachment(f);
+      if (a.size > MAX_FILE_BYTES) {
+        setFileMsg(`「${f.name}」は大きすぎるため添付できません（1点${formatSize(MAX_FILE_BYTES)}まで）。`);
+        continue;
+      }
+      added.push(a);
+    }
+    const nextFiles = [...files, ...added];
+    if (nextFiles.reduce((t, a) => t + a.size, 0) > MAX_TOTAL_BYTES) {
+      setFileMsg(`添付ファイルの合計は${formatSize(MAX_TOTAL_BYTES)}までです。`);
+    } else {
+      setFiles(nextFiles);
+    }
+    setFileBusy(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
+
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     if (!form.reportValidity()) return;
     const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
     if (data.website) return; // スパム対策（人には見えない欄）
+    if (fileBusy) return;
     if (!ENDPOINT) {
       setSend("error");
       return;
@@ -189,6 +229,7 @@ export function EstimateForm() {
           address: data.city ?? "",
           message: lines.join("\n"),
           page: window.location.href,
+          ...(files.length ? { files: files.map(({ name, type, data }) => ({ name, type, data })) } : {}),
         }),
       });
       setSend("sent");
@@ -207,7 +248,7 @@ export function EstimateForm() {
         <h2 className="text-2xl">見積もりのご依頼を受け付けました</h2>
         <p className="mt-4 text-[15px] text-steel">
           ありがとうございます。内容を確認のうえ、担当者よりご連絡いたします。
-          受付のメールをお送りしていますので、図面や現場の写真がある場合は、そのメールにご返信のうえ添付してください。
+          受付のメールをお送りしていますので、追加の図面や写真がある場合は、そのメールにご返信のうえ添付してください。
         </p>
         <p className="mt-4 text-[15px] text-steel">
           お急ぎの場合はお電話（
@@ -407,9 +448,59 @@ export function EstimateForm() {
               className={input}
               placeholder="例：〇月の連休中に、ポンプ更新に合わせて周辺配管も入れ替えたい"
             />
-            <p className="mt-2 text-[13px] text-steel">
-              図面や現場の写真は、送信後にお届けする受付メールにご返信のうえ添付してください。
+          </div>
+
+          {/* 添付ファイル */}
+          <div>
+            <p className={label}>
+              図面・写真などの添付
+              <span className="ml-2 text-[12px] font-normal text-steel">{MAX_FILES}点まで</span>
             </p>
+            <p className="mt-1 text-[13px] text-steel">
+              図面、現場や機器の写真、仕様書などがあれば添付してください（写真・PDF・Word・Excel、1点{formatSize(MAX_FILE_BYTES)}まで）。写真は自動で小さくして送ります。
+            </p>
+            {files.length > 0 && (
+              <ul className="mt-4 space-y-2">
+                {files.map((f, i) => (
+                  <li key={`${f.name}-${i}`} className="flex items-center justify-between gap-3 rounded-sm border border-line bg-white px-4 py-3 text-[14px]">
+                    <span className="min-w-0 truncate">
+                      {f.name}
+                      <span className="ml-2 text-[12px] text-steel">{formatSize(f.size)}</span>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setFiles((cur) => cur.filter((_, j) => j !== i))}
+                      className="shrink-0 text-[13px] text-ai underline underline-offset-4"
+                    >
+                      取り消す
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {files.length < MAX_FILES && (
+              <label className="mt-4 flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-sm border border-dashed border-ai bg-white px-4 py-3 text-[15px] text-ai transition-colors hover:bg-mist">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M9 3 V15 M3 9 H15" stroke="currentColor" strokeWidth="1.6" />
+                </svg>
+                {fileBusy ? "読み込んでいます…" : `ファイルを選ぶ（あと${MAX_FILES - files.length}点）`}
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  name="attachments"
+                  accept={FILE_ACCEPT}
+                  multiple
+                  disabled={fileBusy}
+                  onChange={(e) => void onAddFiles(e.target.files)}
+                  className="sr-only"
+                />
+              </label>
+            )}
+            {fileMsg && (
+              <p role="alert" className="mt-2 text-[13px] text-ai">
+                {fileMsg}
+              </p>
+            )}
           </div>
 
           {/* スパム対策（人には見えない欄） */}
@@ -440,7 +531,7 @@ export function EstimateForm() {
             </button>
             <button
               type="submit"
-              disabled={send === "sending"}
+              disabled={send === "sending" || fileBusy}
               className="inline-flex min-h-12 items-center rounded-sm bg-ai px-8 text-[15px] tracking-[0.1em] text-white transition-colors hover:bg-ai-bright disabled:opacity-60"
             >
               {send === "sending" ? "送信しています…" : "見積もりを依頼する"}
