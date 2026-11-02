@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
 import { Container } from "@/components/ui";
 import { ContactForm } from "@/components/ContactForm";
@@ -39,6 +40,10 @@ export default function ContactPage() {
                 現場に出ていて出られない場合は、折り返しご連絡します。
               </p>
             </div>
+            <Link href="/estimate/" className="block border border-ai px-6 py-5 text-ai transition-colors hover:bg-ai hover:text-white">
+              <span className="block text-[12px]">工事内容を選ぶだけ・約1分</span>
+              <span className="mt-1 block text-[16px] font-medium">かんたん見積もり依頼はこちら</span>
+            </Link>
             <div className="text-[14px]">
               <p className="font-medium">メール</p>
               <a href={`mailto:${site.company.email}`} className="mt-1 block break-all text-ai underline underline-offset-4">
