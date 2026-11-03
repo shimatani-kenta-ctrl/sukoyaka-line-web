@@ -30,9 +30,9 @@ const relatedColumns = [
 const nextSteps = [
   {
     who: "工事をご検討の方",
-    label: "工事を相談する",
+    label: "工事のご依頼について",
     note: "図面がまだない段階のご相談もお受けしています。お見積りは無料です。",
-    href: "/contact/",
+    href: "/request/",
   },
   {
     who: "機器メーカー・工事会社の方",
