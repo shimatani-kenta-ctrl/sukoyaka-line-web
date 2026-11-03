@@ -49,6 +49,16 @@ export function Footer() {
               </li>
             ))}
             <li>
+              <Link href="/request/" className="hover:text-sky">
+                工事のご依頼
+              </Link>
+            </li>
+            <li>
+              <Link href="/estimate/" className="hover:text-sky">
+                かんたん見積もり依頼
+              </Link>
+            </li>
+            <li>
               <Link href="/privacy/" className="hover:text-sky">
                 個人情報の取り扱い
               </Link>

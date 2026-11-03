@@ -22,6 +22,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     { path: "/recruit/", priority: 0.8, freq: "monthly" },
     { path: "/instagram/", priority: 0.5, freq: "weekly" },
+    { path: "/request/", priority: 0.9, freq: "monthly" },
+    { path: "/estimate/", priority: 0.8, freq: "yearly" },
     { path: "/contact/", priority: 0.7, freq: "yearly" },
     { path: "/privacy/", priority: 0.2, freq: "yearly" },
     // 施工事例の個別ページ
