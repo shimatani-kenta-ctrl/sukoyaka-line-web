@@ -305,6 +305,11 @@ export default async function HomePage() {
               協力会社のご相談
             </ButtonLink>
           </div>
+          <p className="mt-6 text-[15px]">
+            <Link href="/request/" className="text-ai underline underline-offset-4 hover:no-underline">
+              工事のご依頼について（対応できる工事・ご依頼の流れ）
+            </Link>
+          </p>
         </Container>
       </section>
 
