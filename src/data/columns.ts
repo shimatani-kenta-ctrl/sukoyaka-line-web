@@ -17,6 +17,15 @@ export const columns: {
   visuals?: ColumnVisualKey[];
 }[] = [
   {
+    href: "/column/pipe-support-frame/",
+    published: "2026-11-05",
+    date: "2026年11月5日",
+    title: "配管架台とは｜役割と、製作から据付まで一社で頼むメリット",
+    summary: "配管や機器を支える架台の役割と、ご相談から据付までの流れ、屋外配管での注意点を、施工事例をもとに解説します。",
+    audience: "client",
+    visuals: ["frame", "outdoor", "onestop"],
+  },
+  {
     href: "/column/tig-arc-welding/",
     published: "2026-10-29",
     date: "2026年10月29日",

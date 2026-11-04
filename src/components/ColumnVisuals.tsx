@@ -18,7 +18,10 @@ export type ColumnVisualKey =
   | "direct"
   | "arcfamily"
   | "twohands"
-  | "weldratio";
+  | "weldratio"
+  | "frame"
+  | "outdoor"
+  | "onestop";
 
 const AI = "#003479";
 const SKY = "#00c2cb";
@@ -264,6 +267,48 @@ const visuals: Record<ColumnVisualKey, { label: string; svg: React.ReactNode }> 
         <text x="56" y="30" fontSize="9" fontWeight="800" fill={INK}>2.67倍</text>
         <rect x="12" y="44" width="15" height="13" rx="2" fill={SOFT} />
         <text x="31" y="54" fontSize="8.5" fill={STEEL}>基準 1倍</text>
+      </>
+    ),
+  },
+  /* 配管架台とは */
+  frame: {
+    label: "配管を支える架台",
+    svg: (
+      <>
+        <line x1="8" y1="24" x2="92" y2="24" stroke={SKY} strokeWidth="5" strokeLinecap="round" />
+        <line x1="8" y1="36" x2="92" y2="36" stroke={SOFT} strokeWidth="5" strokeLinecap="round" />
+        <rect x="16" y="42" width="68" height="4" fill={AI} />
+        <rect x="22" y="46" width="4" height="18" fill={AI} />
+        <rect x="74" y="46" width="4" height="18" fill={AI} />
+        <rect x="18" y="64" width="12" height="3" fill={INK} />
+        <rect x="70" y="64" width="12" height="3" fill={INK} />
+      </>
+    ),
+  },
+  outdoor: {
+    label: "屋外は水はけ・さび",
+    svg: (
+      <>
+        <path d="M30 10 q-5 9 0 12 q5 -3 0 -12 z" fill={SKY} />
+        <path d="M50 6 q-5 9 0 12 q5 -3 0 -12 z" fill={SKY} />
+        <path d="M70 10 q-5 9 0 12 q5 -3 0 -12 z" fill={SKY} />
+        <line x1="12" y1="34" x2="88" y2="42" stroke={AI} strokeWidth="5" strokeLinecap="round" />
+        <text x="50" y="62" textAnchor="middle" fontSize="8" fill={STEEL}>勾配・材料・塗装</text>
+      </>
+    ),
+  },
+  onestop: {
+    label: "製作から据付まで",
+    svg: (
+      <>
+        <rect x="4" y="26" width="26" height="20" rx="4" fill={SOFT} />
+        <text x="17" y="39" textAnchor="middle" fontSize="7.5" fontWeight="700" fill={INK}>製作</text>
+        <rect x="37" y="26" width="26" height="20" rx="4" fill={SKY} />
+        <text x="50" y="39" textAnchor="middle" fontSize="7.5" fontWeight="700" fill={INK}>据付</text>
+        <rect x="70" y="26" width="26" height="20" rx="4" fill={AI} />
+        <text x="83" y="39" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="#fff">配管</text>
+        <path d="M4 56 H96" stroke={AI} strokeWidth="2" />
+        <text x="50" y="66" textAnchor="middle" fontSize="7.5" fill={STEEL}>一社で一貫</text>
       </>
     ),
   },
