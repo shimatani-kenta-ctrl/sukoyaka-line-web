@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { site, telHref } from "@/config/site";
 
 /** ページ下部の問い合わせ導線 */
 export function CtaBand() {
@@ -13,13 +12,6 @@ export function CtaBand() {
           </p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-          <a
-            href={telHref}
-            className="flex min-h-14 flex-col items-center justify-center rounded-sm bg-white px-8 text-ink transition-colors hover:bg-sky-soft"
-          >
-            <span className="text-[11px] tracking-[0.2em] text-steel">お電話</span>
-            <span className="font-display text-xl tracking-[0.08em]">{site.company.tel}</span>
-          </a>
           <Link
             href="/estimate/"
             className="flex min-h-14 flex-col items-center justify-center rounded-sm bg-sky px-8 text-ink transition-colors hover:bg-sky-soft"
