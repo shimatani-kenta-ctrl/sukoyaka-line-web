@@ -53,6 +53,7 @@ const services: { name: string; body: string; media?: Media[]; link?: { href: st
   {
     name: "架台製作及び据付",
     body: "機器や配管を支える架台を製作し、据付まで行います。ポンプやボイラーなど機器の据付と周辺配管も、あわせてお受けします。",
+    link: { href: "/column/pipe-support-frame/", label: "コラム：配管架台とは" },
     media: [
       {
         type: "photo",
