@@ -34,7 +34,8 @@ export const site = {
     street: "昭和南通7-180-1-602",
     /** 地図表示用（部屋番号を除いた住所） */
     mapQuery: "兵庫県尼崎市昭和南通7-180-1",
-    tel: "080-9123-7037",
+    /** サイトには電話番号を載せない方針（2026年11月）。空欄のままにしてください */
+    tel: "",
     email: "shimatani-kenta@sukoyaka-line.com",
     /** 例: "2020年4月"。空欄なら非表示 */
     founded: "2025年3月3日",
@@ -92,4 +93,3 @@ export const site = {
 } as const;
 
 export const fullAddress = `${site.company.prefecture}${site.company.city}${site.company.street}`;
-export const telHref = `tel:${site.company.tel.replace(/-/g, "")}`;

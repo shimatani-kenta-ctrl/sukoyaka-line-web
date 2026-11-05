@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ButtonLink, Container, JsonLd, SectionHeading } from "@/components/ui";
 import { Marquee } from "@/components/Marquee";
-import { site, telHref } from "@/config/site";
+import { site } from "@/config/site";
 import {
   applySteps,
   ceoMessage,
@@ -150,12 +150,6 @@ export default function RecruitPage() {
                 <ButtonLink href="/contact/?type=recruit" variant="light">
                   まずは会いに行く
                 </ButtonLink>
-                <a
-                  href={telHref}
-                  className="inline-flex min-h-12 items-center justify-center rounded-sm border border-sky/70 px-7 text-[15px] tracking-[0.1em] transition-colors hover:bg-white hover:text-ink"
-                >
-                  電話で相談する
-                </a>
               </div>
               <p className="mt-4 text-[13px] text-white/60">履歴書不要。話を聞くだけでもOKです。</p>
             </div>
@@ -567,15 +561,9 @@ export default function RecruitPage() {
               <ButtonLink href="/contact/?type=recruit" variant="light">
                 まずは会いに行く
               </ButtonLink>
-              <a
-                href={telHref}
-                className="inline-flex min-h-12 items-center justify-center rounded-sm border border-sky/70 px-7 text-[15px] tracking-[0.1em] transition-colors hover:bg-white hover:text-ink"
-              >
-                電話で相談する
-              </a>
             </div>
             <p className="mt-6 text-[13px] text-white/60">
-              採用担当：{site.company.representative}　TEL {site.company.tel}
+              採用担当：{site.company.representative}
             </p>
           </div>
         </Container>

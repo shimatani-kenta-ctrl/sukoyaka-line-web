@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
-import { site, telHref } from "@/config/site";
+import { site } from "@/config/site";
 import { pageMeta } from "@/lib/seo";
 
 /**
@@ -55,11 +55,11 @@ export default function LinksPage() {
           ))}
           <li>
             <a
-              href={telHref}
+              href={`mailto:${site.company.email}`}
               className="flex min-h-16 flex-col justify-center rounded-sm bg-ink px-6 py-4 text-white transition-colors hover:bg-ink-deep"
             >
-              <span className="text-[12px] text-sky">お急ぎの方はお電話で</span>
-              <span className="mt-1 font-display text-[20px] tracking-[0.06em]">{site.company.tel}</span>
+              <span className="text-[12px] text-sky">メールでのご連絡</span>
+              <span className="mt-1 break-all text-[15px] tracking-[0.04em]">{site.company.email}</span>
             </a>
           </li>
         </ul>

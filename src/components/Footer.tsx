@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { fullAddress, site, telHref } from "@/config/site";
+import { fullAddress, site } from "@/config/site";
 import { Logo } from "./Logo";
 
 export function Footer() {
@@ -12,12 +12,6 @@ export function Footer() {
           <address className="mt-6 space-y-1 text-[13px] not-italic leading-relaxed">
             <p>
               〒{c.postalCode} {fullAddress}
-            </p>
-            <p>
-              TEL{" "}
-              <a href={telHref} className="hover:text-sky">
-                {c.tel}
-              </a>
             </p>
             <p>
               Mail{" "}

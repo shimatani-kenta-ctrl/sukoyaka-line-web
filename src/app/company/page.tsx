@@ -6,7 +6,7 @@ import { Container, SectionHeading } from "@/components/ui";
 import { LogoFull } from "@/components/Logo";
 import { GoogleMap, mapLinkUrl } from "@/components/GoogleMap";
 import { CtaBand } from "@/components/CtaBand";
-import { fullAddress, site, telHref } from "@/config/site";
+import { fullAddress, site } from "@/config/site";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
@@ -28,14 +28,6 @@ export default function CompanyPage() {
           <br />
           {fullAddress}
         </>
-      ),
-    },
-    {
-      label: "電話番号",
-      value: (
-        <a href={telHref} className="text-ai underline-offset-4 hover:underline">
-          {c.tel}
-        </a>
       ),
     },
     {

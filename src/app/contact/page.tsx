@@ -4,7 +4,7 @@ import { PageHero } from "@/components/PageHero";
 import { Container } from "@/components/ui";
 import { ContactForm } from "@/components/ContactForm";
 import { GoogleMap } from "@/components/GoogleMap";
-import { fullAddress, site, telHref } from "@/config/site";
+import { fullAddress, site } from "@/config/site";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
@@ -31,15 +31,6 @@ export default function ContactPage() {
           </div>
 
           <aside data-reveal="right" className="space-y-8 lg:sticky lg:top-28 lg:self-start">
-            <div className="bg-ink px-6 py-8 text-white">
-              <p className="text-[13px] text-sky">お急ぎの方はお電話で</p>
-              <a href={telHref} className="mt-2 block font-display text-[26px] tracking-[0.06em] hover:text-sky">
-                {site.company.tel}
-              </a>
-              <p className="mt-4 text-[13px] text-white/70">
-                現場に出ていて出られない場合は、折り返しご連絡します。
-              </p>
-            </div>
             <Link href="/estimate/" className="block border border-ai px-6 py-5 text-ai transition-colors hover:bg-ai hover:text-white">
               <span className="block text-[12px]">工事内容を選ぶだけ・約1分</span>
               <span className="mt-1 block text-[16px] font-medium">かんたん見積もり依頼はこちら</span>

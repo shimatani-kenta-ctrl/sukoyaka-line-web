@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { site, telHref } from "@/config/site";
+import { site } from "@/config/site";
 
 const PREFECTURES = [
   "北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県", "茨城県", "栃木県", "群馬県",
@@ -223,11 +223,6 @@ export function ContactForm() {
         <h2 className="text-2xl">送信しました</h2>
         <p className="mt-4 text-[15px] text-steel">
           お問い合わせありがとうございます。内容を確認のうえ、担当者よりご連絡いたします。
-          お急ぎの場合はお電話（
-          <a href={telHref} className="text-ai underline underline-offset-4">
-            {site.company.tel}
-          </a>
-          ）でもお受けしています。
         </p>
         <button
           type="button"
@@ -607,7 +602,7 @@ export function ContactForm() {
           {ENDPOINT
             ? "送信できませんでした。通信環境をご確認のうえ、もう一度お試しください。"
             : "現在フォームから送信できません。"}
-          お手数ですが、お電話（{site.company.tel}）またはメール（{site.company.email}）でご連絡ください。
+          お手数ですが、メール（{site.company.email}）でご連絡ください。
         </p>
       )}
 
