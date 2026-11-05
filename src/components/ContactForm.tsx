@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { site } from "@/config/site";
+import { CompanySuggest } from "./CompanySuggest";
 
 const PREFECTURES = [
   "北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県", "茨城県", "栃木県", "群馬県",
@@ -273,7 +274,20 @@ export function ContactForm() {
             <label htmlFor="company" className={label}>
               会社名・団体名
             </label>
-            <input id="company" name="company" autoComplete="organization" className={input} />
+            <CompanySuggest
+              id="company"
+              name="company"
+              className={input}
+              onPick={(h) => {
+                if (h.zip) {
+                  setZip(h.zip);
+                  lastLookup.current = h.zip.replace(/\D/g, "");
+                }
+                if (h.prefecture) setPrefecture(h.prefecture);
+                if (h.address) setAddress(h.address);
+                setZipState({ kind: "found", message: "会社の所在地を入力しました。必要に応じて建物名などを修正してください。" });
+              }}
+            />
           </div>
         )}
         <div>

@@ -110,9 +110,51 @@ function doPost(e) {
   }
 }
 
-/** 動作確認用：ウェブアプリのURLをブラウザで開くと「OK」と表示されます */
-function doGet() {
+/**
+ * 動作確認用：ウェブアプリのURLをブラウザで開くと「OK」と表示されます。
+ * ?action=houjin&q=会社名 のときは、法人名の候補を返します（お問い合わせフォームの自動入力用）。
+ */
+function doGet(e) {
+  const p = (e && e.parameter) || {};
+  if (p.action === "houjin") return json(searchHoujin(p.q));
   return ContentService.createTextOutput("OK");
+}
+
+/**
+ * 国税庁 法人番号システム Web-API で法人名を検索し、候補（名称・郵便番号・都道府県・住所）を返す。
+ * アプリケーションIDは、スクリプトプロパティ「HOUJIN_APP_ID」に保存する（コードやサイトには書かない）。
+ */
+function searchHoujin(q) {
+  const name = s(q).trim().slice(0, 100);
+  if (name.length < 2) return { ok: true, items: [] };
+  const id = PropertiesService.getScriptProperties().getProperty("HOUJIN_APP_ID");
+  if (!id) return { ok: false, error: "no_app_id" };
+
+  const cache = CacheService.getScriptCache();
+  const key = "houjin:" + Utilities.base64EncodeWebSafe(Utilities.newBlob(name).getBytes()).slice(0, 200);
+  const hit = cache.get(key);
+  if (hit) return JSON.parse(hit);
+
+  // mode=2：部分一致　target=1：あいまい検索　close=0：閉鎖した法人を除く　type=12：XML
+  const url = "https://api.houjin-bangou.nta.go.jp/4/name?id=" + encodeURIComponent(id)
+    + "&name=" + encodeURIComponent(name) + "&mode=2&target=1&close=0&type=12";
+  const res = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+  if (res.getResponseCode() !== 200) return { ok: false, error: "api_" + res.getResponseCode() };
+
+  const root = XmlService.parse(res.getContentText("UTF-8")).getRootElement();
+  const items = root.getChildren("corporation").slice(0, 8).map(function (c) {
+    const t = function (k) { return c.getChildText(k) || ""; };
+    const zip = t("postCode");
+    return {
+      name: t("name"),
+      zip: zip.length === 7 ? zip.slice(0, 3) + "-" + zip.slice(3) : zip,
+      prefecture: t("prefectureName"),
+      address: t("cityName") + t("streetNumber"),
+    };
+  });
+  const out = { ok: true, items: items };
+  cache.put(key, JSON.stringify(out), 21600);
+  return out;
 }
 
 /** 初回に一度だけ実行：メール送信とシートの権限を許可するため */
