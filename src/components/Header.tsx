@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { site, telHref } from "@/config/site";
+import { site } from "@/config/site";
 import { Logo } from "./Logo";
 
 export function Header() {
@@ -96,13 +96,6 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2 lg:hidden">
-          <a
-            href={telHref}
-            className="flex h-10 items-center rounded-sm border border-ai px-3 text-[13px] text-ai"
-            aria-label={`電話をかける ${site.company.tel}`}
-          >
-            電話
-          </a>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -142,9 +135,6 @@ export function Header() {
             ))}
           </ul>
           <div className="mt-8 space-y-3 text-sm">
-            <a href={telHref} className="block rounded-sm bg-white py-3.5 text-center text-ink">
-              電話する {site.company.tel}
-            </a>
             <Link href="/contact/" className="block rounded-sm border border-sky py-3.5 text-center text-sky">
               フォームで問い合わせる
             </Link>

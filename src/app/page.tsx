@@ -8,7 +8,7 @@ import { WorkVisual } from "@/components/WorkVisual";
 import { CtaBand } from "@/components/CtaBand";
 import { GoogleMap } from "@/components/GoogleMap";
 import { InstagramFeed, InstagramFollowButton } from "@/components/InstagramFeed";
-import { fullAddress, site, telHref } from "@/config/site";
+import { fullAddress, site } from "@/config/site";
 import { works } from "@/data/works";
 import { voices } from "@/data/voices";
 import { workFaq } from "@/data/faq";
@@ -380,14 +380,6 @@ export default async function HomePage() {
                   〒{site.company.postalCode}
                   <br />
                   {fullAddress}
-                </dd>
-              </div>
-              <div className="grid grid-cols-[88px_1fr] gap-4">
-                <dt className="text-steel">電話</dt>
-                <dd>
-                  <a href={telHref} className="text-ai underline-offset-4 hover:underline">
-                    {site.company.tel}
-                  </a>
                 </dd>
               </div>
               <div className="grid grid-cols-[88px_1fr] gap-4">

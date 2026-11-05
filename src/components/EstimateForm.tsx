@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { site, telHref } from "@/config/site";
+import { site } from "@/config/site";
 import {
   FILE_ACCEPT,
   MAX_FILES,
@@ -248,13 +248,6 @@ export function EstimateForm() {
         <p className="mt-4 text-[15px] text-steel">
           ありがとうございます。内容を確認のうえ、担当者よりご連絡いたします。
           受付のメールをお送りしていますので、追加の図面や写真がある場合は、そのメールにご返信のうえ添付してください。
-        </p>
-        <p className="mt-4 text-[15px] text-steel">
-          お急ぎの場合はお電話（
-          <a href={telHref} className="text-ai underline underline-offset-4">
-            {site.company.tel}
-          </a>
-          ）でもお受けしています。
         </p>
         <Link href="/works/" className="mt-8 inline-block text-[14px] text-ai underline underline-offset-4">
           施工事例を見る
@@ -520,7 +513,7 @@ export function EstimateForm() {
 
           {send === "error" && (
             <p role="alert" className="text-[14px] text-ai">
-              送信できませんでした。お手数ですが、お電話（{site.company.tel}）かメール（{site.company.email}）でご連絡ください。
+              送信できませんでした。お手数ですが、メール（{site.company.email}）でご連絡ください。
             </p>
           )}
 

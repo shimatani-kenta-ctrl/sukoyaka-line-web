@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
 import { Container } from "@/components/ui";
 import { EstimateForm } from "@/components/EstimateForm";
-import { site, telHref } from "@/config/site";
+import { site } from "@/config/site";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
@@ -31,11 +31,11 @@ export default function EstimatePage() {
 
           <aside className="space-y-8 lg:sticky lg:top-28 lg:self-start">
             <div className="bg-ink px-6 py-8 text-white">
-              <p className="text-[13px] text-sky">お急ぎの方はお電話で</p>
-              <a href={telHref} className="mt-2 block font-display text-[26px] tracking-[0.06em] hover:text-sky">
-                {site.company.tel}
+              <p className="text-[13px] text-sky">メールでのご連絡</p>
+              <a href={`mailto:${site.company.email}`} className="mt-2 block break-all text-[16px] tracking-[0.04em] hover:text-sky">
+                {site.company.email}
               </a>
-              <p className="mt-4 text-[13px] text-white/70">現場に出ていて出られない場合は、折り返しご連絡します。</p>
+              <p className="mt-4 text-[13px] text-white/70">図面や写真を添えてお送りいただくこともできます。</p>
             </div>
             <div className="space-y-3 text-[14px]">
               <p className="font-medium">ご依頼の前に</p>

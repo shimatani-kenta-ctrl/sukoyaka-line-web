@@ -59,8 +59,6 @@ export default function PrivacyPage() {
                 {site.name}
                 <br />〒{site.company.postalCode} {fullAddress}
                 <br />
-                TEL {site.company.tel}
-                <br />
                 Mail {site.company.email}
               </p>
             </section>

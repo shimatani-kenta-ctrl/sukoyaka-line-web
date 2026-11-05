@@ -56,7 +56,6 @@ const organization = {
   logo: `${site.url}/logo.png`,
   image: `${site.url}/og.jpg`,
   description: site.description,
-  telephone: `+81-${site.company.tel.replace(/^0/, "")}`,
   email: site.company.email,
   address: {
     "@type": "PostalAddress",

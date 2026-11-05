@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
 import { ButtonLink, Container, JsonLd, SectionHeading } from "@/components/ui";
-import { site, telHref } from "@/config/site";
+import { site } from "@/config/site";
 import { works } from "@/data/works";
 import { workFaq } from "@/data/faq";
 import { pageMeta } from "@/lib/seo";
@@ -45,7 +45,7 @@ const reasons = [
   {
     no: "01",
     title: "急ぎの案件にも、すぐ動く",
-    body: "設備トラブルや工程の前倒しなど、急なご依頼にも段取りを組んで対応します。お急ぎの場合は、まずはお電話でご相談ください。",
+    body: "設備トラブルや工程の前倒しなど、急なご依頼にも段取りを組んで対応します。お急ぎの場合も、まずはご相談ください。",
   },
   {
     no: "02",
@@ -60,7 +60,7 @@ const reasons = [
 ];
 
 const flow = [
-  { title: "お問い合わせ", body: "お電話、フォーム、かんたん見積もり依頼のいずれかでご連絡ください。" },
+  { title: "お問い合わせ", body: "フォームか、かんたん見積もり依頼でご連絡ください。" },
   { title: "現場の確認・お打ち合わせ", body: "現場を拝見し、ご要望や工程、取合いを確認します。" },
   { title: "お見積り（無料）", body: "工事一式でのお見積りをお出しします。" },
   { title: "製作・施工", body: "必要な配管・架台を製作し、現場で据付・施工します。" },
@@ -85,14 +85,6 @@ function CtaButtons({ light = false }: { light?: boolean }) {
       <ButtonLink href="/estimate/" variant={light ? "light" : "primary"}>
         かんたん見積もり依頼（約1分）
       </ButtonLink>
-      <a
-        href={telHref}
-        className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-sm px-7 text-[15px] tracking-[0.08em] transition-colors ${
-          light ? "border border-white/70 text-white hover:bg-white hover:text-ink" : "border border-ai text-ai hover:bg-ai hover:text-white"
-        }`}
-      >
-        お電話：{site.company.tel}
-      </a>
     </div>
   );
 }
