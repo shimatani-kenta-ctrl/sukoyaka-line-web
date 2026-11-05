@@ -26,6 +26,9 @@ const relatedColumns = [
   { label: "多重下請と直接依頼の違い｜配管工事を直接頼むメリット", href: "/column/direct-contract/" },
 ];
 
+/** 架台を施工した事例（題名に「架台」を含む）では、架台のコラムを先頭に出す */
+const frameColumn = { label: "配管架台とは｜役割と、製作から据付まで一社で頼むメリット", href: "/column/pipe-support-frame/" };
+
 /** 施工事例の最後に出す「次の一歩」。文言はサイト掲載済みの事実のみ（faq.ts・jobs.ts） */
 const nextSteps = [
   {
@@ -202,7 +205,7 @@ export default async function WorkPage({ params }: Props) {
           <div className="mt-16 border-t border-line pt-12">
             <h2 className="text-xl md:text-2xl">工事をご検討の方へ（コラム）</h2>
             <ul className="mt-6 space-y-3 text-[15px]">
-              {relatedColumns.map((c) => (
+              {(w.title.includes("架台") ? [frameColumn, ...relatedColumns] : relatedColumns).map((c) => (
                 <li key={c.href}>
                   <Link href={c.href} className="text-ai underline underline-offset-4">
                     {c.label}
