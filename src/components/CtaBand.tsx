@@ -17,13 +17,13 @@ export function CtaBand() {
             className="flex min-h-14 flex-col items-center justify-center rounded-sm bg-sky px-8 text-ink transition-colors hover:bg-sky-soft"
           >
             <span className="text-[11px] tracking-[0.2em]">選ぶだけ・約1分</span>
-            <span className="tracking-[0.1em]">かんたん見積もり依頼</span>
+            <span className="tracking-[0.1em]">簡単見積もり依頼</span>
           </Link>
           <Link
             href="/contact/"
             className="flex min-h-14 items-center justify-center rounded-sm border border-white/70 px-8 tracking-[0.1em] transition-colors hover:bg-white hover:text-ink"
           >
-            フォームで問い合わせる
+            問い合わせフォーム
           </Link>
         </div>
       </div>

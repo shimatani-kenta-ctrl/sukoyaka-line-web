@@ -49,7 +49,7 @@ export function Footer() {
             </li>
             <li>
               <Link href="/estimate/" className="hover:text-sky">
-                かんたん見積もり依頼
+                簡単見積もり依頼
               </Link>
             </li>
             <li>
