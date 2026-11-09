@@ -60,7 +60,7 @@ const reasons = [
 ];
 
 const flow = [
-  { title: "お問い合わせ", body: "フォームか、かんたん見積もり依頼でご連絡ください。" },
+  { title: "お問い合わせ", body: "フォームか、簡単見積もり依頼でご連絡ください。" },
   { title: "現場の確認・お打ち合わせ", body: "現場を拝見し、ご要望や工程、取合いを確認します。" },
   { title: "お見積り（無料）", body: "工事一式でのお見積りをお出しします。" },
   { title: "製作・施工", body: "必要な配管・架台を製作し、現場で据付・施工します。" },
@@ -83,7 +83,7 @@ function CtaButtons({ light = false }: { light?: boolean }) {
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
       <ButtonLink href="/estimate/" variant={light ? "light" : "primary"}>
-        かんたん見積もり依頼（約1分）
+        簡単見積もり依頼（約1分）
       </ButtonLink>
     </div>
   );

@@ -33,7 +33,7 @@ export default function ContactPage() {
           <aside data-reveal="right" className="space-y-8 lg:sticky lg:top-28 lg:self-start">
             <Link href="/estimate/" className="block border border-ai px-6 py-5 text-ai transition-colors hover:bg-ai hover:text-white">
               <span className="block text-[12px]">工事内容を選ぶだけ・約1分</span>
-              <span className="mt-1 block text-[16px] font-medium">かんたん見積もり依頼はこちら</span>
+              <span className="mt-1 block text-[16px] font-medium">簡単見積もり依頼はこちら</span>
             </Link>
             <div className="text-[14px]">
               <p className="font-medium">メール</p>

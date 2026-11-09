@@ -136,7 +136,7 @@ export function Header() {
           </ul>
           <div className="mt-8 space-y-3 text-sm">
             <Link href="/contact/" className="block rounded-sm border border-sky py-3.5 text-center text-sky">
-              フォームで問い合わせる
+              問い合わせフォーム
             </Link>
           </div>
         </nav>

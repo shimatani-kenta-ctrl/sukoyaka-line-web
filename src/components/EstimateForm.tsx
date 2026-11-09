@@ -14,9 +14,9 @@ import {
 } from "@/lib/attachments";
 
 /**
- * かんたん見積もり依頼。
+ * 簡単見積もり依頼。
  * 工事の内容・規模・時期をボタンで選ぶと、お問い合わせフォームと同じ受信先
- * （スプレッドシート「HPお問い合わせ」＋通知メール＋自動返信）に「かんたん見積もり依頼」として届く。
+ * （スプレッドシート「HPお問い合わせ」＋通知メール＋自動返信）に「簡単見積もり依頼」として届く。
  * 金額はこの画面では出さない（内容を確認してから、工事一式のお見積りをお出しする）。
  *
  * 選択肢を変えたいときは、下の QUESTIONS を書き換えてください。
@@ -202,7 +202,7 @@ export function EstimateForm() {
     }
 
     const lines = [
-      "【かんたん見積もり依頼の内容】",
+      "【簡単見積もり依頼の内容】",
       ...allQuestions.map((q) => `${q.label}：${(answers[q.id] ?? []).join("、") || "（未選択）"}`),
       `工事場所：${data.prefecture}${data.city ? " " + data.city : ""}`,
       "",
@@ -218,7 +218,7 @@ export function EstimateForm() {
         mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({
-          type: "かんたん見積もり依頼",
+          type: "簡単見積もり依頼",
           company: data.company ?? "",
           name: data.name,
           email: data.email,

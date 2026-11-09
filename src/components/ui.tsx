@@ -12,7 +12,7 @@ export function JsonLd({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-/** 見出し。PCでは右側に縦書きの添え字が付く */
+/** 見出し。side を渡すと、見出しの上に小さく横書きの添え字が付く */
 export function SectionHeading({
   title,
   side,
@@ -25,21 +25,17 @@ export function SectionHeading({
   light?: boolean;
 }) {
   return (
-    <div data-reveal className="flex items-start gap-6">
-      <div className="max-w-2xl">
-        <h2 className={`reveal-blur text-2xl md:text-[34px] ${light ? "text-white" : "text-ink"}`}>{title}</h2>
-        <span aria-hidden="true" className={`reveal-bar mt-5 block h-[3px] w-12 ${light ? "bg-sky" : "bg-ai"}`} />
-        {lead && (
-          <p className={`mt-6 text-[15px] ${light ? "text-white/80" : "text-steel"}`}>{lead}</p>
-        )}
-      </div>
+    <div data-reveal className="max-w-2xl">
+      {/* 見出しの上に小さく添える文字（以前は右側に縦書きで表示していた） */}
       {side && (
-        <span
-          aria-hidden="true"
-          className={`tategaki ml-auto hidden font-display text-xs md:block ${light ? "text-sky" : "text-steel/70"}`}
-        >
+        <p className={`mb-3 text-[13px] font-medium tracking-[0.18em] md:text-sm ${light ? "text-sky" : "text-ai"}`}>
           {side}
-        </span>
+        </p>
+      )}
+      <h2 className={`reveal-blur text-2xl md:text-[34px] ${light ? "text-white" : "text-ink"}`}>{title}</h2>
+      <span aria-hidden="true" className={`reveal-bar mt-5 block h-[3px] w-12 ${light ? "bg-sky" : "bg-ai"}`} />
+      {lead && (
+        <p className={`mt-6 text-[15px] ${light ? "text-white/80" : "text-steel"}`}>{lead}</p>
       )}
     </div>
   );

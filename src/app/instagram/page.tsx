@@ -56,7 +56,7 @@ export default async function InstagramPage() {
         <Container className="grid gap-10 md:grid-cols-2">
           <div className="flex flex-col items-start gap-5">
             <p className="font-display text-xl">投稿の工事について、ご相談したい方へ。</p>
-            <ButtonLink href="/estimate/?from=instagram">かんたん見積もり依頼</ButtonLink>
+            <ButtonLink href="/estimate/?from=instagram">簡単見積もり依頼</ButtonLink>
           </div>
           <div className="flex flex-col items-start gap-5">
             <p className="font-display text-xl">投稿を見て、働いてみたいと思った方へ。</p>

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 const links = [
-  { href: "/estimate/?from=instagram", title: "かんたん見積もり依頼", sub: "工事の内容を選ぶだけ・約1分", primary: true },
+  { href: "/estimate/?from=instagram", title: "簡単見積もり依頼", sub: "工事の内容を選ぶだけ・約1分", primary: true },
   { href: "/request/", title: "工事のご依頼について", sub: "機器据付・周辺配管・工場の配管工事" },
   { href: "/works/", title: "施工事例", sub: "これまでに施工した工事" },
   { href: "/recruit/", title: "採用情報", sub: "一緒に働く仲間を募集しています" },

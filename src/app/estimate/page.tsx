@@ -7,7 +7,7 @@ import { site } from "@/config/site";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
-  title: "かんたん見積もり依頼（配管工事・機器据付）",
+  title: "簡単見積もり依頼（配管工事・機器据付）",
   description: `${site.name}への配管工事・機器据付工事のお見積り依頼。工事の内容・規模・時期をボタンで選ぶだけで、約1分でご依頼いただけます。お見積りは無料です。`,
   path: "/estimate/",
 });
@@ -16,7 +16,7 @@ export default function EstimatePage() {
   return (
     <>
       <PageHero
-        title="かんたん見積もり依頼"
+        title="簡単見積もり依頼"
         lead="工事の内容・規模・時期をボタンで選ぶだけ。約1分で、見積もりのご依頼ができます。お見積りは無料です。"
         path="/estimate/"
       />
