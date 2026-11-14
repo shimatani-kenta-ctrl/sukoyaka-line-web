@@ -21,7 +21,10 @@ export type ColumnVisualKey =
   | "weldratio"
   | "frame"
   | "outdoor"
-  | "onestop";
+  | "onestop"
+  | "overtimecap"
+  | "workdays"
+  | "dayclock";
 
 const AI = "#003479";
 const SKY = "#00c2cb";
@@ -309,6 +312,39 @@ const visuals: Record<ColumnVisualKey, { label: string; svg: React.ReactNode }> 
         <text x="83" y="39" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="#fff">配管</text>
         <path d="M4 56 H96" stroke={AI} strokeWidth="2" />
         <text x="50" y="66" textAnchor="middle" fontSize="7.5" fill={STEEL}>一社で一貫</text>
+      </>
+    ),
+  },
+
+  /* 建設業の残業上限規制（数字は厚生労働省・国土交通省の資料より） */
+  overtimecap: {
+    label: "残業の上限（原則）",
+    svg: (
+      <>
+        <rect x="12" y="16" width="34" height="13" rx="2" fill={SKY} />
+        <text x="50" y="26" fontSize="9" fontWeight="800" fill={INK}>月45h</text>
+        <rect x="12" y="40" width="72" height="13" rx="2" fill={AI} />
+        <text x="16" y="50" fontSize="9" fontWeight="800" fill="#fff">年360h</text>
+      </>
+    ),
+  },
+  workdays: {
+    label: "出勤日数（全産業比）",
+    svg: (
+      <>
+        <text x="50" y="40" textAnchor="middle" fontSize="20" fontWeight="800" fill={AI}>+10</text>
+        <text x="50" y="56" textAnchor="middle" fontSize="10" fontWeight="700" fill={INK}>日／年</text>
+      </>
+    ),
+  },
+  dayclock: {
+    label: "求人で確認",
+    svg: (
+      <>
+        <circle cx="50" cy="38" r="26" fill="#fff" stroke={AI} strokeWidth="3" />
+        <line x1="50" y1="38" x2="50" y2="20" stroke={AI} strokeWidth="3" strokeLinecap="round" />
+        <line x1="50" y1="38" x2="63" y2="44" stroke={SKY} strokeWidth="3" strokeLinecap="round" />
+        <circle cx="50" cy="38" r="3" fill={INK} />
       </>
     ),
   },
