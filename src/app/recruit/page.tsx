@@ -457,6 +457,11 @@ export default function RecruitPage() {
               </li>
             ))}
           </ol>
+          <p className="mt-6 text-[14px]">
+            <Link href="/column/overtime-cap/" className="text-ai underline underline-offset-4">
+              建設業の残業上限規制と、求人で確認したいこと（コラム）
+            </Link>
+          </p>
           <div className="mt-12 flex flex-col gap-4 border border-line bg-white px-6 py-6 md:flex-row md:items-center md:justify-between md:px-8">
             <p className="text-[15px] text-steel">現場の様子や社員のリアルな1日は、Instagramでも発信しています。</p>
             <a

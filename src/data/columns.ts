@@ -17,6 +17,15 @@ export const columns: {
   visuals?: ColumnVisualKey[];
 }[] = [
   {
+    href: "/column/overtime-cap/",
+    published: "2026-11-15",
+    date: "2026年11月15日",
+    title: "建設業の残業上限規制（2024年4月〜）とは｜配管工の残業・休日と、求人で確認したいこと",
+    summary: "2024年4月から建設業にも適用された残業の上限を厚生労働省の資料で整理し、配管工の求人を見るときに確認したいポイントを解説します。",
+    audience: "jobseeker",
+    visuals: ["overtimecap", "workdays", "dayclock"],
+  },
+  {
     href: "/column/pipe-support-frame/",
     published: "2026-11-05",
     date: "2026年11月5日",
