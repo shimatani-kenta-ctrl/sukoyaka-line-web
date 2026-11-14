@@ -280,6 +280,14 @@ export default function RecruitPage() {
               </div>
             ))}
           </div>
+          <div className="mt-6 flex flex-col gap-2 text-[14px] md:flex-row md:gap-6">
+            <Link href="/column/construction-aging/" className="text-ai underline underline-offset-4">
+              建設業の高齢化と人手不足をデータで見る（コラム）
+            </Link>
+            <Link href="/column/direct-contract/" className="text-ai underline underline-offset-4">
+              多重下請と直接依頼の違い（コラム）
+            </Link>
+          </div>
         </Container>
       </section>
 
