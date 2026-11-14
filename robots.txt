@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://sukoyaka-line.com
+Sitemap: https://sukoyaka-line.com/sitemap.xml
